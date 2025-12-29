@@ -9,27 +9,26 @@ interface HeroProps {
   text: Translations['hero'];
 }
 
-// Caminhos locais para as imagens da pasta marquee.
-// Certifique-se de que as imagens 1.jpg a 7.jpg existam na pasta public/marquee/
+// Caminhos para as imagens na pasta public/marquee/
 const MARQUEE_ROW_1 = [
-  "components/marquee/marquee-1.webp",
-  "components/marquee/marquee-2.webp",
-  "components/marquee/marquee-3.webp",
-  "components/marquee/marquee-4.webp",
-  "components/marquee/marquee-5.webp",
-  "components/marquee/marquee-6.webp",
-  "components/marquee/marquee-7.webp"
+  "/marquee/marquee-1.webp",
+  "/marquee/marquee-2.webp",
+  "/marquee/marquee-3.webp",
+  "/marquee/marquee-4.webp",
+  "/marquee/marquee-5.webp",
+  "/marquee/marquee-6.webp",
+  "/marquee/marquee-7.webp"
 ];
 
 // Usando as mesmas imagens em ordem invertida para o marquee inferior
 const MARQUEE_ROW_2 = [
-  "components/marquee/marquee-7.webp",
-  "components/marquee/marquee-6.webp",
-  "components/marquee/marquee-5.webp",
-  "components/marquee/marquee-4.webp",
-  "components/marquee/marquee-3.webp",
-  "components/marquee/marquee-2.webp",
-  "components/marquee/marquee-1.webp"
+  "/marquee/marquee-7.webp",
+  "/marquee/marquee-6.webp",
+  "/marquee/marquee-5.webp",
+  "/marquee/marquee-4.webp",
+  "/marquee/marquee-3.webp",
+  "/marquee/marquee-2.webp",
+  "/marquee/marquee-1.webp"
 ];
 
 const Hero: React.FC<HeroProps> = ({ text }) => {

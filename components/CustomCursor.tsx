@@ -6,6 +6,11 @@ const CustomCursor: React.FC = () => {
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
+    // Throttle para limitar updates a ~60fps
+    let rafId: number | null = null;
+    let lastX = 0;
+    let lastY = 0;
+
     const addEventListeners = () => {
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mousedown", onMouseDown);
@@ -23,7 +28,15 @@ const CustomCursor: React.FC = () => {
     };
 
     const onMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      if (rafId === null) {
+        rafId = requestAnimationFrame(() => {
+          setPosition({ x: lastX, y: lastY });
+          rafId = null;
+        });
+      }
     };
 
     const onMouseDown = () => {
@@ -56,7 +69,10 @@ const CustomCursor: React.FC = () => {
     };
 
     addEventListeners();
-    return () => removeEventListeners();
+    return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      removeEventListeners();
+    };
   }, []);
 
   return (
@@ -68,7 +84,7 @@ const CustomCursor: React.FC = () => {
           transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)`,
         }}
       >
-         <div className={`
+        <div className={`
             bg-white rounded-full transition-all duration-300 ease-out
             ${clicked ? 'w-2 h-2' : isHovering ? 'w-4 h-4' : 'w-2 h-2'}
          `} />
@@ -82,16 +98,16 @@ const CustomCursor: React.FC = () => {
           transition: 'transform 0.15s ease-out', // Slight lag for trailing effect
         }}
       >
-        <div 
-            className={`
+        <div
+          className={`
                 border border-white rounded-full transition-all duration-500 ease-out flex items-center justify-center
                 ${clicked ? 'scale-75 opacity-50' : ''}
                 ${isHovering ? 'w-12 h-12 border-white opacity-100 scale-110' : 'w-8 h-8 border-white/40 opacity-50'}
             `}
         >
-            {/* Cyberpunk Crosshair details that appear on hover */}
-            <div className={`absolute w-full h-[1px] bg-white transition-all duration-300 ${isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} />
-            <div className={`absolute h-full w-[1px] bg-white transition-all duration-300 ${isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} />
+          {/* Cyberpunk Crosshair details that appear on hover */}
+          <div className={`absolute w-full h-[1px] bg-white transition-all duration-300 ${isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} />
+          <div className={`absolute h-full w-[1px] bg-white transition-all duration-300 ${isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} />
         </div>
       </div>
     </>

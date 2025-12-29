@@ -34,7 +34,7 @@ const MARQUEE_ROW_2 = [
 
 const Hero: React.FC<HeroProps> = ({ text }) => {
   return (
-    <section id="home" className="relative flex flex-col items-center min-h-[100svh] w-full overflow-hidden pt-32 pb-24 md:pt-48 md:pb-48">
+    <section id="home" className="relative flex flex-col items-center min-h-[100svh] w-full overflow-hidden pt-28 pb-20 md:pt-36 md:pb-32">
 
       {/* --- START OF MARQUEE BACKGROUND --- */}
       <div className="absolute inset-0 z-0 flex flex-col justify-center gap-4 opacity-15 select-none pointer-events-none mix-blend-multiply" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
@@ -45,13 +45,13 @@ const Hero: React.FC<HeroProps> = ({ text }) => {
             {/* Original Set */}
             {MARQUEE_ROW_1.map((img, i) => (
               <div key={`t1-${i}`} className="flex-shrink-0 w-[40vh] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface border border-black/10">
-                <img src={img} alt="" className="w-full h-full object-cover grayscale opacity-80" />
+                <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale opacity-80" />
               </div>
             ))}
             {/* Duplicate Set for Loop */}
             {MARQUEE_ROW_1.map((img, i) => (
               <div key={`t2-${i}`} className="flex-shrink-0 w-[40vh] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface border border-black/10">
-                <img src={img} alt="" className="w-full h-full object-cover grayscale opacity-80" />
+                <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale opacity-80" />
               </div>
             ))}
           </div>
@@ -63,13 +63,13 @@ const Hero: React.FC<HeroProps> = ({ text }) => {
             {/* Original Set */}
             {MARQUEE_ROW_2.map((img, i) => (
               <div key={`b1-${i}`} className="flex-shrink-0 w-[40vh] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface border border-black/10">
-                <img src={img} alt="" className="w-full h-full object-cover grayscale opacity-80" />
+                <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale opacity-80" />
               </div>
             ))}
             {/* Duplicate Set for Loop */}
             {MARQUEE_ROW_2.map((img, i) => (
               <div key={`b2-${i}`} className="flex-shrink-0 w-[40vh] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface border border-black/10">
-                <img src={img} alt="" className="w-full h-full object-cover grayscale opacity-80" />
+                <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale opacity-80" />
               </div>
             ))}
           </div>
@@ -91,7 +91,7 @@ const Hero: React.FC<HeroProps> = ({ text }) => {
         }}
       />
 
-      <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center flex-grow justify-center">
+      <div className="w-full lg:container mx-auto px-5 md:px-6 relative z-10 text-center flex flex-col items-center flex-grow justify-center">
 
         {/* Content Wrapper - Centered in available space */}
         <div className="flex-grow flex flex-col items-center justify-center w-full max-w-5xl">
@@ -107,14 +107,14 @@ const Hero: React.FC<HeroProps> = ({ text }) => {
 
           {/* Title */}
           <Reveal variant="blur-in" duration={1} delay={200}>
-            <h1 className="font-syne font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] text-textPrimary mb-8 md:mb-10 tracking-tight drop-shadow-2xl">
+            <h1 className="font-syne font-bold text-4xl sm:text-5xl md:text-5xl lg:text-7xl leading-[1.1] text-textPrimary mb-8 md:mb-10 tracking-tighter drop-shadow-2xl">
               {text.title}
             </h1>
           </Reveal>
 
           {/* Description */}
           <Reveal variant="fade-up" duration={0.8} delay={400}>
-            <p className="font-manrope text-textSecondary text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed font-light px-4">
+            <p className="font-manrope text-textSecondary text-base sm:text-lg md:text-lg lg:text-xl max-w-2xl leading-relaxed font-light px-4">
               {text.description}
             </p>
           </Reveal>

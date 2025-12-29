@@ -40,14 +40,14 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
         <div className="absolute inset-0 bg-noise opacity-40 mix-blend-multiply" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="w-full lg:container mx-auto px-5 md:px-6 relative z-10">
 
         {/* Main Grid Layout - Equal Top/Bottom Padding (Large) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 py-20 md:py-40">
 
           {/* Left Column: Big CTA */}
           <div className="lg:col-span-7 flex flex-col justify-center lg:pr-12">
-            <h2 className="font-syne font-bold text-4xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight mb-8 md:mb-12">
+            <h2 className="font-syne font-bold text-4xl md:text-5xl lg:text-7xl leading-[0.9] tracking-tight mb-8 md:mb-12">
               {text.titlePart1} <br />
               <span className="text-textSecondary">{text.titlePart2}</span>
             </h2>
@@ -99,7 +99,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
             </div>
 
             {/* Social Column - Separated by Line on MD+ */}
-            <div className="flex-1 lg:pl-12 md:border-l border-black/[0.04] py-2 md:mt-0 flex flex-col gap-6 md:gap-8">
+            <div className="flex-1 lg:pl-12 lg:border-l border-black/[0.04] py-2 md:mt-0 flex flex-col gap-6 md:gap-8">
               <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-textSecondary flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-textPrimary rounded-full" />
                 {text.socialTitle}

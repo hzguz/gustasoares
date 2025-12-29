@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Variables */
+:root {
+    /* Forced Light Mode Palette */
+    --background: #ffffff;
+    --surface: #f4f4f4;
+    --text-primary: #111111;
+    --text-secondary: #4f4f4f;
+    --border: #ebebeb;
+    --inverse: #111111;
+    --inverse-surface: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Make noise fine-grained */
+.bg-noise {
+    background-size: 100px 100px;
+}

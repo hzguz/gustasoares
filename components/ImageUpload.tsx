@@ -20,7 +20,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, label, class
       return;
     }
 
-    // Limit file size to 5MB (relaxed from 2MB since we are using Storage now)
     if (file.size > 5 * 1024 * 1024) {
       alert('A imagem deve ter no máximo 5MB.');
       return;
@@ -33,27 +32,47 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, label, class
     }
 
     setIsLoading(true);
+    let timeoutId: NodeJS.Timeout;
+
     try {
-      // 1. Create a reference to 'uploads/<timestamp>_<filename>'
+      // Create a timeout promise that rejects after 15 seconds
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutId = setTimeout(() => {
+          reject(new Error('Upload timeout'));
+        }, 15000);
+      });
+
+      // 1. Create storage reference
       const storageRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
 
-      // 2. Upload the file
-      const snapshot = await uploadBytes(storageRef, file);
+      // 2. Race between upload and timeout
+      // Note: We await the uploadBytes result specifically
+      const snapshot = await Promise.race([
+        uploadBytes(storageRef, file),
+        timeoutPromise
+      ]) as any;
 
-      // 3. Get the URL
+      // Clear timeout immediately after race wins
+      clearTimeout(timeoutId!);
+
+      // 3. Get URL
       const downloadURL = await getDownloadURL(snapshot.ref);
 
-      // 4. Pass URL to parent
+      // 4. Update parent
       onChange(downloadURL);
 
     } catch (error: any) {
       console.error("Error uploading image:", error);
-      if (error.code === 'storage/unauthorized') {
+
+      // Clear timeout in case of error
+      if (timeoutId!) clearTimeout(timeoutId!);
+
+      if (error.message === 'Upload timeout') {
+        alert("O upload demorou muito. Verifique sua conexão ou problemas de CORS no console.");
+      } else if (error.code === 'storage/unauthorized') {
         alert("Erro: Sem permissão para upload. Verifique as regras do Storage no Firebase Console.");
       } else if (error.code === 'storage/canceled') {
         alert("Upload cancelado.");
-      } else if (error.code === 'storage/unknown') {
-        alert(`Erro desconhecido: ${error.message}`);
       } else {
         alert(`Erro ao fazer upload: ${error.code || error.message}`);
       }

@@ -123,10 +123,10 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
           </div>
 
           {/* Filters Wrapper - High Z-Index to stay above project images */}
-          <Reveal variant="fade-left" delay={200} duration={0.8} className="w-full md:w-auto relative z-40">
+          <Reveal variant="fade-left" delay={200} duration={0.8} className="w-full lg:w-auto relative z-40">
 
             {/* MOBILE: Custom Button-like Dropdown */}
-            <div className="block md:hidden w-full relative" ref={mobileMenuRef}>
+            <div className="block lg:hidden w-full relative" ref={mobileMenuRef}>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`
@@ -178,7 +178,7 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
             {/* DESKTOP: Animated Pill Tabs */}
             <div
               ref={pillContainerRef}
-              className="hidden md:flex relative flex-wrap items-center p-1.5 bg-white rounded-[2rem] border border-black/[0.04] w-full md:w-auto"
+              className="hidden lg:flex relative flex-wrap items-center p-1.5 bg-white rounded-[2rem] border border-black/[0.04] w-full lg:w-auto"
             >
               {/* The sliding background pill */}
               <div

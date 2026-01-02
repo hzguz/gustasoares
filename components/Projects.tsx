@@ -130,9 +130,13 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`
-                    w-full sm:w-[220px] flex items-center justify-between px-6 py-4 rounded-full bg-background 
-                    border border-inverse text-textPrimary transition-all duration-300
-                    ${isMobileMenuOpen ? 'shadow-[0_4px_20px_rgba(0,0,0,0.1)]' : ''}
+                    w-full sm:w-[240px] flex items-center justify-between px-6 py-3.5 rounded-full 
+                    bg-white/50 backdrop-blur-md border border-black/[0.08] 
+                    text-textPrimary transition-all duration-300 group
+                    hover:border-black/[0.2] hover:bg-white/80 hover:shadow-lg
+                    ${isMobileMenuOpen
+                    ? 'shadow-[0_8px_30px_rgba(0,0,0,0.12)] border-black/[0.2] bg-white'
+                    : 'shadow-sm'}
                   `}
               >
                 <span className="font-syne font-bold text-sm uppercase tracking-wide">
@@ -147,30 +151,46 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
 
               {/* Mobile Dropdown Options */}
               <div className={`
-                    absolute top-full left-0 right-0 mt-2 bg-background border border-black/[0.1] rounded-2xl shadow-xl overflow-hidden z-50 origin-top transition-all duration-300
-                    ${isMobileMenuOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-2 invisible pointer-events-none'}
+                    absolute top-full right-0 mt-3 w-full sm:w-[280px]
+                    bg-white/90 backdrop-blur-xl border border-white/20 
+                    rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] 
+                    overflow-hidden z-50 origin-top-right transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                    ring-1 ring-black/[0.05]
+                    ${isMobileMenuOpen
+                  ? 'opacity-100 scale-100 translate-y-0 visible'
+                  : 'opacity-0 scale-95 -translate-y-4 invisible pointer-events-none'}
                 `}>
-                <div className="py-2">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat.key}
-                      onClick={() => {
-                        setActiveCategory(cat.key);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className={`
-                          w-full px-6 py-3.5 flex items-center justify-between text-left transition-colors
-                          ${activeCategory === cat.key ? 'bg-inverse/5 text-textPrimary' : 'text-textSecondary hover:bg-black/[0.02]'}
-                        `}
-                    >
-                      <span className="font-manrope text-sm font-medium uppercase tracking-wide">
-                        {cat.label}
-                      </span>
-                      {activeCategory === cat.key && (
-                        <Check size={16} className="text-inverse" strokeWidth={2} />
-                      )}
-                    </button>
-                  ))}
+                <div className="p-2 space-y-1">
+                  {categories.map((cat) => {
+                    const Icon = cat.icon;
+                    const isActive = activeCategory === cat.key;
+                    return (
+                      <button
+                        key={cat.key}
+                        onClick={() => {
+                          setActiveCategory(cat.key);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`
+                              w-full px-5 py-3.5 rounded-2xl flex items-center justify-between text-left transition-all duration-200 group
+                              ${isActive
+                            ? 'bg-inverse text-inverseSurface shadow-md translate-x-1'
+                            : 'text-textSecondary hover:bg-black/[0.04] hover:text-textPrimary'}
+                            `}
+                      >
+                        <div className="flex items-center gap-3">
+                          <Icon size={18} className={`transition-colors ${isActive ? 'text-inverseSurface' : 'text-textSecondary group-hover:text-textPrimary'}`} />
+                          <span className={`font-manrope text-sm font-medium tracking-wide ${isActive ? 'font-bold' : ''}`}>
+                            {cat.label}
+                          </span>
+                        </div>
+
+                        {isActive && (
+                          <Check size={16} className="text-inverseSurface animate-in fade-in zoom-in duration-300" strokeWidth={2.5} />
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>

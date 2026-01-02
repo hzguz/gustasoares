@@ -117,6 +117,22 @@ const App: React.FC = () => {
     const [isAuthLoading, setIsAuthLoading] = useState(true); // New loading state
     const [editingProject, setEditingProject] = useState<ExtendedProject | null>(null);
 
+    // Sync editingProject with URL on direct access if projects are loaded
+    React.useEffect(() => {
+        if (currentView === 'admin-editor' && projects.length > 0) {
+            const path = window.location.pathname;
+            if (path.startsWith('/dashboard/editor/')) {
+                const id = path.split('/').pop();
+                if (id) {
+                    const found = projects.find(p => p.id === id);
+                    if (found) {
+                        setEditingProject(found);
+                    }
+                }
+            }
+        }
+    }, [currentView, projects]);
+
     // Auth Persistence Listener
     React.useEffect(() => {
         // Check active session first
@@ -156,6 +172,22 @@ const App: React.FC = () => {
             } else if (path === '/dashboard/editor') {
                 if (adminLoggedIn) {
                     setCurrentView('admin-editor');
+                } else {
+                    window.history.replaceState({}, '', '/admin');
+                    setCurrentView('admin-login');
+                }
+            } else if (path.startsWith('/dashboard/editor/')) {
+                if (adminLoggedIn) {
+                    // Extract ID e.g. /dashboard/editor/123 -> 123
+                    const id = path.split('/').pop();
+                    if (id) {
+                        // Find project by ID
+                        // Note: We might need to wait for 'projects' to be fetched if user lands directly here.
+                        // For now, we assume projects are loaded or will be loaded.
+                        // Ideally we should set 'editingProject' here if projects exist.
+                        // But projects are async. 
+                        setCurrentView('admin-editor');
+                    }
                 } else {
                     window.history.replaceState({}, '', '/admin');
                     setCurrentView('admin-login');
@@ -252,7 +284,7 @@ const App: React.FC = () => {
 
     const handleEditProject = (project: ExtendedProject) => {
         setEditingProject(project);
-        transitionToView('admin-editor', '/dashboard/editor');
+        transitionToView('admin-editor', `/dashboard/editor/${project.id}`);
     };
 
     const handleDeleteProject = async (id: string) => {

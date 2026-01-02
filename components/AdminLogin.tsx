@@ -25,12 +25,28 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
     setLoading(true);
     setError('');
 
+    if (!auth) {
+      setError('Firebase não está configurado. Verifique as variáveis de ambiente.');
+      setLoading(false);
+      return;
+    }
+
     try {
       await signInWithEmailAndPassword(auth, username, password);
       onLogin(true);
-    } catch (err) {
-      setError('Credenciais inválidas');
-      console.error(err);
+    } catch (err: any) {
+      console.error('Login error:', err);
+      if (err.code === 'auth/user-not-found') {
+        setError('Usuário não encontrado');
+      } else if (err.code === 'auth/wrong-password') {
+        setError('Senha incorreta');
+      } else if (err.code === 'auth/invalid-credential') {
+        setError('Credenciais inválidas');
+      } else if (err.code === 'auth/too-many-requests') {
+        setError('Muitas tentativas. Tente novamente mais tarde.');
+      } else {
+        setError(`Erro: ${err.code || err.message}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -48,17 +64,23 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
       return;
     }
 
+    if (!auth) {
+      setError('Firebase não está configurado.');
+      setLoading(false);
+      return;
+    }
+
     try {
       await sendPasswordResetEmail(auth, username);
       setResetMessage('Link de redefinição enviado! Verifique seu e-mail.');
     } catch (err: any) {
-      console.error(err);
+      console.error('Reset password error:', err);
       if (err.code === 'auth/user-not-found') {
         setError('E-mail não encontrado.');
       } else if (err.code === 'auth/invalid-email') {
         setError('E-mail inválido.');
       } else {
-        setError('Erro ao enviar e-mail. Tente novamente.');
+        setError(`Erro: ${err.code || err.message}`);
       }
     } finally {
       setLoading(false);

@@ -172,14 +172,14 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 
             {/* Meta Info (Year & Tools) */}
             <div className="lg:col-span-6 flex flex-col gap-10">
-              <Reveal variant="fade-right" delay={100}>
+              <Reveal variant="fade-right" delay={100} width="100%">
                 <div className="border-t border-black/[0.1] pt-6">
                   <h3 className="font-syne font-bold text-sm uppercase tracking-widest text-textSecondary mb-2">Ano</h3>
                   <p className="font-manrope text-xl text-textPrimary">{project.date}</p>
                 </div>
               </Reveal>
 
-              <Reveal variant="fade-right" delay={200}>
+              <Reveal variant="fade-right" delay={200} width="100%">
                 <div className="border-t border-black/[0.1] pt-6">
                   <h3 className="font-syne font-bold text-sm uppercase tracking-widest text-textSecondary mb-4">Ferramentas</h3>
                   <div className="flex flex-wrap gap-2">

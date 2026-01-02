@@ -12,8 +12,8 @@ export default {
                     sm: "100%",
                     md: "100%",
                     lg: "100%",
-                    xl: "1400px", // Increased from 1280px
-                    "2xl": "1600px", // Increased from 1536px
+                    xl: "100%", // Changed to 100% to fix 1280px gap
+                    "2xl": "1600px",
                     "3xl": "1900px", // Increased from 1800px
                 },
                 padding: {

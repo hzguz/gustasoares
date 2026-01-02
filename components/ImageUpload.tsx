@@ -26,6 +26,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, label, class
       return;
     }
 
+    if (!storage) {
+      alert('Firebase Storage não está configurado. Verifique as configurações.');
+      console.error('Firebase Storage is null - check firebase.ts configuration');
+      return;
+    }
+
     setIsLoading(true);
     try {
       // 1. Create a reference to 'uploads/<timestamp>_<filename>'
@@ -40,9 +46,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, label, class
       // 4. Pass URL to parent
       onChange(downloadURL);
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error uploading image:", error);
-      alert("Erro ao fazer upload da imagem.");
+      if (error.code === 'storage/unauthorized') {
+        alert("Erro: Sem permissão para upload. Verifique as regras do Storage no Firebase Console.");
+      } else if (error.code === 'storage/canceled') {
+        alert("Upload cancelado.");
+      } else if (error.code === 'storage/unknown') {
+        alert(`Erro desconhecido: ${error.message}`);
+      } else {
+        alert(`Erro ao fazer upload: ${error.code || error.message}`);
+      }
     } finally {
       setIsLoading(false);
     }

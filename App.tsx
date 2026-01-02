@@ -240,24 +240,51 @@ const App: React.FC = () => {
     };
 
     const handleSaveProject = async (project: ExtendedProject) => {
+        if (!db) {
+            alert("Firebase não está configurado.");
+            return;
+        }
+
+        // Helper function to remove undefined values (Firestore doesn't accept undefined)
+        const cleanObject = (obj: Record<string, unknown>): Record<string, unknown> => {
+            const cleaned: Record<string, unknown> = {};
+            for (const [key, value] of Object.entries(obj)) {
+                if (value === undefined) continue;
+                if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+                    cleaned[key] = cleanObject(value as Record<string, unknown>);
+                } else if (Array.isArray(value)) {
+                    cleaned[key] = value.map(item =>
+                        item !== null && typeof item === 'object'
+                            ? cleanObject(item as Record<string, unknown>)
+                            : item
+                    ).filter(item => item !== undefined);
+                } else {
+                    cleaned[key] = value;
+                }
+            }
+            return cleaned;
+        };
+
+        const cleanedProject = cleanObject(project as unknown as Record<string, unknown>) as unknown as ExtendedProject;
+
         try {
             if (project.id && projects.some(p => p.id === project.id)) {
                 // Update
                 const projectRef = doc(db, "projects", project.id);
-                await setDoc(projectRef, project);
+                await setDoc(projectRef, cleanedProject);
             } else {
                 // Create New
                 if (!project.id || String(project.id).startsWith('temp-')) {
-                    const { id, ...data } = project;
+                    const { id, ...data } = cleanedProject;
                     await addDoc(collection(db, "projects"), data);
                 } else {
-                    await setDoc(doc(db, "projects", String(project.id)), project);
+                    await setDoc(doc(db, "projects", String(project.id)), cleanedProject);
                 }
             }
             transitionToView('admin-dashboard');
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error saving project:", error);
-            alert("Erro ao salvar projeto");
+            alert(`Erro ao salvar projeto: ${error.message}`);
         }
     };
 

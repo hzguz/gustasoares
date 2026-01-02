@@ -58,17 +58,66 @@ const App: React.FC = () => {
     const [currentView, setCurrentView] = useState<'home' | 'project' | 'admin-login' | 'admin-dashboard' | 'admin-editor' | 'not-found'>('home');
     const [projects, setProjects] = useState<ExtendedProject[]>([]); // Start empty, fetch from DB
 
-    // Fetch Projects from Firestore
+    // Fetch Projects from Firestore with fallback to mock data
     React.useEffect(() => {
-        const unsubscribe = onSnapshot(collection(db, "projects"), (snapshot) => {
-            const projectsData: ExtendedProject[] = snapshot.docs.map(doc => ({
-                ...doc.data(),
-                id: doc.id
-            } as ExtendedProject));
-            // Sort by date (newest first)
-            setProjects(projectsData.sort((a, b) => b.id.localeCompare(a.id)));
-        });
-        return () => unsubscribe();
+        // If Firebase is not configured, use mock data immediately
+        if (!db) {
+            console.warn("Firebase not configured - loading mock data");
+            setProjects(INITIAL_PROJECTS);
+            return;
+        }
+
+        let unsubscribe: (() => void) | undefined;
+        let timeoutId: ReturnType<typeof setTimeout>;
+        let resolved = false;
+
+        // Fallback timeout - if Firebase doesn't respond in 5s, use mock data
+        timeoutId = setTimeout(() => {
+            if (!resolved) {
+                console.warn("Firebase timeout - loading mock data");
+                setProjects(INITIAL_PROJECTS);
+                resolved = true;
+            }
+        }, 5000);
+
+        try {
+            unsubscribe = onSnapshot(
+                collection(db, "projects"),
+                (snapshot) => {
+                    clearTimeout(timeoutId);
+                    resolved = true;
+                    if (snapshot.empty) {
+                        // No projects in DB, use mock data
+                        console.info("No projects in Firestore, using mock data");
+                        setProjects(INITIAL_PROJECTS);
+                    } else {
+                        const projectsData: ExtendedProject[] = snapshot.docs.map(doc => ({
+                            ...doc.data(),
+                            id: doc.id
+                        } as ExtendedProject));
+                        // Sort by date (newest first)
+                        setProjects(projectsData.sort((a, b) => b.id.localeCompare(a.id)));
+                    }
+                },
+                (error) => {
+                    clearTimeout(timeoutId);
+                    console.error("Firebase error:", error);
+                    if (!resolved) {
+                        setProjects(INITIAL_PROJECTS);
+                        resolved = true;
+                    }
+                }
+            );
+        } catch (error) {
+            clearTimeout(timeoutId);
+            console.error("Firebase initialization error:", error);
+            setProjects(INITIAL_PROJECTS);
+        }
+
+        return () => {
+            clearTimeout(timeoutId);
+            if (unsubscribe) unsubscribe();
+        };
     }, []);
 
     // URL ROUTING CHECK

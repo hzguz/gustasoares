@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import Button from './Button';
 import Reveal from './Reveal';
 import { ArrowLeft } from 'lucide-react';
-
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { supabase } from '../lib/supabase';
+// import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'; // Removed
+// import { auth } from '../lib/firebase'; // Removed
 
 interface AdminLoginProps {
   onLogin: (status: boolean) => void;
@@ -25,27 +25,22 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
     setLoading(true);
     setError('');
 
-    if (!auth) {
-      setError('Firebase não está configurado. Verifique as variáveis de ambiente.');
-      setLoading(false);
-      return;
-    }
-
     try {
-      await signInWithEmailAndPassword(auth, username, password);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: username,
+        password: password,
+      });
+
+      if (error) throw error;
+
       onLogin(true);
     } catch (err: any) {
       console.error('Login error:', err);
-      if (err.code === 'auth/user-not-found') {
-        setError('Usuário não encontrado');
-      } else if (err.code === 'auth/wrong-password') {
-        setError('Senha incorreta');
-      } else if (err.code === 'auth/invalid-credential') {
-        setError('Credenciais inválidas');
-      } else if (err.code === 'auth/too-many-requests') {
-        setError('Muitas tentativas. Tente novamente mais tarde.');
+      // Map Supabase error messages usually, but they are decent by default
+      if (err.message.includes('Invalid login credentials')) {
+        setError('Credenciais inválidas (E-mail ou senha incorretos)');
       } else {
-        setError(`Erro: ${err.code || err.message}`);
+        setError(`Erro: ${err.message}`);
       }
     } finally {
       setLoading(false);
@@ -64,24 +59,17 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
       return;
     }
 
-    if (!auth) {
-      setError('Firebase não está configurado.');
-      setLoading(false);
-      return;
-    }
-
     try {
-      await sendPasswordResetEmail(auth, username);
+      const { error } = await supabase.auth.resetPasswordForEmail(username, {
+        redirectTo: window.location.origin + '/admin', // Redirect back to admin login
+      });
+
+      if (error) throw error;
+
       setResetMessage('Link de redefinição enviado! Verifique seu e-mail.');
     } catch (err: any) {
       console.error('Reset password error:', err);
-      if (err.code === 'auth/user-not-found') {
-        setError('E-mail não encontrado.');
-      } else if (err.code === 'auth/invalid-email') {
-        setError('E-mail inválido.');
-      } else {
-        setError(`Erro: ${err.code || err.message}`);
-      }
+      setError(`Erro: ${err.message}`);
     } finally {
       setLoading(false);
     }

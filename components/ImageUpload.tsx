@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { UploadCloud, X, Loader2 } from 'lucide-react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../lib/firebase';
+import { supabase } from '../lib/supabase';
+// import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Removed
+// import { storage } from '../lib/firebase'; // Removed
 
 interface ImageUploadProps {
   value: string;
@@ -25,57 +26,39 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, label, class
       return;
     }
 
+    /* 
+     // Firebase storage check removed. Supabase client is mostly always defined.
     if (!storage) {
       alert('Firebase Storage não está configurado. Verifique as configurações.');
       console.error('Firebase Storage is null - check firebase.ts configuration');
       return;
     }
+    */
 
     setIsLoading(true);
-    let timeoutId: NodeJS.Timeout;
 
     try {
-      // Create a timeout promise that rejects after 15 seconds
-      const timeoutPromise = new Promise((_, reject) => {
-        timeoutId = setTimeout(() => {
-          reject(new Error('Upload timeout'));
-        }, 15000);
-      });
+      const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '-')}`;
+      const filePath = `uploads/${fileName}`;
 
-      // 1. Create storage reference
-      const storageRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
+      // 1. Upload to Supabase Storage 'uploads' bucket
+      const { data, error: uploadError } = await supabase.storage
+        .from('uploads') // Ensure this bucket exists in Supabase!
+        .upload(filePath, file);
 
-      // 2. Race between upload and timeout
-      // Note: We await the uploadBytes result specifically
-      const snapshot = await Promise.race([
-        uploadBytes(storageRef, file),
-        timeoutPromise
-      ]) as any;
+      if (uploadError) throw uploadError;
 
-      // Clear timeout immediately after race wins
-      clearTimeout(timeoutId!);
+      // 2. Get Public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('uploads')
+        .getPublicUrl(filePath);
 
-      // 3. Get URL
-      const downloadURL = await getDownloadURL(snapshot.ref);
-
-      // 4. Update parent
-      onChange(downloadURL);
+      // 3. Pass URL to parent
+      onChange(publicUrl);
 
     } catch (error: any) {
       console.error("Error uploading image:", error);
-
-      // Clear timeout in case of error
-      if (timeoutId!) clearTimeout(timeoutId!);
-
-      if (error.message === 'Upload timeout') {
-        alert("O upload demorou muito. Verifique sua conexão ou problemas de CORS no console.");
-      } else if (error.code === 'storage/unauthorized') {
-        alert("Erro: Sem permissão para upload. Verifique as regras do Storage no Firebase Console.");
-      } else if (error.code === 'storage/canceled') {
-        alert("Upload cancelado.");
-      } else {
-        alert(`Erro ao fazer upload: ${error.code || error.message}`);
-      }
+      alert(`Erro no upload: ${error.message}`);
     } finally {
       setIsLoading(false);
     }

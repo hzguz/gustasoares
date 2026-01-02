@@ -2,9 +2,11 @@ import React, { useState, Suspense } from 'react';
 import { Language, Project, ExtendedProject } from './types';
 import { CONTENT, SOCIAL_LINKS } from './constants';
 import DynamicBackground from './components/DynamicBackground';
-import { db, auth } from './lib/firebase';
-import { collection, onSnapshot, addDoc, setDoc, doc, deleteDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
+import { db, auth } from './lib/firebase'; // Keep for now if needed for gradual migration, but we are fully swapping
+// Switching to Supabase
+import { supabase } from './lib/supabase';
+// import { collection, onSnapshot, addDoc, setDoc, doc, deleteDoc } from 'firebase/firestore'; // Removed
+// import { onAuthStateChanged } from 'firebase/auth'; // Removed
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -59,65 +61,54 @@ const App: React.FC = () => {
     const [currentView, setCurrentView] = useState<'home' | 'project' | 'admin-login' | 'admin-dashboard' | 'admin-editor' | 'not-found'>('home');
     const [projects, setProjects] = useState<ExtendedProject[]>([]); // Start empty, fetch from DB
 
-    // Fetch Projects from Firestore with fallback to mock data
-    React.useEffect(() => {
-        // If Firebase is not configured, use mock data immediately
-        if (!db) {
-            console.warn("Firebase not configured - loading mock data");
-            setProjects(INITIAL_PROJECTS);
-            return;
-        }
-
-        let unsubscribe: (() => void) | undefined;
-        let timeoutId: ReturnType<typeof setTimeout>;
-        let resolved = false;
-
-        // Fallback timeout - if Firebase doesn't respond in 5s, use mock data
-        timeoutId = setTimeout(() => {
-            if (!resolved) {
-                console.warn("Firebase timeout - loading mock data");
-                setProjects(INITIAL_PROJECTS);
-                resolved = true;
-            }
-        }, 5000);
-
+    // Fetch Projects from Supabase
+    const fetchProjects = async () => {
         try {
-            unsubscribe = onSnapshot(
-                collection(db, "projects"),
-                (snapshot) => {
-                    clearTimeout(timeoutId);
-                    resolved = true;
-                    if (snapshot.empty) {
-                        // No projects in DB, use mock data
-                        console.info("No projects in Firestore, using mock data");
-                        setProjects(INITIAL_PROJECTS);
-                    } else {
-                        const projectsData: ExtendedProject[] = snapshot.docs.map(doc => ({
-                            ...doc.data(),
-                            id: doc.id
-                        } as ExtendedProject));
-                        // Sort by date (newest first)
-                        setProjects(projectsData.sort((a, b) => b.id.localeCompare(a.id)));
-                    }
-                },
-                (error) => {
-                    clearTimeout(timeoutId);
-                    console.error("Firebase error:", error);
-                    if (!resolved) {
-                        setProjects(INITIAL_PROJECTS);
-                        resolved = true;
-                    }
-                }
-            );
+            const { data, error } = await supabase
+                .from('projects')
+                .select('*')
+                .order('date', { ascending: false }); // Assuming date is sortable, or use created_at
+
+            if (error) {
+                console.error("Supabase error fetching projects:", error);
+                // Fallback if table doesn't exist yet or connection fails
+                setProjects(INITIAL_PROJECTS);
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                console.info("No projects in Supabase, using mock data");
+                setProjects(INITIAL_PROJECTS);
+            } else {
+                // Cast data to ExtendedProject. Ensure DB columns match types!
+                // We might need to handle 'tools' and 'gallery' assuming they are stored as JSON/Arrays
+                const projectsData = data.map(d => ({
+                    ...d,
+                    id: String(d.id) // Ensure ID is string
+                })) as ExtendedProject[];
+
+                setProjects(projectsData);
+            }
         } catch (error) {
-            clearTimeout(timeoutId);
-            console.error("Firebase initialization error:", error);
+            console.error("Supabase unexpected error:", error);
             setProjects(INITIAL_PROJECTS);
         }
+    };
+
+    React.useEffect(() => {
+        fetchProjects();
+
+        // Optional: Realtime subscription
+        const channel = supabase
+            .channel('public:projects')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'projects' }, (payload) => {
+                console.log('Realtime update:', payload);
+                fetchProjects(); // Re-fetch on any change
+            })
+            .subscribe();
 
         return () => {
-            clearTimeout(timeoutId);
-            if (unsubscribe) unsubscribe();
+            supabase.removeChannel(channel);
         };
     }, []);
 
@@ -128,15 +119,18 @@ const App: React.FC = () => {
 
     // Auth Persistence Listener
     React.useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setAdminLoggedIn(true);
-            } else {
-                setAdminLoggedIn(false);
-            }
+        // Check active session first
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setAdminLoggedIn(!!session);
             setIsAuthLoading(false);
         });
-        return () => unsubscribe();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setAdminLoggedIn(!!session);
+            setIsAuthLoading(false);
+        });
+
+        return () => subscription.unsubscribe();
     }, []);
 
     // URL ROUTING CHECK
@@ -245,11 +239,10 @@ const App: React.FC = () => {
         }
     };
 
-    const handleLogout = () => {
-        auth?.signOut().then(() => {
-            setAdminLoggedIn(false);
-            transitionToView('home', '/');
-        });
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        setAdminLoggedIn(false);
+        transitionToView('home', '/');
     };
 
     const handleCreateProject = () => {
@@ -263,34 +256,40 @@ const App: React.FC = () => {
     };
 
     const handleDeleteProject = async (id: string) => {
-        try {
-            await deleteDoc(doc(db, "projects", id));
-        } catch (error) {
+        const { error } = await supabase
+            .from('projects')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
             console.error("Error deleting project:", error);
-            alert("Erro ao excluir projeto");
+            alert("Erro ao excluir projeto: " + error.message);
+        } else {
+            // Optimistic update or wait for realtime
+            setProjects(prev => prev.filter(p => p.id !== id));
         }
     };
 
     const handleSeedProjects = async () => {
-        try {
-            const batchPromises = INITIAL_PROJECTS.map(project => {
-                return setDoc(doc(db, "projects", String(project.id)), project);
-            });
-            await Promise.all(batchPromises);
-            alert("Projetos de exemplo importados com sucesso!");
-        } catch (error) {
+        // Strip IDs to let DB assign them, or keep them if we use UUIDs/Text IDs
+        // For simplicity let's insert them.
+        const projectsToInsert = INITIAL_PROJECTS.map(({ id, ...rest }) => rest);
+
+        const { error } = await supabase
+            .from('projects')
+            .insert(projectsToInsert);
+
+        if (error) {
             console.error("Error seeding projects:", error);
-            alert("Erro ao importar projetos.");
+            alert("Erro ao importar projetos: " + error.message);
+        } else {
+            alert("Projetos de exemplo importados com sucesso!");
+            fetchProjects();
         }
     };
 
     const handleSaveProject = async (project: ExtendedProject) => {
-        if (!db) {
-            alert("Firebase não está configurado.");
-            return;
-        }
-
-        // Helper function to remove undefined values (Firestore doesn't accept undefined)
+        // Remove undefined values
         const cleanObject = (obj: Record<string, unknown>): Record<string, unknown> => {
             const cleaned: Record<string, unknown> = {};
             for (const [key, value] of Object.entries(obj)) {
@@ -310,26 +309,23 @@ const App: React.FC = () => {
             return cleaned;
         };
 
-        const cleanedProject = cleanObject(project as unknown as Record<string, unknown>) as unknown as ExtendedProject;
+        const cleanedProject = cleanObject(project as unknown as Record<string, unknown>);
 
-        try {
-            if (project.id && projects.some(p => p.id === project.id)) {
-                // Update
-                const projectRef = doc(db, "projects", project.id);
-                await setDoc(projectRef, cleanedProject);
-            } else {
-                // Create New
-                if (!project.id || String(project.id).startsWith('temp-')) {
-                    const { id, ...data } = cleanedProject;
-                    await addDoc(collection(db, "projects"), data);
-                } else {
-                    await setDoc(doc(db, "projects", String(project.id)), cleanedProject);
-                }
-            }
-            transitionToView('admin-dashboard');
-        } catch (error: any) {
+        // Handle ID: if it starts with temp-, remove it to let DB generate one
+        if (typeof cleanedProject.id === 'string' && cleanedProject.id.startsWith('temp-')) {
+            delete cleanedProject.id;
+        }
+
+        const { error } = await supabase
+            .from('projects')
+            .upsert(cleanedProject);
+
+        if (error) {
             console.error("Error saving project:", error);
             alert(`Erro ao salvar projeto: ${error.message}`);
+        } else {
+            transitionToView('admin-dashboard');
+            // Fetch will be triggered by realtime subscription usually
         }
     };
 

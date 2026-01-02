@@ -5,13 +5,13 @@ import { getStorage, FirebaseStorage } from "firebase/storage";
 import { getAnalytics, isSupported, Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+    apiKey: "AIzaSyD-NS6p-7nr0Co8zL91p3YcxDzz9duyKlw",
+    authDomain: "gustasoaresestudio.firebaseapp.com",
+    projectId: "gustasoaresestudio",
+    storageBucket: "gustasoaresestudio.firebasestorage.app",
+    messagingSenderId: "994324073394",
+    appId: "1:994324073394:web:26eba6fb9afd4d8afb72ab",
+    measurementId: "G-JTSGFMWWSZ"
 };
 
 // Validate Firebase config

@@ -9,13 +9,20 @@ export default {
             container: {
                 center: true,
                 screens: {
-                    sm: "640px",
+                    sm: "100%",
                     md: "100%",
-                    lg: "1024px",
-                    xl: "1280px",
-                    "2xl": "1536px",
-                    "3xl": "1800px",
-                }
+                    lg: "100%",
+                    xl: "1400px", // Increased from 1280px
+                    "2xl": "1600px", // Increased from 1536px
+                    "3xl": "1900px", // Increased from 1800px
+                },
+                padding: {
+                    DEFAULT: '1.5rem',
+                    sm: '2rem',
+                    lg: '4rem',
+                    xl: '5rem',
+                    '2xl': '6rem',
+                },
             },
             screens: {
                 'xl': '1280px',

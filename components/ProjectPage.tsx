@@ -171,7 +171,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-24">
 
             {/* Meta Info (Year & Tools) */}
-            <div className="lg:col-span-4 flex flex-col gap-10">
+            <div className="lg:col-span-6 flex flex-col gap-10">
               <Reveal variant="fade-right" delay={100}>
                 <div className="border-t border-black/[0.1] pt-6">
                   <h3 className="font-syne font-bold text-sm uppercase tracking-widest text-textSecondary mb-2">Ano</h3>
@@ -194,7 +194,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
             </div>
 
             {/* Long Description */}
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-6">
               <Reveal variant="fade-up" delay={300}>
                 <h2 className="font-syne font-bold text-2xl md:text-3xl mb-8">Sobre o projeto</h2>
                 <div className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed space-y-6 whitespace-pre-line">

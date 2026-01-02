@@ -235,7 +235,7 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
                 onClick={() => onProjectClick(project)}
               >
                 {/* Image Container */}
-                <div className="relative aspect-video overflow-hidden bg-surface mb-6 md:mb-8 border border-black/[0.04] md:group-hover:border-inverse/20 transition-colors rounded-2xl z-0">
+                <div className="relative aspect-[3/2] overflow-hidden bg-surface mb-6 md:mb-8 border border-black/[0.04] md:group-hover:border-inverse/20 transition-colors rounded-2xl z-0">
                   <div className="absolute inset-0 bg-black/40 z-10 transition-opacity duration-500 md:group-hover:opacity-0 opacity-0 md:opacity-0" />
                   <img
                     src={project.image}

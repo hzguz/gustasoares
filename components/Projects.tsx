@@ -126,11 +126,11 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
           <Reveal variant="fade-left" delay={200} duration={0.8} className="w-full xl:w-auto relative z-40">
 
             {/* MOBILE: Custom Button-like Dropdown */}
-            <div className="block xl:hidden w-full relative" ref={mobileMenuRef}>
+            <div className="block xl:hidden w-full sm:w-auto relative" ref={mobileMenuRef}>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`
-                    w-full flex items-center justify-between px-6 py-4 rounded-full bg-background 
+                    w-full sm:w-[220px] flex items-center justify-between px-6 py-4 rounded-full bg-background 
                     border border-inverse text-textPrimary transition-all duration-300
                     ${isMobileMenuOpen ? 'shadow-[0_4px_20px_rgba(0,0,0,0.1)]' : ''}
                   `}

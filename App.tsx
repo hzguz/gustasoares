@@ -2,8 +2,9 @@ import React, { useState, Suspense } from 'react';
 import { Language, Project, ExtendedProject } from './types';
 import { CONTENT, SOCIAL_LINKS } from './constants';
 import DynamicBackground from './components/DynamicBackground';
-import { db } from './lib/firebase';
+import { db, auth } from './lib/firebase';
 import { collection, onSnapshot, addDoc, setDoc, doc, deleteDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -120,23 +121,62 @@ const App: React.FC = () => {
         };
     }, []);
 
-    // URL ROUTING CHECK
-    React.useEffect(() => {
-        const path = window.location.pathname;
-        if (path !== '/' && path !== '/index.html') {
-            if (path === '/admin') {
-                setCurrentView('admin-login');
-            } else if (path === '/admin-dashboard') {
-                setCurrentView('admin-login'); // Force login check
-            } else {
-                setCurrentView('not-found');
-            }
-        }
-    }, []);
-
     const [selectedProject, setSelectedProject] = useState<ExtendedProject | null>(null);
     const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+    const [isAuthLoading, setIsAuthLoading] = useState(true); // New loading state
     const [editingProject, setEditingProject] = useState<ExtendedProject | null>(null);
+
+    // Auth Persistence Listener
+    React.useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setAdminLoggedIn(true);
+            } else {
+                setAdminLoggedIn(false);
+            }
+            setIsAuthLoading(false);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    // URL ROUTING CHECK
+    React.useEffect(() => {
+        if (isAuthLoading) return; // Wait for auth check
+
+        const handleRoute = () => {
+            const path = window.location.pathname;
+            if (path === '/admin') {
+                if (adminLoggedIn) {
+                    window.history.replaceState({}, '', '/dashboard');
+                    setCurrentView('admin-dashboard');
+                } else {
+                    setCurrentView('admin-login');
+                }
+            } else if (path === '/dashboard') {
+                if (adminLoggedIn) {
+                    setCurrentView('admin-dashboard');
+                } else {
+                    window.history.replaceState({}, '', '/admin');
+                    setCurrentView('admin-login');
+                }
+            } else if (path === '/dashboard/editor') {
+                if (adminLoggedIn) {
+                    setCurrentView('admin-editor');
+                } else {
+                    window.history.replaceState({}, '', '/admin');
+                    setCurrentView('admin-login');
+                }
+            } else if (path !== '/' && path !== '/index.html') {
+                setCurrentView('not-found');
+            }
+        };
+
+        handleRoute();
+
+        // Listen to browser back/forward
+        window.addEventListener('popstate', handleRoute);
+        return () => window.removeEventListener('popstate', handleRoute);
+    }, [adminLoggedIn, isAuthLoading]);
 
     const toggleLang = () => {
         if (isTransitioning) return;
@@ -149,9 +189,12 @@ const App: React.FC = () => {
         }, 300);
     };
 
-    const transitionToView = (view: typeof currentView) => {
+    const transitionToView = (view: typeof currentView, updateUrl?: string) => {
         setIsTransitioning(true);
         setTimeout(() => {
+            if (updateUrl) {
+                window.history.pushState({}, '', updateUrl);
+            }
             setCurrentView(view);
             setIsTransitioning(false);
             window.scrollTo(0, 0);
@@ -189,32 +232,34 @@ const App: React.FC = () => {
     // Admin Handlers
     const handleAdminClick = () => {
         if (adminLoggedIn) {
-            transitionToView('admin-dashboard');
+            transitionToView('admin-dashboard', '/dashboard');
         } else {
-            transitionToView('admin-login');
+            transitionToView('admin-login', '/admin');
         }
     };
 
     const handleAdminLogin = (status: boolean) => {
         if (status) {
             setAdminLoggedIn(true);
-            transitionToView('admin-dashboard');
+            transitionToView('admin-dashboard', '/dashboard');
         }
     };
 
     const handleLogout = () => {
-        setAdminLoggedIn(false);
-        transitionToView('home');
+        auth?.signOut().then(() => {
+            setAdminLoggedIn(false);
+            transitionToView('home', '/');
+        });
     };
 
     const handleCreateProject = () => {
         setEditingProject(null);
-        transitionToView('admin-editor');
+        transitionToView('admin-editor', '/dashboard/editor');
     };
 
     const handleEditProject = (project: ExtendedProject) => {
         setEditingProject(project);
-        transitionToView('admin-editor');
+        transitionToView('admin-editor', '/dashboard/editor');
     };
 
     const handleDeleteProject = async (id: string) => {
@@ -292,6 +337,13 @@ const App: React.FC = () => {
 
     return (
         <div className="relative min-h-screen bg-background text-textPrimary selection:bg-inverse selection:text-inverseSurface">
+
+            {/* Loading Overlay for Auth Check */}
+            {isAuthLoading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
+                    <div className="w-8 h-8 border-2 border-inverse border-t-transparent rounded-full animate-spin" />
+                </div>
+            )}
 
             <DynamicBackground />
 

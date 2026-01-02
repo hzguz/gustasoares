@@ -123,7 +123,7 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
           </div>
 
           {/* Filters Wrapper - High Z-Index to stay above project images */}
-          <Reveal variant="fade-left" delay={200} duration={0.8} className="w-full xl:w-auto relative z-40">
+          <Reveal variant="fade-left" delay={200} duration={0.8} className="w-full xl:w-auto relative z-40 flex md:justify-end">
 
             {/* MOBILE: Custom Button-like Dropdown */}
             <div className="block xl:hidden w-full sm:w-auto relative" ref={mobileMenuRef}>

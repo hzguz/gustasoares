@@ -18,7 +18,7 @@ export const CONTENT: Record<string, Translations> = {
     services: {
       subtitle: "/ Serviços",
       title: "Quais trabalhos eu realizo?",
-      description: "Soluções em UX que unem estratégia, design e usabilidade para criar experiências digitais centradas no usuário.",
+      description: "Soluções em UX que unem estratégia, design e usabilidade<br> para criar experiências digitais centradas no usuário.",
       items: [
         {
           id: 1,
@@ -75,7 +75,7 @@ export const CONTENT: Record<string, Translations> = {
     },
     footer: {
       titlePart1: "Vamos criar",
-      titlePart2: "o futuro.",
+      titlePart2: "o seu futuro.",
       emailButtonText: "Entre em contato comigo",
       description: "Criando interfaces intuitivas que tornam cada detalhe uma experiência única.",
       navTitle: "Navegação",

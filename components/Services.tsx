@@ -60,7 +60,7 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
       {/* Decorative Light */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-inverse/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -translate-y-1/2 -translate-x-1/2 opacity-30" />
 
-      <div className="w-full lg:container mx-auto px-5 md:px-6 relative z-10">
+      <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 mb-16 md:mb-24 items-end">
@@ -76,11 +76,12 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
               </h2>
             </Reveal>
           </div>
-          <div className="md:pl-12 border-l border-black/[0.04] md:border-none">
+          <div className="md:pl-12 border-l border-black/[0.04] md:border-none ml-auto">
             <Reveal variant="fade-up" duration={0.8} delay={200}>
-              <p className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed">
-                {text.description}
-              </p>
+              <p
+                className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed text-right"
+                dangerouslySetInnerHTML={{ __html: text.description }}
+              />
             </Reveal>
           </div>
         </div>
@@ -104,7 +105,7 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
           />
 
           {/* Grid items */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-2">
             {text.items.map((service, index) => {
               const isActive = activeIndex === index;
 

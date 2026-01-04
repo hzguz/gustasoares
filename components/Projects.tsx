@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowUpRight, LayoutGrid, Building2, PanelTop, Smartphone, ChevronDown, Check } from 'lucide-react';
+import { ArrowUpRight, Building2, PanelTop, Smartphone, ChevronDown, Check } from 'lucide-react';
 import { Translations, Project } from '../types';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
@@ -12,7 +12,7 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) => {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeCategory, setActiveCategory] = useState<string>('institutional');
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, top: 0, height: 0 });
   const [containerHeight, setContainerHeight] = useState<number | 'auto'>('auto');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,7 +23,6 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const categories = [
-    { key: 'all', label: text.categories.all, icon: LayoutGrid },
     { key: 'institutional', label: text.categories.institutional, icon: Building2 },
     { key: 'landing', label: text.categories.landing, icon: PanelTop },
     { key: 'app', label: text.categories.app, icon: Smartphone },
@@ -107,7 +106,7 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
       {/* Decorative Light - Right Side - Low Intensity */}
       <div className="absolute top-1/2 right-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-inverse/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2 opacity-30" />
 
-      <div className="w-full lg:container mx-auto px-5 md:px-6 relative z-10">
+      <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-20 gap-8 border-b border-black/[0.04] pb-8 relative z-20">
           <div>
             <Reveal variant="fade-right" duration={0.6}>

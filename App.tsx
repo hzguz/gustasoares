@@ -2,11 +2,7 @@ import React, { useState, Suspense } from 'react';
 import { Language, Project, ExtendedProject } from './types';
 import { CONTENT, SOCIAL_LINKS } from './constants';
 import DynamicBackground from './components/DynamicBackground';
-import { db, auth } from './lib/firebase'; // Keep for now if needed for gradual migration, but we are fully swapping
-// Switching to Supabase
 import { supabase } from './lib/supabase';
-// import { collection, onSnapshot, addDoc, setDoc, doc, deleteDoc } from 'firebase/firestore'; // Removed
-// import { onAuthStateChanged } from 'firebase/auth'; // Removed
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';

@@ -90,7 +90,7 @@ const Hero: React.FC<HeroProps> = ({ text }) => {
         }}
       />
 
-      <div className="w-full lg:container mx-auto px-5 md:px-6 relative z-10 text-center flex flex-col items-center flex-grow justify-center">
+      <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center flex-grow justify-center">
 
         {/* Content Wrapper - Centered in available space */}
         <div className="flex-grow flex flex-col items-center justify-center w-full max-w-5xl">

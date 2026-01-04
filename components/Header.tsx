@@ -53,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text }) => {
           : 'py-6 md:py-8'
           }`}
       >
-        <div className="w-full lg:container mx-auto px-5 md:px-6">
+        <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8">
           {/* Desktop Menu Container with blur */}
           <div className="hidden lg:flex items-center justify-between px-8 py-4 backdrop-blur-md bg-white/5 border border-black/[0.04] rounded-full">
             <div className="flex items-center z-50 relative">
@@ -112,17 +112,17 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text }) => {
             <div className="flex items-center gap-2 z-50 relative">
               <button
                 onClick={toggleLang}
-                className={`flex items-center gap-1 px-3 py-2 text-sm font-syne font-bold uppercase transition-colors ${mobileMenuOpen ? 'text-textPrimary' : 'text-textSecondary'}`}
+                className={`transition-all duration-500 flex items-center justify-center rounded-full ${isScrolled ? 'w-10 h-10' : 'w-14 h-14'} ${mobileMenuOpen ? 'text-textPrimary' : 'text-textSecondary'}`}
                 aria-label="Toggle Language"
               >
-                <span>{lang}</span>
+                <span className="text-sm font-syne font-bold uppercase">{lang}</span>
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`transition-all duration-500 ${isScrolled ? 'p-2' : 'p-4'} ${mobileMenuOpen ? 'text-textPrimary' : 'text-textPrimary'}`}
+                className={`transition-all duration-500 flex items-center justify-center rounded-full ${isScrolled ? 'w-10 h-10' : 'w-14 h-14'} ${mobileMenuOpen ? 'text-textPrimary' : 'text-textPrimary'}`}
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
-                {mobileMenuOpen ? <X strokeWidth={1} /> : <Menu strokeWidth={1} />}
+                {mobileMenuOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
               </button>
             </div>
           </div>

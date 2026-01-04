@@ -40,7 +40,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
         <div className="absolute inset-0 bg-noise opacity-40 mix-blend-multiply" />
       </div>
 
-      <div className="w-full lg:container mx-auto px-5 md:px-6 relative z-10">
+      <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
 
         {/* Main Grid Layout - Equal Top/Bottom Padding (Large) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 py-20 md:py-40">

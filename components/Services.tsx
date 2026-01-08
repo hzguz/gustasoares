@@ -54,32 +54,28 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
   }, [activeIndex, text.items]);
 
   return (
-    <section id="services" className="py-24 md:py-40 relative border-b border-black/[0.04]">
+    <section id="services" className="py-20 md:py-40 relative border-b border-black/[0.04]">
       <GridLines variant="outer" />
 
       {/* Decorative Light */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-inverse/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -translate-y-1/2 -translate-x-1/2 opacity-30" />
 
-      <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 mb-16 md:mb-24 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-16 items-end">
           <div>
-            <Reveal variant="fade-right" duration={0.6}>
-              <div className="mb-4 md:mb-6 px-1">
-                <span className="block font-syne text-xs font-bold tracking-widest text-textSecondary uppercase">{text.subtitle}</span>
-              </div>
-            </Reveal>
+
             <Reveal variant="blur-in" duration={0.8} delay={100}>
-              <h2 className="font-syne font-bold text-3xl md:text-4xl lg:text-5xl text-textPrimary leading-[0.95]">
+              <h2 className="font-syne font-bold text-4xl md:text-4xl lg:text-5xl text-textPrimary leading-[0.95]">
                 {text.title}
               </h2>
             </Reveal>
           </div>
-          <div className="md:pl-12 border-l border-black/[0.04] md:border-none ml-auto">
+          <div className="md:pl-12 md:ml-auto">
             <Reveal variant="fade-up" duration={0.8} delay={200}>
               <p
-                className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed text-right"
+                className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed text-left md:text-right"
                 dangerouslySetInnerHTML={{ __html: text.description }}
               />
             </Reveal>

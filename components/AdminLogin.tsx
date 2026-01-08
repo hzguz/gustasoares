@@ -76,12 +76,15 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-black/[0.03] to-transparent rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-black/[0.02] to-transparent rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-noise opacity-30 pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-md px-6">
         <Reveal variant="fade-up">
-          <div className="bg-surface/50 backdrop-blur-xl border border-black/[0.04] p-8 md:p-12 rounded-3xl shadow-2xl">
+          <div className="bg-white/80 backdrop-blur-2xl border border-black/[0.06] p-10 md:p-12 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
             <h2 className="font-syne font-bold text-3xl text-center mb-2">
               {isResetting ? 'Redefinir Senha' : 'Acesso Restrito'}
             </h2>
@@ -99,7 +102,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
                     type="email"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-background border border-black/[0.1] rounded-lg px-4 py-3 focus:outline-none focus:border-inverse transition-colors font-manrope"
+                    className="w-full bg-white/50 border border-black/[0.08] rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black/20 transition-all font-manrope"
                     placeholder="Digite seu e-mail cadastrado"
                   />
                 </div>
@@ -128,7 +131,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
                     type="email"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-background border border-black/[0.1] rounded-lg px-4 py-3 focus:outline-none focus:border-inverse transition-colors font-manrope"
+                    className="w-full bg-white/50 border border-black/[0.08] rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black/20 transition-all font-manrope"
                     placeholder="Digite seu e-mail"
                   />
                 </div>
@@ -138,7 +141,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-background border border-black/[0.1] rounded-lg px-4 py-3 focus:outline-none focus:border-inverse transition-colors font-manrope"
+                    className="w-full bg-white/50 border border-black/[0.08] rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black/20 transition-all font-manrope"
                     placeholder="Digite sua senha"
                   />
                   <div className="flex justify-end mt-1">

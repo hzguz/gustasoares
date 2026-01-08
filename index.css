@@ -27,20 +27,21 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--background);
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 0px;
+    background: #111;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #333;
 }
 
 /* Make noise fine-grained */

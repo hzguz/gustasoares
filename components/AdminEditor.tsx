@@ -23,8 +23,8 @@ const InputGroup = ({ label, children }: React.PropsWithChildren<{ label: string
 );
 
 const styles = {
-    input: "w-full bg-white border border-black/[0.1] rounded-lg px-4 py-3 font-manrope text-sm focus:outline-none focus:border-inverse transition-colors placeholder:text-textSecondary/50",
-    textarea: "w-full bg-white border border-black/[0.1] rounded-lg px-4 py-3 font-manrope text-sm focus:outline-none focus:border-inverse transition-colors resize-y min-h-[100px] placeholder:text-textSecondary/50"
+    input: "w-full bg-white/80 border border-black/[0.08] rounded-xl px-5 py-3.5 font-manrope text-sm focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black/20 transition-all placeholder:text-textSecondary/50",
+    textarea: "w-full bg-white/80 border border-black/[0.08] rounded-xl px-5 py-3.5 font-manrope text-sm focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black/20 transition-all resize-y min-h-[100px] placeholder:text-textSecondary/50"
 };
 
 const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) => {
@@ -104,8 +104,11 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
     };
 
     return (
-        <div className="min-h-screen bg-background pt-24 pb-40 relative">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-24 pb-40 relative">
             <GridLines variant="outer" />
+            {/* Decorative Background */}
+            <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-gradient-to-br from-black/[0.02] to-transparent rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-black/[0.015] to-transparent rounded-full blur-3xl pointer-events-none" />
             <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none" />
 
             <div className="container mx-auto max-w-4xl px-6 relative z-10">
@@ -134,8 +137,9 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
                 <div className="flex flex-col gap-12">
 
                     {/* 1. Informações Básicas */}
-                    <div className="bg-surface/50 border border-black/[0.04] p-8 rounded-3xl">
-                        <h3 className="font-syne font-bold text-xl mb-6 flex items-center gap-2">
+                    <div className="bg-white/80 backdrop-blur-sm border border-black/[0.04] p-8 rounded-[1.5rem] shadow-sm">
+                        <h3 className="font-syne font-bold text-lg mb-6 flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-black/[0.04] flex items-center justify-center text-xs font-bold">1</div>
                             Informações Principais
                         </h3>
 
@@ -175,8 +179,11 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
                     </div>
 
                     {/* 2. Imagens e Links */}
-                    <div className="bg-surface/50 border border-black/[0.04] p-8 rounded-3xl">
-                        <h3 className="font-syne font-bold text-xl mb-6">Mídia & Links</h3>
+                    <div className="bg-white/80 backdrop-blur-sm border border-black/[0.04] p-8 rounded-[1.5rem] shadow-sm">
+                        <h3 className="font-syne font-bold text-lg mb-6 flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-black/[0.04] flex items-center justify-center text-xs font-bold">2</div>
+                            Mídia & Links
+                        </h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div className="space-y-2">
@@ -215,7 +222,10 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
                     {/* 3. Blocos de Conteúdo */}
                     <div>
                         <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-                            <h3 className="font-syne font-bold text-xl">Conteúdo da Página</h3>
+                            <h3 className="font-syne font-bold text-lg flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-black/[0.04] flex items-center justify-center text-xs font-bold">3</div>
+                                Conteúdo da Página
+                            </h3>
 
                             <div className="flex bg-white border border-black/[0.1] rounded-full p-1 gap-1 shadow-sm">
                                 <button onClick={() => addBlock('1x1-image')} className="flex items-center gap-2 px-4 py-2 hover:bg-black/[0.05] rounded-full transition-colors text-xs font-bold font-syne uppercase">

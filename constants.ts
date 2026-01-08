@@ -13,7 +13,8 @@ export const CONTENT: Record<string, Translations> = {
     hero: {
       tagline: "UX / UI DESIGNER",
       title: "Criando experiências que conectam seu público",
-      description: "Desenvolvendo interfaces intuitivas e envolventes, onde cada detalhe transforma a interação do usuário."
+      description: "Desenvolvendo interfaces intuitivas e envolventes, onde cada detalhe transforma a interação do usuário.",
+      scrollIndicator: "Saiba mais"
     },
     services: {
       subtitle: "/ Serviços",
@@ -81,6 +82,46 @@ export const CONTENT: Record<string, Translations> = {
       navTitle: "Navegação",
       socialTitle: "Social",
       rights: "GustaSoares Studio — Todos os direitos reservados © 2025"
+    },
+    aboutPage: {
+      hero: {
+        tagline: "SOBRE MIM",
+        title: "Muito além do design visual",
+        description: "Uma jornada dedicada a resolver problemas complexos através de interfaces intuitivas e funcionais."
+      },
+      introduction: {
+        titlePrefix: "Um pouco sobre",
+        titleHighlight: "minha trajetória"
+      },
+      history: {
+        title: "Minha História",
+        description: "Com mais de 5 anos de experiência no mercado digital, comecei minha jornada como desenvolvedor front-end, o que me deu uma base técnica sólida. \n\nAo longo do tempo, percebi que o verdadeiro impacto estava na concepção da experiência do usuário, migrando meu foco para UX/UI Design. Hoje, combino lógica e criatividade para entregar produtos que não apenas funcionam, mas encantam.",
+        image: "/imgs/profile-photo.webp",
+        highlights: [
+          { number: "+5", label: "Anos de experiência" },
+          { number: "+40", label: "Projetos entregues" },
+          { number: "+10", label: "Setores atendidos" }
+        ]
+      },
+      methodology: {
+        title: "Como eu trabalho",
+        description: "Minha metodologia combina Design Thinking e processos ágeis para garantir entregas assertivas.",
+        items: [
+          { title: "Imersão", description: "Entendo o negócio, o público e os objetivos do projeto." },
+          { title: "Definição", description: "Estruturo a arquitetura da informação e os fluxos de usuário." },
+          { title: "Prototipação", description: "Crio wireframes e protótipos de alta fidelidade para validação." },
+          { title: "UI Design", description: "Aplico a identidade visual e crio interfaces pixel-perfect." }
+        ]
+      },
+      services: {
+        title: "O que posso fazer por você",
+        description: "Serviços sob medida para elevar o nível do seu produto digital."
+      },
+      cta: {
+        title: "Vamos tirar sua ideia\ndo papel?",
+        description: "Estou pronto para ouvir sobre seu projeto e entender como podemos criar algo único juntos. Mande uma mensagem e vamos conversar.",
+        button: "Iniciar Projeto"
+      }
     }
   },
   en: {
@@ -94,7 +135,8 @@ export const CONTENT: Record<string, Translations> = {
     hero: {
       tagline: "UX / UI DESIGNER",
       title: "Creating experiences that connect your audience",
-      description: "Developing intuitive and engaging interfaces, where every detail transforms user interaction."
+      description: "Developing intuitive and engaging interfaces, where every detail transforms user interaction.",
+      scrollIndicator: "Learn more"
     },
     services: {
       subtitle: "/ Services",
@@ -162,6 +204,46 @@ export const CONTENT: Record<string, Translations> = {
       navTitle: "Navigation",
       socialTitle: "Social",
       rights: "GustaSoares Studio — All rights reserved © 2025"
+    },
+    aboutPage: {
+      hero: {
+        tagline: "ABOUT ME",
+        title: "Beyond visual design",
+        description: "A journey dedicated to solving complex problems through intuitive and functional interfaces."
+      },
+      introduction: {
+        titlePrefix: "A little about",
+        titleHighlight: "my journey"
+      },
+      history: {
+        title: "My Story",
+        description: "With over 5 years of experience in the digital market, I started my journey as a front-end developer, which gave me a solid technical foundation.\n\nOver time, I realized that the true impact lay in the design of user experience, shifting my focus to UX/UI Design. Today, I combine logic and creativity to deliver products that not only work but delight.",
+        image: "/imgs/profile-photo.webp",
+        highlights: [
+          { number: "+5", label: "Years of Experience" },
+          { number: "+40", label: "Projects Delivered" },
+          { number: "+10", label: "Sectors Served" }
+        ]
+      },
+      methodology: {
+        title: "How I Work",
+        description: "My methodology combines Design Thinking and agile processes to ensure assertive deliveries.",
+        items: [
+          { title: "Immersion", description: "Understanding the business, audience, and project goals." },
+          { title: "Definition", description: "Structuring information architecture and user flows." },
+          { title: "Prototyping", description: "Creating wireframes and high-fidelity prototypes for validation." },
+          { title: "UI Design", description: "Applying visual identity and creating pixel-perfect interfaces." }
+        ]
+      },
+      services: {
+        title: "What I can do for you",
+        description: "Tailored services to elevate your digital product."
+      },
+      cta: {
+        title: "Let's get your idea\noff the ground?",
+        description: "I'm ready to hear about your project and understand how we can create something unique together. Send me a message and let's talk.",
+        button: "Start Project"
+      }
     }
   }
 };
@@ -171,4 +253,19 @@ export const SOCIAL_LINKS = {
   behance: "https://www.behance.net/gustasoares",
   whatsapp: "https://api.whatsapp.com/send?phone=5519993595368",
   email: "contato@gustasoares.com"
+};
+
+// WhatsApp Messages by Context
+export const WHATSAPP_PHONE = "5519993595368";
+
+export const WHATSAPP_MESSAGES = {
+  footer: "Olá! Vim pelo seu portfólio e gostaria de conversar sobre um projeto.",
+  social: "Olá! Encontrei seu perfil e gostaria de saber mais sobre seus serviços.",
+  contact: "Olá! Tenho interesse em iniciar um projeto. Podemos conversar?",
+  project: (projectName: string) => `Olá! Vi o projeto "${projectName}" no seu portfólio e gostaria de conversar sobre algo similar.`
+};
+
+export const getWhatsAppLink = (message: string): string => {
+  const encodedMessage = encodeURIComponent(message);
+  return `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encodedMessage}`;
 };

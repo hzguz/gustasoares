@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import ProjectPage from './components/ProjectPage';
 import ProjectHeader from './components/ProjectHeader';
 import NotFound from './components/NotFound';
+import About from './components/About';
 
 // Lazy load admin components for better initial bundle size
 const AdminLogin = React.lazy(() => import('./components/AdminLogin'));
@@ -236,6 +237,40 @@ const App: React.FC = () => {
         transitionToView('home');
     };
 
+    const handleHeaderNavigate = (id: string) => {
+        if (id === 'home') {
+            if (currentView !== 'home') {
+                transitionToView('home', '/');
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        } else if (id.startsWith('#')) {
+            // Anchor link
+            if (currentView !== 'home') {
+                // Navigate home then scroll
+                setIsTransitioning(true);
+                setTimeout(() => {
+                    window.history.pushState({}, '', '/');
+                    setCurrentView('home');
+                    setSelectedProject(null);
+                    setIsTransitioning(false);
+                    setTimeout(() => {
+                        const element = document.querySelector(id);
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 100);
+                }, 300);
+            } else {
+                // Just scroll
+                const element = document.querySelector(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+    };
+
     const handleNavigateFromProject = (sectionId: string) => {
         setIsTransitioning(true);
         setTimeout(() => {
@@ -373,7 +408,7 @@ const App: React.FC = () => {
 
             {/* Header Logic */}
             {currentView === 'home' && (
-                <Header lang={lang} toggleLang={toggleLang} text={text.nav} />
+                <Header lang={lang} toggleLang={toggleLang} text={text.nav} onNavigate={handleHeaderNavigate} />
             )}
             {currentView === 'project' && (
                 <ProjectHeader onBack={handleBackToHome} navText={text.nav} onNavigate={handleNavigateFromProject} />
@@ -390,6 +425,7 @@ const App: React.FC = () => {
                             <Hero text={text.hero} />
                             <Services text={text.services} />
                             <Projects text={text.projects} projects={projects} onProjectClick={handleProjectClick} />
+                            <About translations={text} />
                             <Contact text={text.contact} socialEmail={SOCIAL_LINKS.email} />
                         </main>
                         <Footer
@@ -432,6 +468,7 @@ const App: React.FC = () => {
                             onDelete={handleDeleteProject}
                             onLogout={handleLogout}
                             onSeed={handleSeedProjects}
+                            onView={handleProjectClick}
                         />
                     )}
 

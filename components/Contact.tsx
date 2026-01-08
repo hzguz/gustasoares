@@ -69,13 +69,13 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
     };
 
     return (
-        <section id="contact" className="py-24 md:py-40 relative overflow-hidden bg-surface/30 border-t border-black/[0.04]">
+        <section id="contact" className="py-20 md:py-40 relative overflow-hidden bg-surface/30 border-t border-black/[0.04]">
             <GridLines variant="outer" />
 
             {/* Background Light - Significantly Reduced Intensity */}
             <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-inverse/[0.02] to-transparent pointer-events-none" />
 
-            <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+            <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
 
                     {/* Left Column: Text */}
@@ -91,7 +91,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                         </Reveal>
 
                         <Reveal variant="blur-in" delay={100} duration={0.8}>
-                            <h2 className="font-syne font-bold text-3xl md:text-4xl lg:text-5xl text-textPrimary mb-6 md:mb-8 leading-[0.95]">
+                            <h2 className="font-syne font-bold text-4xl md:text-4xl lg:text-5xl text-textPrimary mb-6 md:mb-8 leading-[0.95]">
                                 {text.title}
                             </h2>
                         </Reveal>

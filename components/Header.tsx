@@ -8,9 +8,10 @@ interface HeaderProps {
   lang: Language;
   toggleLang: () => void;
   text: Translations['nav'];
+  onNavigate?: (id: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text }) => {
+const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text, onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -35,11 +36,25 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text }) => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { label: text.home, href: '#home' },
-    { label: text.about, href: '#services' },
+    { label: text.home, href: 'home' },
+    { label: text.about, href: '#about' },
     { label: text.projects, href: '#projects' },
     { label: text.contact, href: '#contact' },
   ];
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (onNavigate) {
+      onNavigate(href);
+    } else {
+      // Fallback for default behavior if onNavigate not provided
+      if (href.startsWith('#')) {
+        const el = document.querySelector(href);
+        el?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setMobileMenuOpen(false);
+  };
 
   const handleMobileClick = () => {
     setMobileMenuOpen(false);
@@ -53,9 +68,9 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text }) => {
           : 'py-6 md:py-8'
           }`}
       >
-        <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8">
+        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
           {/* Desktop Menu Container with blur */}
-          <div className="hidden lg:flex items-center justify-between px-8 py-4 backdrop-blur-md bg-white/5 border border-black/[0.04] rounded-full">
+          <div className={`hidden lg:flex items-center justify-between px-8 py-4 backdrop-blur-md border border-black/[0.04] rounded-full transition-all duration-300 ${isScrolled ? 'bg-white/70' : 'bg-white/5'}`}>
             <div className="flex items-center z-50 relative">
               <a href="#home" aria-label="Home">
                 <img
@@ -71,8 +86,9 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text }) => {
               {navLinks.map((link) => (
                 <a
                   key={link.href}
-                  href={link.href}
-                  className="text-sm font-syne font-bold text-textSecondary hover:text-textPrimary transition-colors duration-300 relative group"
+                  href={link.href.startsWith('#') ? link.href : '#'}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className="text-sm font-syne font-bold text-textPrimary hover:text-textSecondary transition-colors duration-300 relative group"
                 >
                   {link.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-inverse transition-all duration-300 group-hover:w-full" />
@@ -84,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text }) => {
             <div className="hidden lg:flex items-center gap-6">
               <button
                 onClick={toggleLang}
-                className="flex items-center gap-2 text-xs font-syne font-bold text-textSecondary hover:text-textPrimary transition-colors uppercase tracking-wider"
+                className="flex items-center gap-2 text-xs font-syne font-bold text-textPrimary hover:text-textSecondary transition-colors uppercase tracking-wider"
               >
                 <Globe size={16} strokeWidth={1} />
                 <span>{lang}</span>
@@ -131,15 +147,15 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text }) => {
 
       {/* Mobile Menu Overlay - Moved outside header container logically, but physically here */}
       <div
-        className={`fixed inset-0 bg-background/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 lg:hidden ${mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        className={`fixed inset-0 bg-background/70 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 lg:hidden ${mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
           }`}
       >
         <div className="flex flex-col items-center gap-8">
           {navLinks.map((link, i) => (
             <a
               key={link.href}
-              href={link.href}
-              onClick={handleMobileClick}
+              href={link.href.startsWith('#') ? link.href : '#'}
+              onClick={(e) => handleLinkClick(e, link.href)}
               className={`text-4xl font-syne font-bold text-textPrimary hover:text-textSecondary transition-all duration-500 ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                 }`}
               style={{ transitionDelay: `${i * 100}ms` }}

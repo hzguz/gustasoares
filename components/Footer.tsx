@@ -3,6 +3,7 @@ import React from 'react';
 import { Translations, Language } from '../types';
 import { Globe, ArrowUpRight } from 'lucide-react';
 import { IconBrandLinkedin, IconBrandBehance, IconBrandWhatsapp } from '@tabler/icons-react';
+import { getWhatsAppLink, WHATSAPP_MESSAGES } from '../constants';
 
 interface FooterProps {
   text: Translations['footer'];
@@ -40,7 +41,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
         <div className="absolute inset-0 bg-noise opacity-40 mix-blend-multiply" />
       </div>
 
-      <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
 
         {/* Main Grid Layout - Equal Top/Bottom Padding (Large) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 py-20 md:py-40">
@@ -49,12 +50,14 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
           <div className="lg:col-span-7 flex flex-col justify-center lg:pr-12">
             <h2 className="font-syne font-bold text-4xl md:text-5xl lg:text-7xl leading-[0.9] tracking-tight mb-8 md:mb-12">
               {text.titlePart1} <br />
-              <span className="text-textSecondary">{text.titlePart2}</span>
+              <span className="bg-gradient-to-r from-gray-500 to-gray-300 bg-clip-text text-transparent">{text.titlePart2}</span>
             </h2>
 
             {/* Updated Button: Transparent BG, Smaller Font/Icon, Only Border */}
             <a
-              href={`mailto:${socials.email}`}
+              href={getWhatsAppLink(WHATSAPP_MESSAGES.footer)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group w-fit relative inline-flex items-center gap-4 px-6 py-3 rounded-full bg-transparent border border-black/[0.1] transition-all duration-500 hover:border-inverse"
             >
               <span className="font-manrope text-base font-medium text-textPrimary tracking-tight transition-colors duration-500 group-hover:text-textPrimary">
@@ -71,7 +74,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
 
             {/* Navigation Column */}
             <div className="flex-1 lg:pl-12 py-2 flex flex-col gap-6 md:gap-8">
-              <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-textSecondary flex items-center gap-2">
+              <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-textPrimary flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-textPrimary rounded-full" />
                 {text.navTitle}
               </h3>
@@ -100,7 +103,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
 
             {/* Social Column - Separated by Line on MD+ */}
             <div className="flex-1 lg:pl-12 lg:border-l border-black/[0.04] py-2 md:mt-0 flex flex-col gap-6 md:gap-8">
-              <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-textSecondary flex items-center gap-2">
+              <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-textPrimary flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-textPrimary rounded-full" />
                 {text.socialTitle}
               </h3>
@@ -108,7 +111,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
                 {[
                   { icon: IconBrandLinkedin, link: socials.linkedin, label: 'LinkedIn' },
                   { icon: IconBrandBehance, link: socials.behance, label: 'Behance' },
-                  { icon: IconBrandWhatsapp, link: socials.whatsapp, label: 'WhatsApp' },
+                  { icon: IconBrandWhatsapp, link: getWhatsAppLink(WHATSAPP_MESSAGES.social), label: 'WhatsApp' },
                 ].map((social, idx) => (
                   <a
                     key={idx}
@@ -149,13 +152,6 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
             >
               <Globe size={14} className="group-hover:rotate-180 transition-transform duration-500" strokeWidth={1} />
               <span>{lang === 'pt' ? 'EN' : 'PT'}</span>
-            </button>
-            {/* Visible Admin Link (Temporary) */}
-            <button
-              onClick={onAdminClick}
-              className="text-xs font-bold text-textPrimary bg-black/5 px-4 py-2 rounded-full hover:bg-black/10 transition-colors"
-            >
-              Acesso Admin
             </button>
           </div>
         </div>

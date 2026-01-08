@@ -58,6 +58,7 @@ export interface Translations {
     tagline: string;
     title: string;
     description: string;
+    scrollIndicator: string;
   };
   services: {
     subtitle: string;
@@ -100,5 +101,42 @@ export interface Translations {
     navTitle: string;
     socialTitle: string;
     rights: string;
+  };
+  aboutPage: {
+    hero: {
+      tagline: string;
+      title: string;
+      description: string;
+    };
+    introduction: {
+      titlePrefix: string;
+      titleHighlight: string;
+    };
+    history: {
+      title: string;
+      description: string;
+      image: string;
+      highlights: {
+        number: string;
+        label: string;
+      }[];
+    };
+    methodology: {
+      title: string;
+      description: string;
+      items: {
+        title: string;
+        description: string;
+      }[];
+    };
+    services: {
+      title: string;
+      description: string;
+    };
+    cta: {
+      title: string;
+      description: string;
+      button: string;
+    };
   };
 }

@@ -46,22 +46,22 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     switch (block.type) {
       case '1x1-image':
         return (
-          <Reveal key={block.id} variant="fade-up" delay={100} width="100%" className="mb-12 md:mb-24">
-            <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.04] shadow-2xl">
+          <Reveal key={block.id} variant="fade-up" delay={100} width="100%" className="mb-4">
+            <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.06]">
               <img src={block.content.image} alt="Full width" className="w-full h-auto object-cover" />
             </div>
           </Reveal>
         );
       case '2x1-image':
         return (
-          <div key={block.id} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 mb-12 md:mb-24">
+          <div key={block.id} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <Reveal variant="fade-right" delay={100} width="100%">
-              <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.04] shadow-xl">
+              <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.06]">
                 <img src={block.content.image} alt="Left" className="w-full h-full object-cover min-h-[300px]" />
               </div>
             </Reveal>
             <Reveal variant="fade-left" delay={200} width="100%">
-              <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.04] shadow-xl">
+              <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.06]">
                 <img src={block.content.image2} alt="Right" className="w-full h-full object-cover min-h-[300px]" />
               </div>
             </Reveal>
@@ -69,7 +69,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
         );
       case 'text-image-left':
         return (
-          <div key={block.id} className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-24 items-center mb-12 md:mb-24">
+          <div key={block.id} className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center mb-4">
             <div className="lg:col-span-5 order-2 lg:order-1">
               <Reveal variant="fade-up">
                 <div className="relative pl-6 md:pl-0">
@@ -84,7 +84,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
             </div>
             <div className="lg:col-span-7 order-1 lg:order-2">
               <Reveal variant="fade-left">
-                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.04] shadow-xl">
+                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.06]">
                   <img src={block.content.image} alt={block.content.title} className="w-full h-auto object-cover" />
                 </div>
               </Reveal>
@@ -93,10 +93,10 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
         );
       case 'gallery-2x2':
         return (
-          <div key={block.id} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 md:mb-24">
+          <div key={block.id} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             {block.content.images?.map((img, idx) => (
               <Reveal key={idx} variant="fade-up" delay={idx * 100}>
-                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.04] shadow-lg">
+                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.06]">
                   <img src={img} alt={`Gallery ${idx}`} className="w-full h-auto object-cover aspect-square" />
                 </div>
               </Reveal>
@@ -112,16 +112,16 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     <div className="relative min-h-screen bg-background text-textPrimary">
 
       {/* 1. Seção Banner (Full Width) */}
-      <section className="relative w-full h-[85vh] flex items-end pb-24 md:pb-32 overflow-hidden">
+      <section className="relative w-full h-[85vh] flex items-end pb-16 md:pb-32 overflow-hidden">
         {/* Background Image Container with Parallax */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src={bannerImage}
             alt={project.title}
-            className="w-full h-[120%] object-cover origin-center will-change-transform"
+            className="w-full h-[120%] object-cover origin-center will-change-transform grayscale"
             style={{
               transform: `translate3d(0, ${scrollY * 0.4}px, 0) scale(${1 + scrollY * 0.0005})`,
-              filter: `blur(${scrollY * 0.01}px)` // Subtle blur on scroll
+              filter: `blur(${scrollY * 0.01}px) grayscale(100%)`
             }}
           />
 
@@ -138,17 +138,17 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 
         <GridLines variant="outer" />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
           <Reveal variant="fade-up" duration={0.8}>
             <div className="max-w-4xl">
               {/* Tagline removida conforme solicitado */}
               {/* <span className="inline-block py-1 px-3 border border-black/10 rounded-full text-xs font-syne font-bold uppercase tracking-widest text-textSecondary mb-6 backdrop-blur-md bg-white/30">
                         {project.category}
                     </span> */}
-              <h1 className="font-syne font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] text-textPrimary mb-8 drop-shadow-sm">
+              <h1 className="font-syne font-bold text-4xl md:text-7xl lg:text-8xl leading-[0.9] text-textPrimary mb-6 md:mb-8 drop-shadow-sm">
                 {project.title}
               </h1>
-              <p className="font-manrope text-lg md:text-2xl text-textSecondary font-light max-w-2xl mb-10 leading-relaxed">
+              <p className="font-manrope text-base md:text-2xl text-textSecondary font-light max-w-2xl mb-8 md:mb-10 leading-relaxed">
                 {project.descriptionShort}
               </p>
 
@@ -166,29 +166,25 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       </section>
 
       {/* 2. Seção Detalhes */}
-      <section className="py-20 md:py-32 border-b border-black/[0.04]">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-24">
+      <section className="py-12 md:py-32 border-b border-black/[0.04]">
+        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[120px]">
 
             {/* Meta Info (Year & Tools) */}
-            <div className="lg:col-span-6 flex flex-col gap-10">
+            <div className="lg:col-span-6 flex flex-col gap-6">
               <Reveal variant="fade-right" delay={100} width="100%">
-                <div className="pt-0">
-                  <h3 className="font-syne font-bold text-sm uppercase tracking-widest text-textSecondary mb-2">Ano</h3>
-                  <p className="font-manrope text-xl text-textPrimary">{project.date}</p>
+                <div className="flex items-center justify-between py-4 border-b border-black/[0.08]">
+                  <h3 className="font-syne font-bold text-sm tracking-widest text-textSecondary">Ano</h3>
+                  <p className="font-manrope text-sm text-textSecondary">{project.date}</p>
                 </div>
               </Reveal>
 
               <Reveal variant="fade-right" delay={200} width="100%">
-                <div className="border-t border-black/[0.1] pt-6">
-                  <h3 className="font-syne font-bold text-sm uppercase tracking-widest text-textSecondary mb-4">Ferramentas</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tools.map((tool, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-surface rounded-full text-xs font-manrope text-textPrimary/80 border border-black/[0.04]">
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
+                <div className="flex items-start justify-between py-4 border-b border-black/[0.08]">
+                  <h3 className="font-syne font-bold text-sm tracking-widest text-textSecondary">Ferramentas</h3>
+                  <p className="font-manrope text-sm text-textSecondary text-right max-w-[60%]">
+                    {project.tools.join(', ')}
+                  </p>
                 </div>
               </Reveal>
             </div>
@@ -196,7 +192,6 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
             {/* Long Description */}
             <div className="lg:col-span-6">
               <Reveal variant="fade-up" delay={300}>
-                <h2 className="font-syne font-bold text-2xl md:text-3xl mb-8">Sobre o projeto</h2>
                 <div className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed space-y-6 whitespace-pre-line">
                   {project.descriptionLong}
                 </div>
@@ -207,18 +202,18 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       </section>
 
       {/* 3. Seção Conteúdo Dinâmico (Builder) ou Galeria Legada */}
-      <section className="py-20 md:py-32 bg-surface/30">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-32 bg-surface/30">
+        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
           {/* If dynamic blocks exist, render them. Otherwise render legacy gallery */}
           {project.blocks && project.blocks.length > 0 ? (
             <div className="flex flex-col">
               {project.blocks.map((block, index) => renderBlock(block, index))}
             </div>
           ) : (
-            <div className="flex flex-col gap-12 md:gap-24">
+            <div className="flex flex-col gap-4">
               {project.gallery.map((imgSrc, index) => (
                 <Reveal key={index} variant="fade-up" delay={index * 100} width="100%">
-                  <div className="relative rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.04] shadow-2xl group">
+                  <div className="relative rounded-2xl md:rounded-[2rem] overflow-hidden border border-black/[0.06] group">
                     <img
                       src={imgSrc}
                       alt={`${project.title} detail ${index + 1}`}

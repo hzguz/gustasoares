@@ -1,9 +1,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowUpRight, Building2, PanelTop, Smartphone, ChevronDown, Check } from 'lucide-react';
+import { Building2, PanelTop, Smartphone, ChevronDown, Check } from 'lucide-react';
 import { Translations, Project } from '../types';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
+import ProjectCard from './ProjectCard';
 
 interface ProjectsProps {
   text: Translations['projects'];
@@ -100,22 +101,17 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
   const currentLabel = categories.find(c => c.key === activeCategory)?.label || text.categories.all;
 
   return (
-    <section id="projects" className="py-24 md:py-40 relative overflow-hidden">
+    <section id="projects" className="py-20 md:py-40 relative overflow-hidden">
       <GridLines variant="center" />
 
       {/* Decorative Light - Right Side - Low Intensity */}
       <div className="absolute top-1/2 right-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-inverse/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2 opacity-30" />
 
-      <div className="w-full max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-20 gap-8 border-b border-black/[0.04] pb-8 relative z-20">
+      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-20 gap-4 md:gap-8 md:border-b border-black/[0.04] pb-0 md:pb-8 relative z-20">
           <div>
-            <Reveal variant="fade-right" duration={0.6}>
-              <div className="mb-4 md:mb-6 px-1">
-                <span className="block font-syne text-xs font-bold tracking-widest text-textSecondary uppercase">{text.subtitle}</span>
-              </div>
-            </Reveal>
             <Reveal variant="blur-in" delay={100} duration={0.8}>
-              <h2 className="font-syne font-bold text-3xl md:text-4xl lg:text-5xl text-textPrimary">
+              <h2 className="font-syne font-bold text-4xl md:text-4xl lg:text-5xl text-textPrimary">
                 {text.title}
               </h2>
             </Reveal>
@@ -132,9 +128,9 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
                     w-full sm:w-[240px] flex items-center justify-between px-6 py-3.5 rounded-full 
                     bg-white/50 backdrop-blur-md border border-black/[0.08] 
                     text-textPrimary transition-all duration-300 group
-                    hover:border-black/[0.2] hover:bg-white/80 hover:shadow-lg
+                    hover:border-black/[0.2] hover:bg-white/80
                     ${isMobileMenuOpen
-                    ? 'shadow-[0_8px_30px_rgba(0,0,0,0.12)] border-black/[0.2] bg-white'
+                    ? 'border-black/[0.2] bg-white'
                     : 'shadow-sm'}
                   `}
               >
@@ -247,53 +243,13 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
             className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-x-12 md:gap-y-16"
           >
             {filteredProjects.map((project, index) => (
-              <div
+              <ProjectCard
                 key={project.id}
-                className="group cursor-pointer animate-fade-in-up fill-mode-forwards opacity-0"
-                style={{ animationDelay: `${index * 150}ms` }}
+                project={project}
+                text={text}
                 onClick={() => onProjectClick(project)}
-              >
-                {/* Image Container */}
-                <div className="relative aspect-[3/2] overflow-hidden bg-surface mb-6 md:mb-8 border border-black/[0.04] md:group-hover:border-inverse/20 transition-colors rounded-2xl z-0">
-                  <div className="absolute inset-0 bg-black/40 z-10 transition-opacity duration-500 md:group-hover:opacity-0 opacity-0 md:opacity-0" />
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out md:grayscale md:group-hover:grayscale-0 md:group-hover:scale-105"
-                  />
-
-                  {/* Tech Corners - Hidden on mobile, visible on desktop hover */}
-                  <div className="hidden md:block absolute top-0 left-0 w-3 h-3 border-t border-l border-inverse/30 z-20 transition-all duration-500 ease-out group-hover:translate-x-4 group-hover:translate-y-4 rounded-tl-lg" />
-                  <div className="hidden md:block absolute bottom-0 right-0 w-3 h-3 border-b border-r border-inverse/30 z-20 transition-all duration-500 ease-out group-hover:-translate-x-4 group-hover:-translate-y-4 rounded-br-lg" />
-                  <div className="hidden md:block absolute bottom-0 left-0 w-3 h-3 border-b border-l border-inverse/30 z-20 transition-all duration-500 ease-out group-hover:translate-x-4 group-hover:-translate-y-4 rounded-bl-lg" />
-
-                  {/* Arrow - Always visible on mobile in corner, fade in on desktop */}
-                  <div className="absolute top-4 right-4 z-20 bg-black/80 backdrop-blur text-white p-2 md:p-3 rounded-full 
-                        opacity-100 translate-y-0
-                        md:opacity-0 md:-translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 
-                        transition-all duration-300 border border-white/10">
-                    <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1} />
-                  </div>
-                </div>
-
-                {/* Info */}
-                <div className="flex flex-col gap-2 pl-4 border-l-2 border-transparent group-hover:border-inverse transition-colors duration-300">
-                  <h3 className="font-syne font-bold text-xl md:text-2xl text-textPrimary group-hover:translate-x-1 transition-transform duration-300">
-                    {project.title}
-                  </h3>
-                  <div className="flex items-center gap-4">
-                    <span className="font-manrope text-textSecondary text-xs uppercase tracking-widest">
-                      {project.date}
-                    </span>
-                    <span className="w-1 h-1 bg-textSecondary rounded-full" />
-                    <span className="font-manrope text-textSecondary text-xs uppercase tracking-widest text-textPrimary/80">
-                      {text.categories[project.category as keyof typeof text.categories] || project.category}
-                    </span>
-                  </div>
-                </div>
-              </div>
+                animationDelay={index * 150}
+              />
             ))}
           </div>
         </div>

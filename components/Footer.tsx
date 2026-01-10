@@ -4,6 +4,7 @@ import { Translations, Language } from '../types';
 import { Globe, ArrowUpRight } from 'lucide-react';
 import { IconBrandLinkedin, IconBrandBehance, IconBrandWhatsapp } from '@tabler/icons-react';
 import { getWhatsAppLink, WHATSAPP_MESSAGES } from '../constants';
+import GridLines from './GridLines';
 
 interface FooterProps {
   text: Translations['footer'];
@@ -38,8 +39,10 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
           </div>
         </div>
         {/* Noise Overlay */}
-        <div className="absolute inset-0 bg-noise opacity-40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-noise opacity-30" />
       </div>
+
+      <GridLines variant="outer" />
 
       <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
 

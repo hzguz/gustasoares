@@ -92,6 +92,8 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
         </div>
       )}
 
+
+
       {/* VARIANT: ABOUT (Clean Grid & Left Align) */}
       {variant === 'about' && (
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
@@ -99,7 +101,7 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
 
           {/* Subtle noise */}
-          <div className="absolute inset-0 bg-noise opacity-[0.15] mix-blend-overlay" />
+          <div className="absolute inset-0 bg-noise opacity-30 mix-blend-overlay" />
 
           {/* Gradient masking for depth */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
@@ -122,6 +124,11 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
             background: 'radial-gradient(ellipse at bottom left, rgba(0,0,0,0.08) 0%, transparent 50%)'
           }}
         />
+      )}
+
+      {/* NOISE OVERLAY FOR HOME - Must be after gradient overlays */}
+      {variant === 'home' && (
+        <div className="absolute inset-0 z-[5] pointer-events-none select-none opacity-30 bg-noise" />
       )}
 
       <div className={`w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10 flex flex-col items-center flex-grow justify-center ${variant === 'about' ? 'md:items-start md:text-left' : 'text-center'}`}>

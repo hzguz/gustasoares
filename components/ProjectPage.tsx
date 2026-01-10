@@ -110,6 +110,10 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 
   return (
     <div className="relative min-h-screen bg-background text-textPrimary">
+      {/* Global GridLines for entire page */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        <GridLines variant="outer" />
+      </div>
 
       {/* 1. Seção Banner (Full Width) */}
       <section className="relative w-full h-[85vh] flex items-end pb-16 md:pb-32 overflow-hidden">
@@ -133,7 +137,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
 
           {/* Texture */}
-          <div className="absolute inset-0 bg-noise opacity-30 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-noise opacity-30" />
         </div>
 
         <GridLines variant="outer" />

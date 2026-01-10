@@ -33,7 +33,7 @@ const GridLines: React.FC<GridLinesProps> = ({ variant = 'full' }) => {
   );
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden hidden 2xl:block">
+    <div className="absolute inset-0 pointer-events-none z-50 overflow-hidden hidden 2xl:block">
       {/* Changed 'container' to custom width to push lines further out than the content */}
       <div
         className="mx-auto w-[98%] max-w-[1920px] px-6 h-full relative border-x transition-colors duration-500"

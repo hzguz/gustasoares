@@ -3,13 +3,15 @@ import React from 'react';
 
 interface GridLinesProps {
   variant?: 'full' | 'outer' | 'none' | 'center';
+  className?: string;
+  inverted?: boolean;
 }
 
-const GridLines: React.FC<GridLinesProps> = ({ variant = 'full' }) => {
+const GridLines: React.FC<GridLinesProps> = ({ variant = 'full', className = '', inverted = false }) => {
   if (variant === 'none') return null;
 
-  // Unified color for lines and markers
-  const gridColor = 'rgba(17, 17, 17, 0.04)';
+  // Unified color for lines and markers - inverted uses white for dark backgrounds
+  const gridColor = inverted ? 'rgba(255, 255, 255, 0.05)' : 'rgba(17, 17, 17, 0.04)';
 
   // Helper for the "plus" marker
   const PlusMarker = ({ className }: { className?: string }) => (
@@ -33,7 +35,7 @@ const GridLines: React.FC<GridLinesProps> = ({ variant = 'full' }) => {
   );
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-50 overflow-hidden hidden 2xl:block">
+    <div className={`absolute inset-0 pointer-events-none z-50 overflow-hidden hidden 2xl:block ${className}`}>
       {/* Changed 'container' to custom width to push lines further out than the content */}
       <div
         className="mx-auto w-[98%] max-w-[1920px] px-6 h-full relative border-x transition-colors duration-500"

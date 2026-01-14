@@ -4,15 +4,18 @@ import { CONTENT, SOCIAL_LINKS } from './constants';
 import DynamicBackground from './components/DynamicBackground';
 import { supabase } from './lib/supabase';
 import Header from './components/Header';
+import FixedHeader from './components/FixedHeader';
+import ProjectHeader from './components/ProjectHeader';
+import MobileMenu from './components/MobileMenu';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectPage from './components/ProjectPage';
-import ProjectHeader from './components/ProjectHeader';
 import NotFound from './components/NotFound';
 import About from './components/About';
+import SEO from './components/SEO';
 
 // Lazy load admin components for better initial bundle size
 const AdminLogin = React.lazy(() => import('./components/AdminLogin'));
@@ -23,6 +26,7 @@ const AdminEditor = React.lazy(() => import('./components/AdminEditor'));
 const INITIAL_PROJECTS: ExtendedProject[] = [
     {
         id: "1",
+        slug: "fintech-dashboard",
         title: "Fintech Dashboard",
         category: "app",
         date: "2024",
@@ -38,6 +42,7 @@ const INITIAL_PROJECTS: ExtendedProject[] = [
     },
     {
         id: "2",
+        slug: "modern-architecture",
         title: "Modern Architecture",
         category: "landing",
         date: "2023",
@@ -51,6 +56,18 @@ const INITIAL_PROJECTS: ExtendedProject[] = [
         blocks: []
     }
 ];
+
+// Helper function to generate slug from title
+const generateSlug = (title: string): string => {
+    return title
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remove accents
+        .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-') // Replace multiple hyphens with single
+        .trim();
+};
 
 const App: React.FC = () => {
     const [lang, setLang] = useState<Language>('pt');
@@ -78,10 +95,11 @@ const App: React.FC = () => {
                 setProjects(INITIAL_PROJECTS);
             } else {
                 // Cast data to ExtendedProject. Ensure DB columns match types!
-                // We might need to handle 'tools' and 'gallery' assuming they are stored as JSON/Arrays
+                // Generate slug from title if not present
                 const projectsData = data.map(d => ({
                     ...d,
-                    id: String(d.id) // Ensure ID is string
+                    id: String(d.id),
+                    slug: d.slug || generateSlug(d.title) // Auto-generate slug if missing
                 })) as ExtendedProject[];
 
                 setProjects(projectsData);
@@ -113,6 +131,8 @@ const App: React.FC = () => {
     const [adminLoggedIn, setAdminLoggedIn] = useState(false);
     const [isAuthLoading, setIsAuthLoading] = useState(true); // New loading state
     const [editingProject, setEditingProject] = useState<ExtendedProject | null>(null);
+    const [pendingProjectSlug, setPendingProjectSlug] = useState<string | null>(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // Global mobile menu state
 
     // Sync editingProject with URL on direct access if projects are loaded
     React.useEffect(() => {
@@ -129,6 +149,21 @@ const App: React.FC = () => {
             }
         }
     }, [currentView, projects]);
+
+    // Sync pendingProjectSlug when projects are loaded (for direct URL access)
+    React.useEffect(() => {
+        if (pendingProjectSlug && projects.length > 0) {
+            const found = projects.find(p => p.slug === pendingProjectSlug);
+            if (found) {
+                setSelectedProject(found);
+                setPendingProjectSlug(null);
+            } else {
+                // Project with this slug doesn't exist
+                setCurrentView('not-found');
+                setPendingProjectSlug(null);
+            }
+        }
+    }, [pendingProjectSlug, projects]);
 
     // Auth Persistence Listener
     React.useEffect(() => {
@@ -189,7 +224,30 @@ const App: React.FC = () => {
                     window.history.replaceState({}, '', '/admin');
                     setCurrentView('admin-login');
                 }
-            } else if (path !== '/' && path !== '/index.html') {
+            } else if (path.startsWith('/projeto/')) {
+                // Project page route: /projeto/:slug
+                const slug = path.replace('/projeto/', '');
+                if (slug) {
+                    // We need projects to be loaded to find by slug
+                    // If projects aren't loaded yet, we'll set a pending slug
+                    const found = projects.find(p => p.slug === slug);
+                    if (found) {
+                        setSelectedProject(found);
+                        setCurrentView('project');
+                    } else if (projects.length === 0) {
+                        // Projects not loaded yet, will be handled in another effect
+                        setPendingProjectSlug(slug);
+                        setCurrentView('project');
+                    } else {
+                        // Slug not found
+                        setCurrentView('not-found');
+                    }
+                }
+            } else if (path === '/' || path === '/index.html' || path === '') {
+                // Home route - reset state
+                setSelectedProject(null);
+                setCurrentView('home');
+            } else {
                 setCurrentView('not-found');
             }
         };
@@ -199,7 +257,7 @@ const App: React.FC = () => {
         // Listen to browser back/forward
         window.addEventListener('popstate', handleRoute);
         return () => window.removeEventListener('popstate', handleRoute);
-    }, [adminLoggedIn, isAuthLoading]);
+    }, [adminLoggedIn, isAuthLoading, projects]);
 
     const toggleLang = () => {
         if (isTransitioning) return;
@@ -212,6 +270,10 @@ const App: React.FC = () => {
         }, 300);
     };
 
+    const handleToggleMobileMenu = () => {
+        setMobileMenuOpen(prev => !prev);
+    };
+
     const transitionToView = (view: typeof currentView, updateUrl?: string) => {
         setIsTransitioning(true);
         setTimeout(() => {
@@ -221,20 +283,20 @@ const App: React.FC = () => {
             setCurrentView(view);
             setIsTransitioning(false);
             window.scrollTo(0, 0);
-        }, 300);
+        }, 250);
     };
 
     const handleProjectClick = (project: Project) => {
         const fullProject = projects.find(p => p.id === project.id);
         if (fullProject) {
             setSelectedProject(fullProject);
-            transitionToView('project');
+            transitionToView('project', `/projeto/${fullProject.slug}`);
         }
     };
 
     const handleBackToHome = () => {
         setSelectedProject(null);
-        transitionToView('home');
+        transitionToView('home', '/');
     };
 
     const handleHeaderNavigate = (id: string) => {
@@ -272,6 +334,7 @@ const App: React.FC = () => {
     };
 
     const handleNavigateFromProject = (sectionId: string) => {
+        setMobileMenuOpen(false); // Ensure menu closes on nav
         setIsTransitioning(true);
         setTimeout(() => {
             setCurrentView('home');
@@ -406,21 +469,42 @@ const App: React.FC = () => {
 
             <DynamicBackground />
 
+            {/* Global Mobile Menu */}
+            <MobileMenu
+                isOpen={mobileMenuOpen}
+                onClose={() => setMobileMenuOpen(false)}
+                navText={text.nav}
+                socials={SOCIAL_LINKS}
+                onNavigate={(id) => {
+                    handleHeaderNavigate(id);
+                    setMobileMenuOpen(false);
+                }}
+                lang={lang}
+                toggleLang={toggleLang}
+            />
+
             {/* Header Logic */}
             {currentView === 'home' && (
-                <Header lang={lang} toggleLang={toggleLang} text={text.nav} onNavigate={handleHeaderNavigate} />
+                <>
+                    <Header lang={lang} toggleLang={toggleLang} text={text.nav} onNavigate={handleHeaderNavigate} onOpenMenu={handleToggleMobileMenu} />
+                    <FixedHeader lang={lang} toggleLang={toggleLang} text={text.nav} onNavigate={handleHeaderNavigate} onOpenMenu={handleToggleMobileMenu} />
+                </>
             )}
             {currentView === 'project' && (
-                <ProjectHeader onBack={handleBackToHome} navText={text.nav} onNavigate={handleNavigateFromProject} />
+                <>
+                    <ProjectHeader onBack={handleBackToHome} navText={text.nav} onNavigate={handleNavigateFromProject} onOpenMenu={handleToggleMobileMenu} />
+                    <FixedHeader lang={lang} toggleLang={toggleLang} text={text.nav} onNavigate={handleNavigateFromProject} onOpenMenu={handleToggleMobileMenu} />
+                </>
             )}
 
             {/* Main Content Wrapper */}
             <div
-                className={`relative z-10 transition-all duration-300 ease-in-out ${isTransitioning ? 'opacity-0 blur-sm scale-[0.99]' : 'opacity-100 blur-0 scale-100'
+                className={`relative z-10 transition-all duration-300 ease-in-out ${isTransitioning ? 'opacity-0 blur-[2px] translate-y-1' : 'opacity-100 blur-0 translate-y-0'
                     }`}
             >
                 {currentView === 'home' && (
                     <>
+                        <SEO />
                         <main>
                             <Hero text={text.hero} />
                             <Services text={text.services} />
@@ -440,14 +524,23 @@ const App: React.FC = () => {
                 )}
 
                 {currentView === 'project' && selectedProject && (
-                    <ProjectPage
-                        project={selectedProject}
-                        translations={text}
-                        socials={SOCIAL_LINKS}
-                        lang={lang}
-                        toggleLang={toggleLang}
-                        onNavigate={handleNavigateFromProject}
-                    />
+                    <>
+                        <SEO
+                            title={selectedProject.title}
+                            description={selectedProject.descriptionShort}
+                            image={selectedProject.coverImage || selectedProject.image}
+                            url={`/projeto/${selectedProject.slug}`}
+                            type="article"
+                        />
+                        <ProjectPage
+                            project={selectedProject}
+                            translations={text}
+                            socials={SOCIAL_LINKS}
+                            lang={lang}
+                            toggleLang={toggleLang}
+                            onNavigate={handleNavigateFromProject}
+                        />
+                    </>
                 )}
 
                 {/* Admin Views - Lazy loaded with Suspense */}

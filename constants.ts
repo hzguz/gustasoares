@@ -19,7 +19,7 @@ export const CONTENT: Record<string, Translations> = {
     services: {
       subtitle: "/ Serviços",
       title: "Quais trabalhos eu realizo?",
-      description: "Soluções em UX que unem estratégia, design e usabilidade<br> para criar experiências digitais centradas no usuário.",
+      description: "Soluções em UX que unem estratégia, design e usabilidade para criar experiências digitais centradas no usuário.",
       items: [
         {
           id: 1,
@@ -99,8 +99,8 @@ export const CONTENT: Record<string, Translations> = {
         image: "/imgs/profile-photo.webp",
         highlights: [
           { number: "+5", label: "Anos de experiência" },
-          { number: "+40", label: "Projetos entregues" },
-          { number: "+10", label: "Setores atendidos" }
+          { number: "+200", label: "Projetos entregues" },
+          { number: "+4", label: "Setores atendidos" }
         ]
       },
       methodology: {
@@ -118,7 +118,7 @@ export const CONTENT: Record<string, Translations> = {
         description: "Serviços sob medida para elevar o nível do seu produto digital."
       },
       cta: {
-        title: "Vamos tirar sua ideia\ndo papel?",
+        title: "Vamos tirar sua ideia\noff the ground?",
         description: "Estou pronto para ouvir sobre seu projeto e entender como podemos criar algo único juntos. Mande uma mensagem e vamos conversar.",
         button: "Iniciar Projeto"
       }
@@ -221,8 +221,8 @@ export const CONTENT: Record<string, Translations> = {
         image: "/imgs/profile-photo.webp",
         highlights: [
           { number: "+5", label: "Years of Experience" },
-          { number: "+40", label: "Projects Delivered" },
-          { number: "+10", label: "Sectors Served" }
+          { number: "+200", label: "Projects Delivered" },
+          { number: "+4", label: "Sectors Served" }
         ]
       },
       methodology: {

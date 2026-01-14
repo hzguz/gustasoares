@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MousePointer2 } from 'lucide-react';
+import { IconSparkles } from '@tabler/icons-react';
 import { Translations } from '../types';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
@@ -44,29 +44,37 @@ const styles = `
 
 const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
   return (
-    <section id="home" className="relative flex flex-col items-center min-h-[100svh] w-full overflow-hidden pt-28 pb-20 md:pt-36 md:pb-32">
-      <GridLines variant="outer" />
+    <section
+      id="home"
+      className="relative flex flex-col items-center min-h-[100svh] w-full overflow-hidden pt-20 pb-16 md:pt-32 md:pb-32 bg-inverse"
+      style={variant === 'home' ? {
+        backgroundImage: 'radial-gradient(at top center, #353535 0%, #111111 100%)'
+      } : undefined}
+    >
+      <GridLines variant="outer" inverted />
 
       {variant === 'about' && <style>{styles}</style>}
 
       {/* --- BACKGROUND VARIANTS --- */}
 
+
+
       {/* VARIANT: HOME (Marquee) */}
       {variant === 'home' && (
-        <div className="absolute inset-0 z-0 flex flex-col justify-center gap-4 opacity-15 select-none pointer-events-none mix-blend-multiply" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+        <div className="absolute inset-0 z-0 flex flex-col justify-center gap-4 select-none pointer-events-none" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
           {/* Top Marquee (Right to Left) */}
           <div className="flex-1 flex overflow-hidden relative w-full items-center">
             <div className="flex animate-marquee-left min-w-max h-full gap-6">
               {/* Original Set */}
               {MARQUEE_ROW_1.map((img, i) => (
-                <div key={`t1-${i}`} className="flex-shrink-0 w-[40vh] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface border border-black/10">
-                  <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale opacity-80" />
+                <div key={`t1-${i}`} className="flex-shrink-0 w-[280px] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface/5 border border-white/5">
+                  <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale" />
                 </div>
               ))}
               {/* Duplicate Set for Loop */}
               {MARQUEE_ROW_1.map((img, i) => (
-                <div key={`t2-${i}`} className="flex-shrink-0 w-[40vh] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface border border-black/10">
-                  <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale opacity-80" />
+                <div key={`t2-${i}`} className="flex-shrink-0 w-[280px] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface/5 border border-white/5">
+                  <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale" />
                 </div>
               ))}
             </div>
@@ -77,14 +85,14 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
             <div className="flex animate-marquee-right min-w-max h-full gap-6">
               {/* Original Set */}
               {MARQUEE_ROW_2.map((img, i) => (
-                <div key={`b1-${i}`} className="flex-shrink-0 w-[40vh] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface border border-black/10">
-                  <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale opacity-80" />
+                <div key={`b1-${i}`} className="flex-shrink-0 w-[280px] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface/5 border border-white/5">
+                  <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale" />
                 </div>
               ))}
               {/* Duplicate Set for Loop */}
               {MARQUEE_ROW_2.map((img, i) => (
-                <div key={`b2-${i}`} className="flex-shrink-0 w-[40vh] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface border border-black/10">
-                  <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale opacity-80" />
+                <div key={`b2-${i}`} className="flex-shrink-0 w-[280px] md:w-[50vh] h-full relative rounded-xl overflow-hidden bg-surface/5 border border-white/5">
+                  <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale" />
                 </div>
               ))}
             </div>
@@ -92,13 +100,26 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
         </div>
       )}
 
+      {/* Gradient Overlay Above Marquee */}
+      {variant === 'home' && (
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none"
+          style={{
+            backgroundColor: 'transparent',
+            backgroundImage: 'radial-gradient(at top center, #111111e3 0%, #111111FC 50%)'
+          }}
+        />
+      )}
+
+
+
 
 
       {/* VARIANT: ABOUT (Clean Grid & Left Align) */}
       {variant === 'about' && (
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
           {/* Detailed Grid Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
 
           {/* Subtle noise */}
           <div className="absolute inset-0 bg-noise opacity-30 mix-blend-overlay" />
@@ -110,51 +131,34 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
 
       {/* --- END OF BACKGROUND VARIANTS --- */}
 
-      {/* Background Gradient Overlay */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(at top center, #ffffff85 20%, #ffffffff 55%)' }}
-      />
 
-      {/* Soft dark lighting from bottom-left corner (Only for Home) */}
-      {variant === 'home' && (
-        <div
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse at bottom left, rgba(0,0,0,0.08) 0%, transparent 50%)'
-          }}
-        />
-      )}
 
-      {/* NOISE OVERLAY FOR HOME - Must be after gradient overlays */}
-      {variant === 'home' && (
-        <div className="absolute inset-0 z-[5] pointer-events-none select-none opacity-30 bg-noise" />
-      )}
+
+
+
 
       <div className={`w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10 flex flex-col items-center flex-grow justify-center ${variant === 'about' ? 'md:items-start md:text-left' : 'text-center'}`}>
 
         {/* Content Wrapper */}
-        <div className={`flex-grow flex flex-col justify-center w-full max-w-5xl ${variant === 'about' ? 'items-start' : 'items-center'}`}>
-          {/* Tagline Refined */}
-          <Reveal variant="scale-in" duration={0.6}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/[0.06] backdrop-blur-md mb-8 md:mb-12 hover:bg-black/[0.1] hover:scale-105 transition-all duration-300">
-              <MousePointer2 size={12} className="text-textPrimary" strokeWidth={1} />
-              <span className="text-[10px] font-syne font-bold tracking-[0.2em] text-textSecondary uppercase leading-none">
-                {text.tagline}
-              </span>
-            </div>
-          </Reveal>
+        <div className={`flex-grow flex flex-col justify-center w-full max-w-5xl mt-12 md:mt-20 ${variant === 'about' ? 'items-start' : 'items-center'}`}>
+          {/* Tagline - No Reveal wrapper to preserve backdrop-blur */}
+          <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border-white/5 bg-black/5 backdrop-blur-[16px] border mb-8 md:mb-12 hover:bg-white/[0.15] hover:scale-105 transition-all duration-300 relative z-20 animate-scale-in">
+            <IconSparkles size={14} className="text-white" stroke={1} />
+            <span className="text-xs font-syne font-bold tracking-[0.2em] text-white/90 uppercase leading-none">
+              {text.tagline}
+            </span>
+          </div>
 
           {/* Title */}
           <Reveal variant="blur-in" duration={1} delay={200}>
-            <h1 className="font-syne font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] text-textPrimary mb-6 md:mb-10 tracking-tighter drop-shadow-2xl">
+            <h1 className="font-syne font-bold text-[36px] md:text-5xl lg:text-7xl leading-[0.9] tracking-tighter text-center mb-8 relative z-20 drop-shadow-2xl text-white">
               {text.title}
             </h1>
           </Reveal>
 
           {/* Description */}
           <Reveal variant="fade-up" duration={0.8} delay={400}>
-            <p className="font-manrope text-textSecondary text-sm sm:text-lg md:text-xl max-w-2xl leading-relaxed font-light px-4">
+            <p className="font-manrope text-white/70 text-sm md:text-lg text-center max-w-2xl mb-12 relative z-20 leading-relaxed font-light">
               {text.description}
             </p>
           </Reveal>
@@ -162,15 +166,17 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
 
         {/* Scroll Indicator - Anchored at bottom (Only Home) */}
         {variant === 'home' && (
-          <Reveal variant="fade-up" delay={800} duration={1}>
+          <Reveal variant="fade-up" delay={800} duration={1} className="overflow-visible z-50">
             <a
               href="#services"
-              className="group flex flex-col items-center gap-4 text-textSecondary hover:text-textPrimary transition-colors duration-300 pt-12 md:pt-0"
+              className="group flex flex-col items-center gap-4 pt-12 md:pt-0 p-6 transition-opacity duration-300 transform-gpu"
+              aria-label={text.scrollIndicator}
             >
-              <div className="h-12 md:h-16 w-[1px] bg-gradient-to-b from-transparent via-inverse/10 to-inverse/30 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1/2 bg-inverse blur-[2px] animate-shimmer-down" />
+              {/* Mouse Body */}
+              <div className="w-[20px] h-[32px] rounded-full border border-white/30 flex justify-center p-1 box-border transition-all duration-300 transform-gpu group-hover:border-white group-hover:translate-y-2">
+                {/* Scroll Wheel */}
+                <div className="w-0.5 h-1.5 bg-white rounded-full animate-scroll" />
               </div>
-              <span className="text-xs uppercase tracking-widest font-syne opacity-50 group-hover:opacity-100 transition-opacity">{text.scrollIndicator}</span>
             </a>
           </Reveal>
         )}

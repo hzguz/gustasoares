@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { IconArrowUpRight } from '@tabler/icons-react';
 import { Project, Translations } from '../types';
 import { useImageColor } from '../lib/useImageColor';
 
@@ -8,9 +8,10 @@ interface ProjectCardProps {
     text: Translations['projects'];
     onClick: () => void;
     animationDelay: number;
+    inverted?: boolean;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, text, onClick, animationDelay }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, text, onClick, animationDelay, inverted = false }) => {
     const { borderColor } = useImageColor(project.image);
 
     return (
@@ -20,7 +21,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, text, onClick, anima
             onClick={onClick}
         >
             {/* Image Container */}
-            <div className="relative aspect-[3/2] overflow-hidden bg-surface mb-6 md:mb-8 border border-black/[0.04] md:group-hover:border-inverse/20 transition-colors rounded-2xl z-0">
+            <div
+                className={`relative aspect-[3/2] overflow-hidden ${inverted ? 'bg-transparent' : 'bg-surface'} mb-6 md:mb-8 border transition-colors rounded-2xl z-0`}
+                style={{
+                    borderColor: inverted ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.04)',
+                    background: inverted ? 'radial-gradient(at top center, var(--e-global-color-3ba8dc3) 0%, var(--e-global-color-primary) 100%)' : undefined
+                }}
+            >
                 <div className="absolute inset-0 bg-black/40 z-10 transition-opacity duration-500 md:group-hover:opacity-0 opacity-0 md:opacity-0" />
                 <img
                     src={project.image}
@@ -49,21 +56,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, text, onClick, anima
               opacity-100 translate-y-0
               md:opacity-0 md:-translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 
               transition-all duration-300 border border-white/10">
-                    <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1} />
+                    <IconArrowUpRight className="w-4 h-4 md:w-5 md:h-5" stroke={1.5} />
                 </div>
             </div>
 
             {/* Info */}
-            <div className="flex flex-col gap-2 pl-4 border-l-2 border-transparent group-hover:border-inverse transition-colors duration-300">
-                <h3 className="font-syne font-bold text-xl md:text-2xl text-textPrimary group-hover:translate-x-1 transition-transform duration-300">
+            <div className={`flex flex-col gap-2 pl-4 border-l-2 border-transparent group-hover:border-${inverted ? 'white' : 'inverse'} transition-colors duration-300`}>
+                <h3 className={`font-syne font-bold text-xl md:text-2xl ${inverted ? 'text-white' : 'text-textPrimary'} group-hover:translate-x-1 transition-transform duration-300`}>
                     {project.title}
                 </h3>
                 <div className="flex items-center gap-4">
-                    <span className="font-manrope text-textSecondary text-xs uppercase tracking-widest">
+                    <span className={`font-manrope ${inverted ? 'text-white/60' : 'text-textSecondary'} text-xs uppercase tracking-widest`}>
                         {project.date}
                     </span>
-                    <span className="w-1 h-1 bg-textSecondary rounded-full" />
-                    <span className="font-manrope text-textSecondary text-xs uppercase tracking-widest text-textPrimary/80">
+                    <span className={`w-1 h-1 ${inverted ? 'bg-white/60' : 'bg-textSecondary'} rounded-full`} />
+                    <span className={`font-manrope ${inverted ? 'text-white/60' : 'text-textSecondary'} text-xs uppercase tracking-widest ${inverted ? 'text-white/80' : 'text-textPrimary/80'}`}>
                         {text.categories[project.category as keyof typeof text.categories] || project.category}
                     </span>
                 </div>

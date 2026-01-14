@@ -11,34 +11,34 @@ const About: React.FC<AboutProps> = ({ translations }) => {
     const { aboutPage } = translations;
 
     return (
-        <section id="about" className="py-20 md:py-40 relative overflow-hidden border-t border-b border-black/[0.04]">
+        <section id="about" className="py-20 md:py-28 xl:py-40 relative overflow-hidden border-t border-b border-black/[0.04]">
             <GridLines variant="outer" />
             <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-32 items-center">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 lg:gap-12 xl:gap-32 items-center">
 
                     {/* Text Side (Left) */}
-                    <div className="order-2 lg:order-1">
+                    <div className="order-2 xl:order-1">
                         <Reveal variant="fade-up">
                             <h2 className="font-syne font-bold text-4xl md:text-4xl lg:text-5xl mb-8 leading-tight">
-                                {aboutPage.introduction.titlePrefix} <br /> <span className="bg-gradient-to-r from-gray-500 to-gray-300 bg-clip-text text-transparent">{aboutPage.introduction.titleHighlight}</span>
+                                {aboutPage.introduction.titlePrefix} <br /> <span className="bg-gradient-to-r from-[#111111] to-[#ababab] bg-clip-text text-transparent">{aboutPage.introduction.titleHighlight}</span>
                             </h2>
-                            <div className="font-manrope text-lg leading-relaxed whitespace-pre-line mb-10 bg-gradient-to-br from-gray-600 to-gray-400 bg-clip-text text-transparent">
+                            <div className="font-manrope text-lg leading-relaxed whitespace-pre-line mb-10 bg-gradient-to-br from-[#111111] to-[#ababab] bg-clip-text text-transparent">
                                 {aboutPage.history.description}
                             </div>
 
                             {/* Highlights */}
-                            <div className="relative grid grid-cols-3 gap-1 md:gap-2 p-1 md:p-2 border border-black/[0.08] rounded-[24px] md:rounded-[32px]">
+                            <div className="relative grid grid-cols-3 gap-3 md:gap-6 p-3 md:p-4 border border-black/[0.08] rounded-[24px] md:rounded-[32px]">
                                 {aboutPage.history.highlights.map((highlight, idx) => {
                                     const isFirst = idx === 0;
                                     return (
                                         <div
                                             key={idx}
-                                            className={`relative z-10 flex flex-col gap-1 md:gap-3 p-4 md:p-8 rounded-2xl md:rounded-3xl ${isFirst ? 'bg-black' : 'border-black/[0.04]'}`}
+                                            className={`relative z-10 flex flex-col gap-3 md:gap-5 p-6 md:p-12 rounded-2xl md:rounded-3xl ${isFirst ? 'bg-black' : 'border-black/[0.04]'}`}
                                         >
-                                            <span className={`font-syne font-bold text-2xl md:text-5xl ${isFirst ? 'text-white' : 'text-textPrimary'}`}>
+                                            <span className={`font-syne font-bold text-xl md:text-3xl xl:text-5xl ${isFirst ? 'text-white' : 'text-textPrimary'}`}>
                                                 {highlight.number}
                                             </span>
-                                            <span className={`font-manrope text-[10px] md:text-xs uppercase tracking-wider ${isFirst ? 'text-white/80' : 'bg-gradient-to-r from-gray-500 to-gray-400 bg-clip-text text-transparent'}`}>
+                                            <span className={`font-manrope text-xs md:text-xs uppercase tracking-wider ${isFirst ? 'text-white/80' : 'bg-gradient-to-r from-[#111111] to-[#ababab] bg-clip-text text-transparent'}`}>
                                                 {highlight.label}
                                             </span>
                                         </div>
@@ -49,7 +49,7 @@ const About: React.FC<AboutProps> = ({ translations }) => {
                     </div>
 
                     {/* Image Side (Right) */}
-                    <div className="order-1 lg:order-2 relative">
+                    <div className="order-1 xl:order-2 relative">
                         <Reveal variant="fade-left" delay={200}>
                             <div className="relative aspect-square group">
                                 {/* Main Image Container */}

@@ -11,13 +11,13 @@ interface RevealProps {
   width?: 'fit-content' | '100%';
 }
 
-const Reveal: React.FC<RevealProps> = ({ 
-  children, 
-  variant = 'fade-up', 
-  delay = 0, 
+const Reveal: React.FC<RevealProps> = ({
+  children,
+  variant = 'fade-up',
+  delay = 0,
   duration = 0.8,
   className = '',
-  width = 'fit-content' 
+  width = 'fit-content'
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -63,7 +63,7 @@ const Reveal: React.FC<RevealProps> = ({
       ref={ref}
       // "will-change-transform" helps browser optimize rendering layers to prevent jank
       // "opacity-0" ensures element is hidden before JS kicks in or animation starts
-      className={`${className} ${width === '100%' ? 'w-full' : 'w-fit'} will-change-transform ${isVisible ? getAnimationClass() : 'opacity-0'}`}
+      className={`${className} ${width === '100%' ? 'w-full' : 'w-fit'} ${isVisible ? getAnimationClass() : 'opacity-0'}`}
       style={{
         animationDuration: `${duration}s`,
         animationDelay: `${delay}ms`,

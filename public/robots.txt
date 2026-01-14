@@ -1,0 +1,12 @@
+# GustaSoares Estúdio - Portfolio
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /dashboard/*
+
+# Sitemap location
+Sitemap: https://gustasoares.com/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1

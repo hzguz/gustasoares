@@ -57,11 +57,23 @@ export default {
                 'liquid-shape': 'liquidShape 10s ease-in-out infinite alternate',
                 'liquid-rotate': 'liquidRotate 20s linear infinite',
                 'float-horizontal': 'floatHorizontal 10s ease-in-out infinite alternate',
-                'shimmer-down': 'shimmerDown 2s infinite',
+                'shimmer-down': 'shimmerDown 4s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+                'slide-down': 'slideDown 0.5s ease-out forwards',
                 'marquee-left': 'marqueeLeft 60s linear infinite',
                 'marquee-right': 'marqueeRight 60s linear infinite',
+                'scroll': 'scroll 2s ease-in-out infinite',
             },
             keyframes: {
+                slideDown: {
+                    '0%': { transform: 'translateY(-100%)' },
+                    '100%': { transform: 'translateY(0)' },
+                },
+                scroll: {
+                    '0%': { transform: 'translateY(1px)', opacity: '0' },
+                    '20%': { transform: 'translateY(3px)', opacity: '1' },
+                    '50%': { transform: 'translateY(8px)', opacity: '0' },
+                    '100%': { transform: 'translateY(8px)', opacity: '0' },
+                },
                 blob: {
                     '0%': { transform: 'translate(0px, 0px) scale(1)' },
                     '33%': { transform: 'translate(30px, -50px) scale(1.1)' },

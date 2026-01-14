@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Mail, MessageSquare, ArrowRight, Check } from 'lucide-react';
+import { IconMessage, IconArrowRight, IconCheck } from '@tabler/icons-react';
 import { Translations } from '../types';
 import Button from './Button';
 import Reveal from './Reveal';
@@ -69,7 +69,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
     };
 
     return (
-        <section id="contact" className="py-20 md:py-40 relative overflow-hidden bg-surface/30 border-t border-black/[0.04]">
+        <section id="contact" className="py-20 md:py-28 xl:py-40 relative overflow-hidden bg-surface/30 border-t border-black/[0.04]">
             <GridLines variant="outer" />
 
             {/* Background Light - Significantly Reduced Intensity */}
@@ -83,8 +83,8 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                         <Reveal variant="scale-in">
                             {/* Tagline */}
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/[0.06] backdrop-blur-md mb-6 md:mb-8 w-fit hover:bg-black/[0.1] hover:scale-105 transition-all duration-300">
-                                <MessageSquare size={12} className="text-textPrimary" strokeWidth={1} />
-                                <span className="text-[10px] font-syne font-bold tracking-[0.2em] text-textSecondary uppercase leading-none pt-[1px]">
+                                <IconMessage size={14} className="text-textPrimary" stroke={1} />
+                                <span className="text-xs font-syne font-bold tracking-[0.2em] text-textSecondary uppercase leading-none pt-[1px]">
                                     {text.tagline}
                                 </span>
                             </div>
@@ -97,7 +97,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                         </Reveal>
 
                         <Reveal variant="fade-right" delay={200} duration={0.8}>
-                            <p className="font-manrope text-textSecondary text-base md:text-lg mb-12 md:mb-48 max-w-lg leading-relaxed">
+                            <p className="font-manrope text-textSecondary text-base md:text-lg mb-12 xl:mb-48 max-w-lg leading-relaxed">
                                 {text.description}
                             </p>
                         </Reveal>
@@ -107,11 +107,8 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                 <p className="font-manrope text-textSecondary text-xs uppercase tracking-widest mb-4">{text.orEmail}</p>
                                 <a
                                     href={`mailto:${socialEmail}`}
-                                    className="font-syne font-medium text-lg text-textPrimary hover:text-textSecondary transition-colors flex items-center gap-3 group w-fit"
+                                    className="font-syne font-medium text-lg text-textPrimary hover:text-textSecondary transition-colors group w-fit block"
                                 >
-                                    <div className="w-8 h-8 bg-inverse/10 text-textPrimary rounded-full flex items-center justify-center group-hover:bg-inverse group-hover:text-inverseSurface transition-all">
-                                        <Mail size={14} strokeWidth={1} />
-                                    </div>
                                     {socialEmail}
                                 </a>
                             </div>
@@ -122,7 +119,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                     <Reveal variant="fade-left" delay={200} duration={0.8} width="100%">
                         <div className="relative">
                             {/* Cyberpunk Form Container - Updated: Radius 32px, Border opacity 0.04 */}
-                            <div className="bg-background p-6 md:p-10 rounded-[24px] md:rounded-[32px] relative border border-black/[0.04] overflow-hidden min-h-[600px] flex flex-col justify-center">
+                            <div className="bg-background p-6 md:p-10 rounded-[24px] md:rounded-[32px] relative border border-black/[0.04] overflow-hidden min-h-[400px] md:min-h-[600px] flex flex-col justify-center">
                                 {/* Decorative corner */}
                                 <div className="absolute top-0 right-0 w-12 h-12 border-t border-r border-black/[0.04] rounded-tr-[24px] md:rounded-tr-[32px] z-10" />
 
@@ -132,7 +129,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                         <div className="relative mb-8 group">
                                             <div className="absolute inset-0 bg-black/5 rounded-full blur-xl animate-pulse" />
                                             <div className="relative w-20 h-20 bg-black rounded-full flex items-center justify-center shadow-lg">
-                                                <Check size={40} className="text-white animate-in zoom-in duration-500 delay-100" strokeWidth={3} />
+                                                <IconCheck size={40} className="text-white animate-in zoom-in duration-500 delay-100" stroke={3} />
                                             </div>
 
                                             {/* Decorative particles */}
@@ -165,7 +162,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                                     value={formData.name}
                                                     onChange={handleChange}
                                                     required
-                                                    className="w-full bg-transparent border-b border-black/[0.12] py-3 text-textPrimary text-base font-manrope focus:outline-none focus:border-inverse transition-colors placeholder:text-textSecondary/70 hover:border-black/[0.3]"
+                                                    className="w-full bg-transparent border-b border-black/[0.12] py-3 text-textPrimary text-sm md:text-base font-manrope focus:outline-none focus:border-inverse transition-colors placeholder:text-textSecondary/70 hover:border-black/[0.3]"
                                                     placeholder={text.form.name}
                                                 />
                                             </div>
@@ -176,7 +173,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                                     value={formData.email}
                                                     onChange={handleChange}
                                                     required
-                                                    className="w-full bg-transparent border-b border-black/[0.12] py-3 text-textPrimary text-base font-manrope focus:outline-none focus:border-inverse transition-colors placeholder:text-textSecondary/70 hover:border-black/[0.3]"
+                                                    className="w-full bg-transparent border-b border-black/[0.12] py-3 text-textPrimary text-sm md:text-base font-manrope focus:outline-none focus:border-inverse transition-colors placeholder:text-textSecondary/70 hover:border-black/[0.3]"
                                                     placeholder={text.form.email}
                                                 />
                                             </div>
@@ -188,7 +185,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                                 name="company"
                                                 value={formData.company}
                                                 onChange={handleChange}
-                                                className="w-full bg-transparent border-b border-black/[0.12] py-3 text-textPrimary text-base font-manrope focus:outline-none focus:border-inverse transition-colors placeholder:text-textSecondary/70 hover:border-black/[0.3]"
+                                                className="w-full bg-transparent border-b border-black/[0.12] py-3 text-textPrimary text-sm md:text-base font-manrope focus:outline-none focus:border-inverse transition-colors placeholder:text-textSecondary/70 hover:border-black/[0.3]"
                                                 placeholder={text.form.company}
                                             />
                                         </div>
@@ -220,7 +217,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                                 onChange={handleChange}
                                                 required
                                                 rows={4}
-                                                className="w-full bg-transparent border-b border-black/[0.12] py-3 text-textPrimary text-base font-manrope focus:outline-none focus:border-inverse transition-colors resize-none placeholder:text-textSecondary/70 hover:border-black/[0.3]"
+                                                className="w-full bg-transparent border-b border-black/[0.12] py-3 text-textPrimary text-sm md:text-base font-manrope focus:outline-none focus:border-inverse transition-colors resize-none placeholder:text-textSecondary/70 hover:border-black/[0.3]"
                                                 placeholder={text.form.message}
                                             />
                                         </div>
@@ -234,7 +231,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                             >
                                                 {loading ? 'Enviando...' : text.form.submit}
                                                 {!loading && (
-                                                    <ArrowRight size={16} strokeWidth={1} className="group-hover:translate-x-1 transition-transform" />
+                                                    <IconArrowRight size={16} stroke={1} className="group-hover:translate-x-1 transition-transform" />
                                                 )}
                                             </Button>
                                         </div>

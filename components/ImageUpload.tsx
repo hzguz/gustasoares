@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { UploadCloud, X, Loader2 } from 'lucide-react';
+import { IconCloudUpload, IconX, IconLoader2 } from '@tabler/icons-react';
 import { supabase } from '../lib/supabase';
 // import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Removed
 // import { storage } from '../lib/firebase'; // Removed
@@ -119,7 +119,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, label, class
 
         {isLoading ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface/80 backdrop-blur-sm z-20">
-            <Loader2 className="animate-spin text-textPrimary mb-2" size={24} />
+            <IconLoader2 className="animate-spin text-textPrimary mb-2" size={24} />
             <span className="text-xs font-manrope font-medium text-textSecondary">Enviando para o servidor...</span>
           </div>
         ) : value ? (
@@ -134,14 +134,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, label, class
                 title="Remover imagem"
                 type="button"
               >
-                <X size={20} />
+                <IconX size={20} />
               </button>
             </div>
           </div>
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-textSecondary pointer-events-none">
             <div className={`p-4 rounded-full mb-3 transition-colors duration-300 ${isDragging ? 'bg-inverse text-white' : 'bg-white shadow-sm text-textSecondary'}`}>
-              <UploadCloud size={24} strokeWidth={1.5} />
+              <IconCloudUpload size={24} stroke={1.5} />
             </div>
             <p className="font-syne font-bold text-sm text-textPrimary mb-1">
               {isDragging ? 'Solte para enviar' : 'Clique ou arraste a imagem'}

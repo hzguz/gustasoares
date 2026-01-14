@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Button from './Button';
 import Reveal from './Reveal';
-import { ArrowLeft } from 'lucide-react';
+import { IconArrowLeft } from '@tabler/icons-react';
 import { supabase } from '../lib/supabase';
 // import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'; // Removed
 // import { auth } from '../lib/firebase'; // Removed
@@ -80,7 +80,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
       {/* Decorative Background Elements */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-black/[0.03] to-transparent rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-black/[0.02] to-transparent rounded-full blur-3xl" />
-      <div className="absolute inset-0 bg-noise opacity-30 pointer-events-none" />
+
 
       <div className="relative z-10 w-full max-w-md px-6">
         <Reveal variant="fade-up">
@@ -166,7 +166,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBack }) => {
                     onClick={onBack}
                     className="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-textSecondary hover:text-textPrimary mt-4 transition-colors font-syne"
                   >
-                    <ArrowLeft size={14} /> Voltar ao Site
+                    <IconArrowLeft size={14} stroke={1.5} /> Voltar ao Site
                   </button>
                 </div>
               </form>

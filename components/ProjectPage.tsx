@@ -4,7 +4,7 @@ import { ExtendedProject, Translations, Language, ProjectBlock } from '../types'
 import Reveal from './Reveal';
 import Button from './Button';
 import Footer from './Footer';
-import { ArrowUpRight } from 'lucide-react';
+import { IconArrowUpRight } from '@tabler/icons-react';
 import GridLines from './GridLines';
 
 interface ProjectPageProps {
@@ -76,7 +76,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
                   {/* Decorative element for text blocks */}
                   <div className="hidden md:block absolute -left-12 top-0 bottom-0 w-[1px] bg-black/[0.04]" />
                   <h3 className="font-syne font-bold text-2xl mb-6">{block.content.title}</h3>
-                  <p className="font-manrope text-textSecondary text-lg leading-relaxed whitespace-pre-line">
+                  <p className="font-manrope text-textSecondary text-lg leading-relaxed whitespace-pre-line break-words">
                     {block.content.text}
                   </p>
                 </div>
@@ -116,51 +116,42 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       </div>
 
       {/* 1. Seção Banner (Full Width) */}
-      <section className="relative w-full h-[85vh] flex items-end pb-16 md:pb-32 overflow-hidden">
+      <section
+        className="relative w-full h-[60vh] md:h-[60vh] xl:h-[85vh] flex items-end pb-10 md:pb-12 xl:pb-32 overflow-hidden bg-black"
+      >
         {/* Background Image Container with Parallax */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src={bannerImage}
             alt={project.title}
-            className="w-full h-[120%] object-cover origin-center will-change-transform grayscale"
+            className="w-full h-[120%] object-cover origin-center will-change-transform grayscale opacity-100"
             style={{
               transform: `translate3d(0, ${scrollY * 0.4}px, 0) scale(${1 + scrollY * 0.0005})`,
               filter: `blur(${scrollY * 0.01}px) grayscale(100%)`
             }}
           />
-
-          {/* Light Overlay for Contrast (Tom claro por cima) */}
-          <div className="absolute inset-0 bg-white/40 mix-blend-overlay" />
-          <div className="absolute inset-0 bg-white/60" /> {/* General wash to lighten image */}
-
-          {/* Gradient blending into solid background at the bottom */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
-
-          {/* Texture */}
-          <div className="absolute inset-0 bg-noise opacity-30" />
         </div>
 
-        <GridLines variant="outer" />
+        {/* Radial Gradient Overlay - Separate Layer */}
+        <div className="absolute inset-0 z-[1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(at top center, #11111181 0%, #111111FC 50%)' }} />
+
+        <GridLines variant="outer" inverted />
 
         <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
           <Reveal variant="fade-up" duration={0.8}>
             <div className="max-w-4xl">
-              {/* Tagline removida conforme solicitado */}
-              {/* <span className="inline-block py-1 px-3 border border-black/10 rounded-full text-xs font-syne font-bold uppercase tracking-widest text-textSecondary mb-6 backdrop-blur-md bg-white/30">
-                        {project.category}
-                    </span> */}
-              <h1 className="font-syne font-bold text-4xl md:text-7xl lg:text-8xl leading-[0.9] text-textPrimary mb-6 md:mb-8 drop-shadow-sm">
+              <h1 className="font-syne font-bold text-2xl md:text-4xl xl:text-6xl leading-[0.9] text-white mb-3 md:mb-6 drop-shadow-2xl">
                 {project.title}
               </h1>
-              <p className="font-manrope text-base md:text-2xl text-textSecondary font-light max-w-2xl mb-8 md:mb-10 leading-relaxed">
+              <p className="font-manrope text-base md:text-lg xl:text-xl text-white/70 font-light max-w-2xl mb-6 md:mb-10 leading-relaxed">
                 {project.descriptionShort}
               </p>
 
               {project.showLink && project.link && (
                 <a href={project.link} target="_blank" rel="noopener noreferrer">
-                  <Button variant="primary" className="group">
+                  <Button variant="outline" className="group border-white text-white hover:bg-white hover:text-black">
                     Visite o Site
-                    <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    <IconArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" stroke={1.5} />
                   </Button>
                 </a>
               )}
@@ -170,23 +161,23 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       </section>
 
       {/* 2. Seção Detalhes */}
-      <section className="py-12 md:py-32 border-b border-black/[0.04]">
+      <section className="pt-8 pb-0 md:pt-12 md:pb-0 xl:py-32 xl:border-b xl:border-black/[0.04]">
         <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[120px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 xl:gap-[120px]">
 
             {/* Meta Info (Year & Tools) */}
             <div className="lg:col-span-6 flex flex-col gap-6">
               <Reveal variant="fade-right" delay={100} width="100%">
                 <div className="flex items-center justify-between py-4 border-b border-black/[0.08]">
-                  <h3 className="font-syne font-bold text-sm tracking-widest text-textSecondary">Ano</h3>
-                  <p className="font-manrope text-sm text-textSecondary">{project.date}</p>
+                  <h3 className="font-syne font-bold text-base tracking-widest text-black">Ano</h3>
+                  <p className="font-manrope text-base text-textSecondary">{project.date}</p>
                 </div>
               </Reveal>
 
               <Reveal variant="fade-right" delay={200} width="100%">
                 <div className="flex items-start justify-between py-4 border-b border-black/[0.08]">
-                  <h3 className="font-syne font-bold text-sm tracking-widest text-textSecondary">Ferramentas</h3>
-                  <p className="font-manrope text-sm text-textSecondary text-right max-w-[60%]">
+                  <h3 className="font-syne font-bold text-base tracking-widest text-black">Ferramentas</h3>
+                  <p className="font-manrope text-base text-textSecondary text-right max-w-[60%]">
                     {project.tools.join(', ')}
                   </p>
                 </div>
@@ -196,7 +187,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
             {/* Long Description */}
             <div className="lg:col-span-6">
               <Reveal variant="fade-up" delay={300}>
-                <div className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed space-y-6 whitespace-pre-line">
+                <div className="font-manrope text-textSecondary text-base leading-relaxed space-y-6 whitespace-pre-line break-words">
                   {project.descriptionLong}
                 </div>
               </Reveal>
@@ -206,7 +197,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       </section>
 
       {/* 3. Seção Conteúdo Dinâmico (Builder) ou Galeria Legada */}
-      <section className="py-12 md:py-32 bg-surface/30">
+      <section className="py-8 md:py-12 xl:py-32 bg-surface/30">
         <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
           {/* If dynamic blocks exist, render them. Otherwise render legacy gallery */}
           {project.blocks && project.blocks.length > 0 ? (

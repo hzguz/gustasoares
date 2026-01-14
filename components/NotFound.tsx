@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-import { Home, AlertTriangle } from 'lucide-react';
+import { IconHome, IconAlertTriangle } from '@tabler/icons-react';
 import Reveal from './Reveal';
 
 interface NotFoundProps {
@@ -11,7 +11,7 @@ const NotFound: React.FC<NotFoundProps> = ({ onHome }) => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#fafafa] relative overflow-hidden text-black selection:bg-black selection:text-white">
             {/* Background Noise & Effects */}
-            <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none mix-blend-multiply" />
+
 
             {/* Black Plasma Effect (Luz Preta) - Floating Animation */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-black opacity-[0.04] blur-[100px] rounded-full pointer-events-none animate-blob mix-blend-multiply" />
@@ -46,7 +46,7 @@ const NotFound: React.FC<NotFoundProps> = ({ onHome }) => {
 
                 <Reveal variant="fade-up" delay={300}>
                     <Button onClick={onHome} variant="primary" className="gap-2 px-10 py-5 text-sm bg-black text-white hover:bg-neutral-800 border-none rounded-full shadow-xl shadow-black/10">
-                        <Home size={18} />
+                        <IconHome size={18} stroke={1.5} />
                         Restaurar Conexão
                     </Button>
                 </Reveal>

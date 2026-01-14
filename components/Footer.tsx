@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { Translations, Language } from '../types';
-import { Globe, ArrowUpRight } from 'lucide-react';
-import { IconBrandLinkedin, IconBrandBehance, IconBrandWhatsapp } from '@tabler/icons-react';
+import { IconWorld, IconArrowUpRight, IconBrandLinkedin, IconBrandBehance, IconBrandWhatsapp } from '@tabler/icons-react';
 import { getWhatsAppLink, WHATSAPP_MESSAGES } from '../constants';
 import GridLines from './GridLines';
 
@@ -27,33 +26,38 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
   };
 
   return (
-    <footer className="relative text-textPrimary overflow-hidden border-t border-black/[0.04]">
+    <footer
+      className="relative text-white overflow-hidden border-t border-white/[0.05]"
+      style={{
+        background: 'radial-gradient(at bottom center, var(--e-global-color-3ba8dc3) 0%, var(--e-global-color-primary) 80%)'
+      }}
+    >
 
       {/* Background Elements - Reduced Intensity */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <div className="animate-float-horizontal">
           <div className="relative w-[500px] h-[500px] md:w-[800px] md:h-[800px] filter blur-[80px] md:blur-[120px] contrast-[150%] opacity-10 mix-blend-screen animate-liquid-rotate">
-            <div className="absolute top-0 left-20 w-[60%] h-[60%] bg-inverse rounded-full animate-liquid-shape mix-blend-screen" />
-            <div className="absolute bottom-0 right-20 w-[55%] h-[55%] bg-inverse rounded-full animate-liquid-shape mix-blend-screen animation-delay-2000" style={{ animationDirection: 'alternate-reverse' }} />
-            <div className="absolute bottom-20 left-10 w-[40%] h-[40%] bg-inverse/80 rounded-full animate-blob mix-blend-screen" />
+            <div className="absolute top-0 left-20 w-[60%] h-[60%] bg-white rounded-full animate-liquid-shape mix-blend-screen" />
+            <div className="absolute bottom-0 right-20 w-[55%] h-[55%] bg-white rounded-full animate-liquid-shape mix-blend-screen animation-delay-2000" style={{ animationDirection: 'alternate-reverse' }} />
+            <div className="absolute bottom-20 left-10 w-[40%] h-[40%] bg-white/80 rounded-full animate-blob mix-blend-screen" />
           </div>
         </div>
         {/* Noise Overlay */}
-        <div className="absolute inset-0 bg-noise opacity-30" />
+
       </div>
 
-      <GridLines variant="outer" />
+      <GridLines variant="outer" inverted />
 
       <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
 
         {/* Main Grid Layout - Equal Top/Bottom Padding (Large) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 py-20 md:py-40">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 py-20 md:py-28 xl:py-40">
 
           {/* Left Column: Big CTA */}
           <div className="lg:col-span-7 flex flex-col justify-center lg:pr-12">
-            <h2 className="font-syne font-bold text-4xl md:text-5xl lg:text-7xl leading-[0.9] tracking-tight mb-8 md:mb-12">
+            <h2 className="font-syne font-bold text-4xl md:text-5xl lg:text-7xl leading-[0.9] tracking-tight mb-8 md:mb-12 text-white">
               {text.titlePart1} <br />
-              <span className="bg-gradient-to-r from-gray-500 to-gray-300 bg-clip-text text-transparent">{text.titlePart2}</span>
+              <span className="bg-gradient-to-r from-white to-white/50 bg-clip-text text-transparent">{text.titlePart2}</span>
             </h2>
 
             {/* Updated Button: Transparent BG, Smaller Font/Icon, Only Border */}
@@ -61,24 +65,24 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
               href={getWhatsAppLink(WHATSAPP_MESSAGES.footer)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group w-fit relative inline-flex items-center gap-4 px-6 py-3 rounded-full bg-transparent border border-black/[0.1] transition-all duration-500 hover:border-inverse"
+              className="group w-fit relative inline-flex items-center gap-4 pl-6 pr-3 py-3 rounded-full bg-transparent border border-white/[0.1] transition-all duration-500 hover:border-white"
             >
-              <span className="font-manrope text-base font-medium text-textPrimary tracking-tight transition-colors duration-500 group-hover:text-textPrimary">
+              <span className="font-manrope text-base font-medium text-white tracking-tight transition-colors duration-500">
                 {text.emailButtonText}
               </span>
-              <div className="w-8 h-8 bg-inverse rounded-full flex items-center justify-center text-inverseSurface transition-all duration-500 group-hover:scale-110 group-hover:rotate-45 shadow-[0_0_10px_rgba(var(--inverse),0.2)]">
-                <ArrowUpRight size={16} strokeWidth={1} />
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black transition-all duration-500 group-hover:scale-110 group-hover:rotate-45 shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+                <IconArrowUpRight size={16} stroke={1} />
               </div>
             </a>
           </div>
 
           {/* Right Column: Navigation & Social Grid - Using Lines instead of Containers */}
-          <div className="lg:col-span-5 flex flex-col md:flex-row lg:border-l border-black/[0.04] gap-12 md:gap-0">
+          <div className="lg:col-span-5 flex flex-col md:flex-row lg:border-l border-white/[0.05] gap-12 md:gap-0">
 
             {/* Navigation Column */}
             <div className="flex-1 lg:pl-12 py-2 flex flex-col gap-6 md:gap-8">
-              <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-textPrimary flex items-center gap-2">
-                <div className="w-1.5 h-1.5 bg-textPrimary rounded-full" />
+              <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-white flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-white rounded-full" />
                 {text.navTitle}
               </h3>
               <nav className="flex flex-col gap-4">
@@ -92,12 +96,12 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
                     key={item.h}
                     href={item.h}
                     onClick={(e) => handleNavClick(e, item.h)}
-                    className="group flex items-center gap-3 text-sm font-manrope text-textPrimary/70 hover:text-textPrimary transition-colors w-fit"
+                    className="group flex items-center gap-3 text-sm font-manrope text-white/70 hover:text-white transition-colors w-fit"
                   >
-                    <span className="text-[10px] font-mono text-textSecondary group-hover:text-textPrimary transition-colors">0{index + 1}</span>
+                    <span className="text-[10px] font-mono text-white/40 group-hover:text-white transition-colors">0{index + 1}</span>
                     <span className="relative">
                       {item.l}
-                      <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-textPrimary transition-all duration-300 group-hover:w-full"></span>
+                      <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
                     </span>
                   </a>
                 ))}
@@ -105,9 +109,9 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
             </div>
 
             {/* Social Column - Separated by Line on MD+ */}
-            <div className="flex-1 lg:pl-12 lg:border-l border-black/[0.04] py-2 md:mt-0 flex flex-col gap-6 md:gap-8">
-              <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-textPrimary flex items-center gap-2">
-                <div className="w-1.5 h-1.5 bg-textPrimary rounded-full" />
+            <div className="flex-1 lg:pl-12 lg:border-l border-white/[0.05] py-2 md:mt-0 flex flex-col gap-6 md:gap-8">
+              <h3 className="font-syne font-bold text-xs uppercase tracking-widest text-white flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-white rounded-full" />
                 {text.socialTitle}
               </h3>
               <div className="flex flex-col gap-4">
@@ -121,10 +125,10 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
                     href={social.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex items-center gap-4 text-textPrimary/70 hover:text-textPrimary transition-colors w-fit"
+                    className="group flex items-center gap-4 text-white/70 hover:text-white transition-colors w-fit"
                   >
                     {/* Fixed Width/Height Container to maintain border size while shrinking icon */}
-                    <div className="w-8 h-8 flex items-center justify-center border border-black/[0.04] rounded-full group-hover:bg-inverse group-hover:text-inverseSurface transition-all duration-300">
+                    <div className="w-8 h-8 flex items-center justify-center border border-white/[0.05] rounded-full group-hover:bg-white group-hover:text-black transition-all duration-300">
                       <social.icon size={14} stroke={1} />
                     </div>
                     <span className="font-manrope text-sm group-hover:translate-x-1 transition-transform">{social.label}</span>
@@ -137,12 +141,12 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
         </div>
 
         {/* Footer Bottom Bar - Equal Top/Bottom Padding (Smaller) */}
-        <div className="border-t border-black/[0.04] flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-8 md:gap-6 relative z-10 py-8 md:py-12">
+        <div className="border-t border-white/[0.05] flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-8 md:gap-6 relative z-10 py-8 md:py-12">
           <div className="flex flex-col gap-2">
-            <p className="font-manrope font-medium text-textPrimary/60 text-xs uppercase tracking-widest">
+            <p className="font-manrope font-medium text-white/60 text-xs uppercase tracking-widest">
               GustaSoares © {currentYear}
             </p>
-            <p className="font-manrope text-xs text-textSecondary max-w-md">
+            <p className="font-manrope text-xs text-white/40 max-w-md">
               {text.description}
             </p>
           </div>
@@ -151,9 +155,9 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
             {/* Language Toggle */}
             <button
               onClick={toggleLang}
-              className="flex items-center gap-2 text-xs font-syne font-bold text-textPrimary hover:text-textSecondary transition-colors uppercase tracking-widest group px-4 py-2 border border-black/[0.04] rounded-full hover:bg-inverse/5"
+              className="flex items-center gap-2 text-xs font-syne font-bold text-white hover:text-white/80 transition-colors uppercase tracking-widest group px-4 py-2 border border-white/[0.05] rounded-full hover:bg-white/5"
             >
-              <Globe size={14} className="group-hover:rotate-180 transition-transform duration-500" strokeWidth={1} />
+              <IconWorld size={14} className="group-hover:rotate-180 transition-transform duration-500" stroke={1} />
               <span>{lang === 'pt' ? 'EN' : 'PT'}</span>
             </button>
           </div>

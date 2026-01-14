@@ -1,6 +1,5 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Monitor, Code2, Layers, Search, Plus } from 'lucide-react';
+import { IconDeviceDesktop, IconCode, IconLayersIntersect, IconSearch } from '@tabler/icons-react';
 import { Translations } from '../types';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
@@ -18,11 +17,11 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
-      case 'monitor': return <Monitor strokeWidth={1} size={32} />;
-      case 'code': return <Code2 strokeWidth={1} size={32} />;
-      case 'layout': return <Layers strokeWidth={1} size={32} />;
-      case 'search': return <Search strokeWidth={1} size={32} />;
-      default: return <Monitor strokeWidth={1} size={32} />;
+      case 'monitor': return <IconDeviceDesktop stroke={1} size={32} />;
+      case 'code': return <IconCode stroke={1} size={32} />;
+      case 'layout': return <IconLayersIntersect stroke={1} size={32} />;
+      case 'search': return <IconSearch stroke={1} size={32} />;
+      default: return <IconDeviceDesktop stroke={1} size={32} />;
     }
   };
 
@@ -54,7 +53,7 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
   }, [activeIndex, text.items]);
 
   return (
-    <section id="services" className="py-20 md:py-40 relative border-b border-black/[0.04]">
+    <section id="services" className="py-20 md:py-28 xl:py-40 relative border-b border-black/[0.04]">
       <GridLines variant="outer" />
 
       {/* Decorative Light */}
@@ -63,19 +62,19 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
       <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-16 items-end">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6 xl:gap-8 mb-6 md:mb-16 items-end">
           <div>
 
             <Reveal variant="blur-in" duration={0.8} delay={100}>
-              <h2 className="font-syne font-bold text-4xl md:text-4xl lg:text-5xl text-textPrimary leading-[0.95]">
+              <h2 className="font-syne font-bold text-4xl md:text-5xl lg:text-5xl text-textPrimary leading-[0.95]">
                 {text.title}
               </h2>
             </Reveal>
           </div>
-          <div className="md:pl-12 md:ml-auto">
+          <div className="xl:pl-12 xl:ml-auto">
             <Reveal variant="fade-up" duration={0.8} delay={200}>
               <p
-                className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed text-left md:text-right"
+                className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed text-left xl:text-right"
                 dangerouslySetInnerHTML={{ __html: text.description }}
               />
             </Reveal>
@@ -90,18 +89,19 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
 
           {/* Sliding Background Element - Hidden on Mobile */}
           <div
-            className="hidden md:block absolute bg-inverse rounded-[2rem] shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] z-0 pointer-events-none"
+            className="hidden md:block absolute rounded-[2rem] shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] z-0 pointer-events-none"
             style={{
               left: highlightStyle.left,
               top: highlightStyle.top,
               width: highlightStyle.width,
               height: highlightStyle.height,
-              opacity: highlightStyle.opacity
+              opacity: highlightStyle.opacity,
+              background: 'radial-gradient(at top center, var(--e-global-color-3ba8dc3) 0%, var(--e-global-color-primary) 100%)'
             }}
           />
 
           {/* Grid items */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-2">
             {text.items.map((service, index) => {
               const isActive = activeIndex === index;
 
@@ -122,16 +122,16 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
                     <div
                       className={`
                         group relative p-6 md:p-8 md:pt-16 md:pb-10 flex flex-col justify-between min-h-[260px] md:min-h-[380px] h-full
-                        transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] rounded-[1.2rem] md:rounded-[2rem] cursor-pointer z-10
+                        transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] rounded-[1.2rem] md:rounded-[2rem] z-10
                         
                         /* Mobile Specific Styles */
                         border-0 md:border md:border-none
                         ${isActive
-                          ? 'bg-inverse text-white border-transparent'
+                          ? 'text-white border-transparent bg-[image:radial-gradient(at_top_center,var(--e-global-color-3ba8dc3)_0%,var(--e-global-color-primary)_100%)]'
                           : 'bg-white/50 md:border-black/[0.04] text-textPrimary'}
                             
                         /* Desktop Specific Override (relying on sliding bg) */
-                        md:bg-transparent
+                        md:bg-transparent md:bg-none
                         ${isActive
                           // Logic handled by sliding bg container on desktop
                           ? 'md:scale-[1.0]'
@@ -142,27 +142,23 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
                         <div className={`
                                 mb-8 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center border transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]
                                 ${isActive
-                            ? 'bg-white text-inverse border-white scale-100 md:scale-110 shadow-[0_0_20px_rgba(255,255,255,0.2)]'
-                            : 'bg-inverse/5 text-textPrimary border-black/[0.04]'}
+                            ? 'bg-white text-inverse border-white scale-100 md:scale-110 shadow-[0_0_20px_rgba(255,255,255,0.2)] delay-100'
+                            : 'bg-inverse/5 text-textPrimary border-black/[0.04] delay-0'}
                             `}>
                           {getIcon(service.icon)}
                         </div>
 
                         <h3 className={`font-syne font-bold text-xl mb-4 leading-tight transition-colors duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
-                                ${isActive ? 'text-white' : 'text-textPrimary md:text-textPrimary/80'}`}>
+                                ${isActive ? 'text-white delay-100' : 'text-black delay-0'}`}>
                           {service.title}
                         </h3>
                       </div>
 
                       <div className="relative z-10">
                         <p className={`font-manrope text-sm leading-relaxed transition-colors duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
-                                ${isActive ? 'text-gray-300' : 'text-textSecondary'}`}>
+                                ${isActive ? 'text-gray-300 delay-100' : 'text-textSecondary delay-0'}`}>
                           {service.description}
                         </p>
-                        <div className={`mt-8 flex justify-end transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
-                                ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'}`}>
-                          <Plus size={20} strokeWidth={1} className={`${isActive ? 'text-white' : 'text-textPrimary'} animate-pulse`} />
-                        </div>
                       </div>
                     </div>
                   </Reveal>
@@ -171,8 +167,8 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
             })}
           </div>
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 };
 

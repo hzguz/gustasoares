@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ExtendedProject } from '../types';
 import Button from './Button';
-import { Plus, Edit3, Trash2, LogOut, Building2, PanelTop, Smartphone, LayoutGrid, Eye } from 'lucide-react';
+import { IconPlus, IconEdit, IconTrash, IconLogout, IconBuildingSkyscraper, IconLayoutBoard, IconDeviceMobile, IconLayoutGrid, IconEye } from '@tabler/icons-react';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
 
@@ -20,10 +20,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
     const [activeCategory, setActiveCategory] = useState<string>('all');
 
     const categories = [
-        { key: 'all', label: 'Todos', icon: LayoutGrid },
-        { key: 'institutional', label: 'Institucional', icon: Building2 },
-        { key: 'landing', label: 'Landing Pages', icon: PanelTop },
-        { key: 'app', label: 'Aplicativos', icon: Smartphone },
+        { key: 'all', label: 'Todos', icon: IconLayoutGrid },
+        { key: 'institutional', label: 'Institucional', icon: IconBuildingSkyscraper },
+        { key: 'landing', label: 'Landing Pages', icon: IconLayoutBoard },
+        { key: 'app', label: 'Aplicativos', icon: IconDeviceMobile },
     ];
 
     const filteredProjects = activeCategory === 'all'
@@ -36,7 +36,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
             {/* Decorative Background Elements */}
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-black/[0.02] to-transparent rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-black/[0.015] to-transparent rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none" />
+
 
             <div className="container mx-auto max-w-6xl relative z-10 px-6">
                 {/* Premium Header */}
@@ -47,7 +47,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
                                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
                                 Painel Ativo
                             </span>
-                            <h1 className="font-syne font-bold text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 bg-clip-text text-transparent">
+                            <h1 className="font-syne font-bold text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-[#111111] via-[#555555] to-[#ababab] bg-clip-text text-transparent">
                                 Gerenciamento
                             </h1>
                         </div>
@@ -60,14 +60,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
                                 </Button>
                             )}
                             <Button onClick={onCreate} variant="primary" className="gap-2 shadow-lg shadow-black/10 hover:shadow-xl hover:shadow-black/15 transition-shadow">
-                                <Plus size={18} /> Novo Projeto
+                                <IconPlus size={18} stroke={1.5} /> Novo Projeto
                             </Button>
                             <button
                                 onClick={onLogout}
                                 className="p-3 rounded-full bg-white border border-black/[0.06] hover:bg-red-50 hover:border-red-100 text-textSecondary hover:text-red-500 transition-all shadow-sm"
                                 title="Sair"
                             >
-                                <LogOut size={20} />
+                                <IconLogout size={20} stroke={1.5} />
                             </button>
                         </div>
                     </Reveal>
@@ -95,7 +95,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
                                         }
                                     `}
                                 >
-                                    <Icon size={14} />
+                                    <Icon size={14} stroke={1.5} />
                                     {cat.label}
                                     <span className={`
                                         ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold
@@ -127,7 +127,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
                                         title="Visualizar projeto"
                                     >
                                         <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 transition-transform duration-300 group-hover/thumb:scale-110">
-                                            <Eye size={22} className="text-white" strokeWidth={1.5} />
+                                            <IconEye size={22} className="text-white" stroke={1.5} />
                                         </div>
                                     </button>
                                 )}
@@ -152,7 +152,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
                                     onClick={() => onEdit(project)}
                                     className="flex items-center gap-2 px-5 py-2.5 bg-black text-white rounded-full hover:bg-gray-800 transition-all duration-300 text-xs font-bold uppercase tracking-wide shadow-sm"
                                 >
-                                    <Edit3 size={14} /> Editar
+                                    <IconEdit size={14} stroke={1.5} /> Editar
                                 </button>
                                 <button
                                     onClick={() => {
@@ -162,7 +162,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
                                     }}
                                     className="flex items-center gap-2 px-5 py-2.5 bg-white border border-red-200 rounded-full text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white transition-all duration-300 text-xs font-bold uppercase tracking-wide"
                                 >
-                                    <Trash2 size={14} /> Excluir
+                                    <IconTrash size={14} stroke={1.5} /> Excluir
                                 </button>
                             </div>
                         </div>

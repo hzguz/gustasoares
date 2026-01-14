@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ExtendedProject, ProjectBlock } from '../types';
 import Button from './Button';
-import { ArrowLeft, Save, Square, Columns, LayoutTemplate, Trash2 } from 'lucide-react';
+import { IconArrowLeft, IconDeviceFloppy, IconSquare, IconColumns, IconLayout, IconTrash } from '@tabler/icons-react';
 import GridLines from './GridLines';
 import ImageUpload from './ImageUpload';
 
@@ -85,8 +85,21 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
     const handleSave = () => {
         if (!formData.title) return alert("Título é obrigatório");
 
+        // Generate slug from title
+        const generateSlug = (title: string): string => {
+            return title
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '') // Remove accents
+                .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
+                .replace(/\s+/g, '-') // Replace spaces with hyphens
+                .replace(/-+/g, '-') // Replace multiple hyphens with single
+                .trim();
+        };
+
         const finalProject: ExtendedProject = {
             id: formData.id || String(Date.now()),
+            slug: formData.slug || generateSlug(formData.title!),
             title: formData.title!,
             category: formData.category || 'landing',
             date: formData.date || '2025',
@@ -109,7 +122,7 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
             {/* Decorative Background */}
             <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-gradient-to-br from-black/[0.02] to-transparent rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-black/[0.015] to-transparent rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none" />
+
 
             <div className="container mx-auto max-w-4xl px-6 relative z-10">
 
@@ -117,7 +130,7 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
                 <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6 border-b border-black/[0.04] pb-8 bg-background/95 backdrop-blur-sm sticky top-20 z-40 rounded-b-2xl">
                     <div className="flex items-center gap-4 w-full md:w-auto">
                         <button onClick={onCancel} className="p-2 hover:bg-black/[0.05] rounded-full transition-colors text-textSecondary hover:text-textPrimary">
-                            <ArrowLeft size={24} />
+                            <IconArrowLeft size={24} stroke={1.5} />
                         </button>
                         <h2 className="font-syne font-bold text-2xl md:text-3xl">{project ? 'Editar Projeto' : 'Novo Projeto'}</h2>
                     </div>
@@ -129,7 +142,7 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
                             Cancelar
                         </button>
                         <Button onClick={handleSave} variant="primary" className="flex-1 md:flex-none gap-2">
-                            <Save size={18} /> Salvar
+                            <IconDeviceFloppy size={18} stroke={1.5} /> Salvar
                         </Button>
                     </div>
                 </div>
@@ -229,15 +242,15 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
 
                             <div className="flex bg-white border border-black/[0.1] rounded-full p-1 gap-1 shadow-sm">
                                 <button onClick={() => addBlock('1x1-image')} className="flex items-center gap-2 px-4 py-2 hover:bg-black/[0.05] rounded-full transition-colors text-xs font-bold font-syne uppercase">
-                                    <Square size={16} /> Imagem Cheia
+                                    <IconSquare size={16} stroke={1.5} /> Imagem Cheia
                                 </button>
                                 <div className="w-[1px] bg-black/[0.1] my-1" />
                                 <button onClick={() => addBlock('2x1-image')} className="flex items-center gap-2 px-4 py-2 hover:bg-black/[0.05] rounded-full transition-colors text-xs font-bold font-syne uppercase">
-                                    <Columns size={16} /> 2 Colunas
+                                    <IconColumns size={16} stroke={1.5} /> 2 Colunas
                                 </button>
                                 <div className="w-[1px] bg-black/[0.1] my-1" />
                                 <button onClick={() => addBlock('text-image-left')} className="flex items-center gap-2 px-4 py-2 hover:bg-black/[0.05] rounded-full transition-colors text-xs font-bold font-syne uppercase">
-                                    <LayoutTemplate size={16} /> Texto + Img
+                                    <IconLayout size={16} stroke={1.5} /> Texto + Img
                                 </button>
                             </div>
                         </div>
@@ -251,7 +264,7 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
                                             Bloco {index + 1}: {block.type}
                                         </span>
                                         <button onClick={() => removeBlock(block.id)} className="text-red-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
-                                            <Trash2 size={18} />
+                                            <IconTrash size={18} stroke={1.5} />
                                         </button>
                                     </div>
 

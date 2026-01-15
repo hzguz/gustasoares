@@ -11,10 +11,10 @@ export async function generateStaticParams() {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    // If env vars are missing, skip static generation
+    // If env vars are missing, return placeholder to allow build to pass
     if (!supabaseUrl || !supabaseAnonKey) {
-        console.warn("Supabase env vars missing. Skipping static params generation.");
-        return [];
+        console.warn("Supabase env vars missing. Using placeholder slug.");
+        return [{ slug: 'placeholder' }];
     }
 
     try {
@@ -23,10 +23,10 @@ export async function generateStaticParams() {
 
         if (error) {
             console.error("Supabase Error in generateStaticParams:", error);
-            return [];
+            return [{ slug: 'placeholder' }];
         }
 
-        if (!projects) return [];
+        if (!projects || projects.length === 0) return [{ slug: 'placeholder' }];
 
         const params = projects.map((project) => ({
             slug: generateSlug(project.title || '')
@@ -35,7 +35,7 @@ export async function generateStaticParams() {
         return params;
     } catch (e) {
         console.error("Exception in generateStaticParams:", e);
-        return [];
+        return [{ slug: 'placeholder' }];
     }
 }
 

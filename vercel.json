@@ -1,6 +1,0 @@
-{
-    "outputDirectory": "out",
-    "framework": "nextjs",
-    "cleanUrls": true,
-    "trailingSlash": false
-}

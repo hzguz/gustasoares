@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { IconMenu, IconWorld } from '@tabler/icons-react';
 import { Language, Translations } from '../types';
 import Button from './Button';
+import { SOCIAL_LINKS } from '../constants';
 
 interface HeaderProps {
   lang: Language;
@@ -15,15 +16,15 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text, onNavigate, onOpenMenu }) => {
   const navLinks = [
     { label: text.home, href: 'home' },
-    { label: text.about, href: '#about' },
     { label: text.projects, href: '#projects' },
+    { label: text.about, href: '#about' },
     { label: text.contact, href: '#contact' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     if (onNavigate) {
-      onNavigate(href);
+      onNavigate(href.replace('#', ''));
     } else {
       if (href.startsWith('#')) {
         const el = document.querySelector(href);
@@ -40,7 +41,15 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text, onNavigate, onO
           {/* Desktop Menu Container with blur */}
           <div className="hidden xl:flex items-center justify-between px-8 py-4 border rounded-full border-white/5 bg-black/5 backdrop-blur-[16px]">
             <div className="flex items-center z-50 relative">
-              <a href="#home" aria-label="Home">
+              <a
+                href="#home"
+                aria-label="Home"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onNavigate) onNavigate('home');
+                  else document.querySelector('#home')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 <img
                   src="/imgs/logo-texto.svg"
                   alt="GustaSoares"
@@ -74,8 +83,15 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text, onNavigate, onO
                 <span>{lang}</span>
               </button>
 
-              <a href="#contact">
-                <Button variant="white" className="py-2.5 pl-6 pr-4 text-xs">
+              <a
+                href={SOCIAL_LINKS.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  // Removed preventDefault to allow external link
+                }}
+              >
+                <Button variant="white" className="py-2.5 pl-6 pr-4 text-xs bg-gradient-to-r from-white to-gray-100">
                   {text.cta}
                 </Button>
               </a>
@@ -85,7 +101,15 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text, onNavigate, onO
           {/* Mobile Menu Button - Calls Global Menu */}
           <div className="xl:hidden flex items-center justify-between">
             <div className="flex items-center z-50 relative">
-              <a href="#home" aria-label="Home">
+              <a
+                href="#home"
+                aria-label="Home"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onNavigate) onNavigate('home');
+                  else document.querySelector('#home')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 <img
                   src="/imgs/logo-simbolo.svg"
                   alt="GustaSoares"

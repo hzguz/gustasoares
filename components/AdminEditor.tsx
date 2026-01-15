@@ -5,6 +5,7 @@ import Button from './Button';
 import { IconArrowLeft, IconDeviceFloppy, IconSquare, IconColumns, IconLayout, IconTrash } from '@tabler/icons-react';
 import GridLines from './GridLines';
 import ImageUpload from './ImageUpload';
+import { generateSlug } from '../lib/utils';
 
 interface AdminEditorProps {
     project?: ExtendedProject | null;
@@ -84,18 +85,6 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
 
     const handleSave = () => {
         if (!formData.title) return alert("Título é obrigatório");
-
-        // Generate slug from title
-        const generateSlug = (title: string): string => {
-            return title
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '') // Remove accents
-                .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
-                .replace(/\s+/g, '-') // Replace spaces with hyphens
-                .replace(/-+/g, '-') // Replace multiple hyphens with single
-                .trim();
-        };
 
         const finalProject: ExtendedProject = {
             id: formData.id || String(Date.now()),

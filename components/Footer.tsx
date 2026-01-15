@@ -21,27 +21,18 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (onNavigate) {
       e.preventDefault();
-      onNavigate(href);
+      onNavigate(href.replace('#', ''));
     }
   };
 
   return (
     <footer
-      className="relative text-white overflow-hidden border-t border-white/[0.05]"
-      style={{
-        background: 'radial-gradient(at bottom center, var(--e-global-color-3ba8dc3) 0%, var(--e-global-color-primary) 80%)'
-      }}
+      className="relative text-white overflow-hidden border-t border-white/[0.05] bg-[linear-gradient(to_top,var(--e-global-color-3ba8dc3)_0%,var(--e-global-color-primary)_80%)] md:bg-[radial-gradient(at_bottom_center,var(--e-global-color-3ba8dc3)_0%,var(--e-global-color-primary)_80%)]"
     >
 
       {/* Background Elements - Reduced Intensity */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        <div className="animate-float-horizontal">
-          <div className="relative w-[500px] h-[500px] md:w-[800px] md:h-[800px] filter blur-[80px] md:blur-[120px] contrast-[150%] opacity-10 mix-blend-screen animate-liquid-rotate">
-            <div className="absolute top-0 left-20 w-[60%] h-[60%] bg-white rounded-full animate-liquid-shape mix-blend-screen" />
-            <div className="absolute bottom-0 right-20 w-[55%] h-[55%] bg-white rounded-full animate-liquid-shape mix-blend-screen animation-delay-2000" style={{ animationDirection: 'alternate-reverse' }} />
-            <div className="absolute bottom-20 left-10 w-[40%] h-[40%] bg-white/80 rounded-full animate-blob mix-blend-screen" />
-          </div>
-        </div>
+
         {/* Noise Overlay */}
 
       </div>
@@ -55,7 +46,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
 
           {/* Left Column: Big CTA */}
           <div className="lg:col-span-7 flex flex-col justify-center lg:pr-12">
-            <h2 className="font-syne font-bold text-4xl md:text-5xl lg:text-7xl leading-[0.9] tracking-tight mb-8 md:mb-12 text-white">
+            <h2 className="font-syne font-bold text-2xl md:text-4xl lg:text-7xl leading-[0.95] tracking-tight mb-6 md:mb-12 text-white">
               {text.titlePart1} <br />
               <span className="bg-gradient-to-r from-white to-white/50 bg-clip-text text-transparent">{text.titlePart2}</span>
             </h2>
@@ -65,12 +56,12 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
               href={getWhatsAppLink(WHATSAPP_MESSAGES.footer)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group w-fit relative inline-flex items-center gap-4 pl-6 pr-3 py-3 rounded-full bg-transparent border border-white/[0.1] transition-all duration-500 hover:border-white"
+              className="group w-fit relative inline-flex items-center gap-4 pl-6 pr-3 py-3 rounded-full bg-transparent border border-white/[0.1] transition-all duration-500 hover:bg-white hover:border-white"
             >
-              <span className="font-manrope text-base font-medium text-white tracking-tight transition-colors duration-500">
+              <span className="font-manrope text-base font-medium text-white tracking-tight transition-colors duration-500 group-hover:text-black">
                 {text.emailButtonText}
               </span>
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black transition-all duration-500 group-hover:scale-110 group-hover:rotate-45 shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black transition-all duration-500 group-hover:scale-110 group-hover:rotate-45 group-hover:bg-black group-hover:text-white shadow-[0_0_10px_rgba(255,255,255,0.2)]">
                 <IconArrowUpRight size={16} stroke={1} />
               </div>
             </a>
@@ -88,8 +79,8 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
               <nav className="flex flex-col gap-4">
                 {[
                   { l: navText.home, h: '#home' },
-                  { l: navText.about, h: '#services' },
                   { l: navText.projects, h: '#projects' },
+                  { l: navText.about, h: '#about' },
                   { l: navText.contact, h: '#contact' }
                 ].map((item, index) => (
                   <a
@@ -140,8 +131,14 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
           </div>
         </div>
 
-        {/* Footer Bottom Bar - Equal Top/Bottom Padding (Smaller) */}
-        <div className="border-t border-white/[0.05] flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-8 md:gap-6 relative z-10 py-8 md:py-12">
+      </div>
+
+      {/* Full Width Border */}
+      <div className="w-full h-[1px] bg-white/[0.05] relative z-10" />
+
+      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+        {/* Footer Bottom Bar */}
+        <div className="flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-8 md:gap-6 py-8 md:py-12">
           <div className="flex flex-col gap-2">
             <p className="font-manrope font-medium text-white/60 text-xs uppercase tracking-widest">
               GustaSoares © {currentYear}

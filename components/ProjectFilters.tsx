@@ -27,7 +27,7 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ categories, activeCateg
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // Sliding Indicator Logic
+    // Sliding Indicator Logic for Desktop
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
     const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -60,18 +60,18 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ categories, activeCateg
 
     return (
         <div className="w-full xl:w-auto relative z-40 flex xl:justify-end">
-            {/* MOBILE: Custom Button-like Dropdown */}
+            {/* MOBILE/TABLET: Dropdown */}
             <div className="block xl:hidden w-full relative" ref={mobileMenuRef}>
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     className={`
-            w-full flex items-center justify-between px-6 py-3.5 rounded-full 
-            backdrop-blur-md border 
-            text-white transition-all duration-300 group
-            ${isMobileMenuOpen
+                        w-full flex items-center justify-between px-6 py-3.5 rounded-2xl
+                        backdrop-blur-md border 
+                        text-white transition-all duration-300 group
+                        ${isMobileMenuOpen
                             ? 'border-white/10 bg-[#1E1E1E]'
                             : 'bg-[#1E1E1E] border-transparent'}
-          `}
+                    `}
                 >
                     <span className="font-manrope font-semibold text-sm tracking-wide">
                         {currentLabel}
@@ -85,14 +85,14 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ categories, activeCateg
 
                 {/* Mobile Dropdown Options */}
                 <div className={`
-            absolute top-full right-0 mt-3 w-full
-            bg-[#1E1E1E] border border-white/10
-            rounded-3xl shadow-xl
-            overflow-hidden z-50 origin-top-right transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
-            ${isMobileMenuOpen
+                    absolute top-full right-0 mt-3 w-full
+                    bg-[#1E1E1E] border border-white/10
+                    rounded-2xl shadow-xl
+                    overflow-hidden z-50 origin-top-right transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                    ${isMobileMenuOpen
                         ? 'opacity-100 scale-100 translate-y-0 visible'
                         : 'opacity-0 scale-95 -translate-y-4 invisible pointer-events-none'}
-        `}>
+                `}>
                     <div className="p-2 space-y-1">
                         {categories.map((cat) => {
                             const isActive = activeCategory === cat.key;
@@ -104,11 +104,11 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ categories, activeCateg
                                         setIsMobileMenuOpen(false);
                                     }}
                                     className={`
-                    w-full px-5 py-3.5 rounded-2xl flex items-center text-left transition-all duration-200
-                    ${isActive
+                                        w-full px-5 py-3.5 rounded-xl flex items-center text-left transition-all duration-200
+                                        ${isActive
                                             ? 'bg-[#262626] text-white'
                                             : 'text-white/60 hover:bg-white/[0.05] hover:text-white'}
-                  `}
+                                    `}
                                 >
                                     <span className={`font-manrope text-sm tracking-wide ${isActive ? 'font-bold' : 'font-medium'}`}>
                                         {cat.label}
@@ -120,7 +120,7 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ categories, activeCateg
                 </div>
             </div>
 
-            {/* DESKTOP: Simple Button Group */}
+            {/* DESKTOP: Horizontal Button Group */}
             <div className="hidden xl:flex items-center p-1.5 bg-[#1E1E1E] rounded-full gap-1 relative">
                 {/* Sliding Background Indicator */}
                 <div
@@ -140,11 +140,11 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ categories, activeCateg
                             ref={el => { tabsRef.current[index] = el }}
                             onClick={() => onCategoryChange(cat.key)}
                             className={`
-                px-6 py-2.5 rounded-full text-sm font-manrope font-semibold capitalize tracking-wide transition-colors duration-200 relative z-10
-                ${isActive
+                                px-6 py-2.5 rounded-full text-sm font-manrope font-semibold capitalize tracking-wide transition-colors duration-200 relative z-10
+                                ${isActive
                                     ? 'text-white'
                                     : 'text-white/50 hover:text-white'}
-              `}
+                            `}
                         >
                             {cat.label}
                         </button>
@@ -156,3 +156,4 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ categories, activeCateg
 };
 
 export default ProjectFilters;
+

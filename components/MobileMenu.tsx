@@ -19,6 +19,8 @@ interface MobileMenuProps {
     toggleLang: () => void;
 }
 
+import { createPortal } from 'react-dom';
+
 const MobileMenu: React.FC<MobileMenuProps> = ({
     isOpen,
     onClose,
@@ -29,37 +31,53 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     toggleLang
 }) => {
     // Animation state
-    const [isVisible, setIsVisible] = useState(false);
+    const [mounted, setMounted] = useState(false); // Hydration safety
+    const [shouldAnimate, setShouldAnimate] = useState(false); // Delayed animation trigger
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         if (isOpen) {
-            setIsVisible(true);
             document.body.style.overflow = 'hidden';
-        } else {
-            const timer = setTimeout(() => setIsVisible(false), 500); // Wait for exit animation
-            document.body.style.overflow = 'unset';
+            // Use setTimeout to ensure the closed state is painted before animating
+            const timer = setTimeout(() => {
+                setShouldAnimate(true);
+            }, 50);
             return () => clearTimeout(timer);
+        } else {
+            setShouldAnimate(false);
+            document.body.style.overflow = '';
         }
     }, [isOpen]);
 
-    if (!isVisible && !isOpen) return null;
+    if (!mounted) return null;
 
     const handleLinkClick = (id: string) => {
-        onNavigate(id);
+        onNavigate(id.replace('#', ''));
         onClose();
     };
 
     const links = [
         { id: 'home', label: navText.home },
-        { id: '#about', label: navText.about },
         { id: '#projects', label: navText.projects },
+        { id: '#about', label: navText.about },
         { id: '#contact', label: navText.contact },
     ];
 
-    return (
+    return createPortal(
         <div
-            className={`fixed inset-0 z-[100] flex flex-col bg-white/95 backdrop-blur-2xl transition-all duration-500 ease-in-out ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+            className={`fixed inset-0 z-[100] flex flex-col bg-white/95 backdrop-blur-2xl origin-top-right ${isOpen
+                ? 'pointer-events-auto'
+                : 'pointer-events-none'
                 }`}
+            style={{
+                clipPath: shouldAnimate
+                    ? 'circle(150% at calc(100% - 48px) 48px)'
+                    : 'circle(0% at calc(100% - 48px) 48px)',
+                transition: 'clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
         >
             {/* Header Area */}
             <div className="flex items-center justify-between p-6 md:p-8">
@@ -68,7 +86,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     onClick={toggleLang}
                     className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/5 hover:bg-black/10 transition-colors"
                 >
-                    <IconWorld size={20} stroke={1.5} className="text-textPrimary" />
+                    <IconWorld size={18} stroke={1.5} className="text-textPrimary" />
                     <span className="text-sm font-syne font-bold uppercase text-textPrimary tracking-wider">
                         {lang}
                     </span>
@@ -80,17 +98,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     className="p-3 rounded-full bg-black/5 hover:bg-black/10 text-textPrimary hover:rotate-90 transition-all duration-300"
                     aria-label="Close menu"
                 >
-                    <IconX size={24} stroke={1.5} />
+                    <IconX size={22} stroke={1.5} />
                 </button>
             </div>
 
             {/* Main Navigation */}
-            <nav className="flex-1 flex flex-col items-center justify-center gap-6 md:gap-8 px-6">
+            <nav className="flex-1 flex flex-col items-center justify-center gap-5 md:gap-8 px-6">
                 {links.map((link, index) => (
                     <button
                         key={link.id}
                         onClick={() => handleLinkClick(link.id)}
-                        className={`group relative text-5xl md:text-6xl font-syne font-bold text-textPrimary transition-all duration-500 transform pb-2 ${isOpen
+                        className={`group relative text-4xl md:text-6xl font-syne font-bold text-textPrimary transition-all duration-500 transform pb-2 ${isOpen
                             ? 'translate-y-0 opacity-100'
                             : 'translate-y-12 opacity-0'
                             }`}
@@ -114,22 +132,23 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                 <div className="flex items-center justify-between pt-4 border-t border-black/5">
                     <div className="flex gap-4">
                         <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:scale-110 transition-transform text-textPrimary">
-                            <IconBrandLinkedin size={20} stroke={1.5} />
+                            <IconBrandLinkedin size={16} stroke={1.5} />
                         </a>
                         <a href={socials.behance} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:scale-110 transition-transform text-textPrimary">
-                            <IconBrandBehance size={20} stroke={1.5} />
+                            <IconBrandBehance size={16} stroke={1.5} />
                         </a>
                         <a href={socials.whatsapp} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:scale-110 transition-transform text-textPrimary">
-                            <IconBrandWhatsapp size={20} stroke={1.5} />
+                            <IconBrandWhatsapp size={16} stroke={1.5} />
                         </a>
                     </div>
 
-                    <a href={`mailto:${socials.email}`} className="text-sm font-manrope font-medium text-textSecondary hover:text-textPrimary transition-colors">
+                    <a href={`mailto:${socials.email}`} className="text-xs font-manrope font-medium text-textSecondary hover:text-textPrimary transition-colors">
                         {socials.email}
                     </a>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

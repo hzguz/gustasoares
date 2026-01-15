@@ -12,21 +12,25 @@ interface FixedHeaderProps {
     onOpenMenu: () => void;
 }
 
+import { createPortal } from 'react-dom';
+import { SOCIAL_LINKS } from '../constants';
+
 const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNavigate, onOpenMenu }) => {
     const [isVisible, setIsVisible] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const lastScrollY = useRef(0);
-    const threshold = 300;
 
     useEffect(() => {
+        setMounted(true);
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
-            // Only activate after passing threshold
-            if (currentScrollY > threshold) {
-                const delta = currentScrollY - lastScrollY.current;
+            const delta = currentScrollY - lastScrollY.current;
 
-                // Require minimum scroll delta to prevent jitter
-                if (Math.abs(delta) > 10) {
+            // Activate after passing smaller threshold
+            if (currentScrollY > 100) {
+                // Show on any upward scroll, hide on down
+                if (Math.abs(delta) > 0) {
                     const isScrollingUp = delta < 0;
                     setIsVisible(isScrollingUp);
                 }
@@ -43,11 +47,13 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
 
     // Local mobile menu state removed - handled globally
 
-    return (
+    if (!mounted) return null;
+
+    return createPortal(
         <>
             {/* Fixed Desktop Header - Capsule Style */}
             <header
-                className="fixed top-0 left-0 right-0 z-50 py-2 transition-all duration-500 ease-in-out xl:bg-transparent hidden xl:block"
+                className="fixed top-0 left-0 right-0 z-[90] py-2 transition-all duration-500 ease-in-out xl:bg-transparent hidden xl:block"
                 style={{
                     transform: isVisible ? 'translateY(0)' : 'translateY(-200%)',
                 }}
@@ -56,7 +62,14 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
                     <div className="flex items-center justify-between border rounded-full transition-all duration-300 mx-auto bg-white/85 border-black/5 backdrop-blur-md w-fit pl-8 pr-3 py-3 gap-32">
                         {/* Logo */}
                         <div className="flex items-center z-50 relative">
-                            <a href="#home" aria-label="Home">
+                            <a
+                                href="#home"
+                                aria-label="Home"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onNavigate?.('home');
+                                }}
+                            >
                                 <img
                                     src="/imgs/logo-texto.svg"
                                     alt="GustaSoares"
@@ -68,8 +81,15 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
                         {/* Right Actions */}
                         <div className="flex items-center gap-2">
                             {/* Contact Button */}
-                            <a href="#contact">
-                                <Button variant="primary" className="py-2.5 px-6 text-xs">
+                            <a
+                                href={SOCIAL_LINKS.whatsapp}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => {
+                                    // Removed preventDefault and navigation to allow normal link behavior
+                                }}
+                            >
+                                <Button variant="primary" className="py-2.5 px-6 text-xs bg-gradient-to-r from-[#353535] to-[#111111]">
                                     {text.cta}
                                 </Button>
                             </a>
@@ -89,33 +109,40 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
 
             {/* Fixed Mobile Header */}
             <header
-                className="fixed top-0 left-0 right-0 z-50 py-2 bg-background/80 transition-all duration-500 ease-in-out xl:hidden"
+                className="fixed top-0 left-0 right-0 z-[90] py-3 bg-white/90 backdrop-blur-md border-b border-black/5 transition-all duration-500 ease-in-out xl:hidden"
                 style={{
                     transform: isVisible ? 'translateY(0)' : 'translateY(-200%)',
                 }}
             >
                 <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between w-full">
                         <div className="flex items-center z-50 relative">
-                            <a href="#home" aria-label="Home">
+                            <a
+                                href="#home"
+                                aria-label="Home"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onNavigate?.('home');
+                                }}
+                            >
                                 <img
                                     src="/imgs/logo-simbolo.svg"
                                     alt="GustaSoares"
-                                    className="h-6 w-auto transition-all duration-500"
+                                    className="h-7 md:h-8 w-auto transition-all duration-500"
                                 />
                             </a>
                         </div>
-                        <div className="flex items-center gap-2 z-50 relative">
+                        <div className="flex items-center gap-1 z-50 relative">
                             <button
                                 onClick={toggleLang}
-                                className="transition-all duration-500 flex items-center justify-center rounded-full w-10 h-10 text-textPrimary"
+                                className="transition-all duration-500 flex items-center justify-center rounded-full w-10 h-10 text-textPrimary hover:bg-black/5"
                                 aria-label="Toggle Language"
                             >
                                 <span className="text-sm font-syne font-bold uppercase">{lang}</span>
                             </button>
                             <button
                                 onClick={onOpenMenu}
-                                className="transition-all duration-500 flex items-center justify-center rounded-full w-10 h-10 text-textPrimary"
+                                className="transition-all duration-500 flex items-center justify-center rounded-full w-10 h-10 text-textPrimary hover:bg-black/5"
                                 aria-label="Open menu"
                             >
                                 <IconMenu size={24} stroke={1.5} />
@@ -124,7 +151,8 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
                     </div>
                 </div>
             </header>
-        </>
+        </>,
+        document.body
     );
 };
 

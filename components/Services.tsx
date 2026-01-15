@@ -9,7 +9,7 @@ interface ServicesProps {
 }
 
 const Services: React.FC<ServicesProps> = ({ text }) => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const activeIndex = 0; // Fixo no primeiro card
   const [highlightStyle, setHighlightStyle] = useState({ left: 0, top: 0, width: 0, height: 0, opacity: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -66,7 +66,7 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
           <div>
 
             <Reveal variant="blur-in" duration={0.8} delay={100}>
-              <h2 className="font-syne font-bold text-4xl md:text-5xl lg:text-5xl text-textPrimary leading-[0.95]">
+              <h2 className="font-syne font-bold text-2xl md:text-4xl lg:text-5xl text-textPrimary leading-[0.95]">
                 {text.title}
               </h2>
             </Reveal>
@@ -74,7 +74,7 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
           <div className="xl:pl-12 xl:ml-auto">
             <Reveal variant="fade-up" duration={0.8} delay={200}>
               <p
-                className="font-manrope text-textSecondary text-base md:text-lg leading-relaxed text-left xl:text-right"
+                className="font-manrope text-textSecondary text-sm md:text-base lg:text-lg leading-relaxed text-left xl:text-right"
                 dangerouslySetInnerHTML={{ __html: text.description }}
               />
             </Reveal>
@@ -110,8 +110,6 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
                   key={service.id}
                   ref={(el) => { itemRefs.current[index] = el; }}
                   className="h-full"
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => setActiveIndex(index)} // Allow tap to activate on mobile
                 >
                   <Reveal
                     variant="fade-up"
@@ -133,9 +131,8 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
                         /* Desktop Specific Override (relying on sliding bg) */
                         md:bg-transparent md:bg-none
                         ${isActive
-                          // Logic handled by sliding bg container on desktop
                           ? 'md:scale-[1.0]'
-                          : 'md:opacity-70 md:hover:opacity-100'}
+                          : 'md:opacity-70'}
                         `}
                     >
                       <div className="relative z-10">
@@ -148,7 +145,7 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
                           {getIcon(service.icon)}
                         </div>
 
-                        <h3 className={`font-syne font-bold text-xl mb-4 leading-tight transition-colors duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
+                        <h3 className={`font-syne font-bold text-base md:text-xl mb-4 leading-tight transition-colors duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
                                 ${isActive ? 'text-white delay-100' : 'text-black delay-0'}`}>
                           {service.title}
                         </h3>

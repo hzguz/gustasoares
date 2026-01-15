@@ -76,7 +76,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
                   {/* Decorative element for text blocks */}
                   <div className="hidden md:block absolute -left-12 top-0 bottom-0 w-[1px] bg-black/[0.04]" />
                   <h3 className="font-syne font-bold text-2xl mb-6">{block.content.title}</h3>
-                  <p className="font-manrope text-textSecondary text-lg leading-relaxed whitespace-pre-line break-words">
+                  <p className="font-manrope text-textSecondary text-sm md:text-base lg:text-lg leading-relaxed whitespace-pre-line break-words">
                     {block.content.text}
                   </p>
                 </div>
@@ -133,7 +133,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
         </div>
 
         {/* Radial Gradient Overlay - Separate Layer */}
-        <div className="absolute inset-0 z-[1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(at top center, #11111181 0%, #111111FC 50%)' }} />
+        <div className="absolute inset-0 z-[1] pointer-events-none bg-[linear-gradient(to_bottom,#11111181_0%,#111111FC_50%)] md:bg-[radial-gradient(at_top_center,#11111181_0%,#111111FC_50%)]" />
 
         <GridLines variant="outer" inverted />
 
@@ -143,13 +143,13 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
               <h1 className="font-syne font-bold text-2xl md:text-4xl xl:text-6xl leading-[0.9] text-white mb-3 md:mb-6 drop-shadow-2xl">
                 {project.title}
               </h1>
-              <p className="font-manrope text-base md:text-lg xl:text-xl text-white/70 font-light max-w-2xl mb-6 md:mb-10 leading-relaxed">
+              <p className="font-manrope text-sm md:text-base lg:text-lg xl:text-xl text-white/70 font-light max-w-2xl mb-6 md:mb-10 leading-relaxed break-words">
                 {project.descriptionShort}
               </p>
 
               {project.showLink && project.link && (
                 <a href={project.link} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="group border-white text-white hover:bg-white hover:text-black">
+                  <Button variant="outline" className="group border-white/[0.2] text-white hover:!bg-white hover:!text-black hover:!border-white transition-colors duration-300">
                     Visite o Site
                     <IconArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" stroke={1.5} />
                   </Button>
@@ -169,15 +169,15 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
             <div className="lg:col-span-6 flex flex-col gap-6">
               <Reveal variant="fade-right" delay={100} width="100%">
                 <div className="flex items-center justify-between py-4 border-b border-black/[0.08]">
-                  <h3 className="font-syne font-bold text-base tracking-widest text-black">Ano</h3>
-                  <p className="font-manrope text-base text-textSecondary">{project.date}</p>
+                  <h3 className="font-syne font-bold text-sm md:text-base tracking-widest text-black">Ano</h3>
+                  <p className="font-manrope text-sm md:text-base text-textSecondary">{project.date}</p>
                 </div>
               </Reveal>
 
               <Reveal variant="fade-right" delay={200} width="100%">
                 <div className="flex items-start justify-between py-4 border-b border-black/[0.08]">
-                  <h3 className="font-syne font-bold text-base tracking-widest text-black">Ferramentas</h3>
-                  <p className="font-manrope text-base text-textSecondary text-right max-w-[60%]">
+                  <h3 className="font-syne font-bold text-sm md:text-base tracking-widest text-black">Ferramentas</h3>
+                  <p className="font-manrope text-sm md:text-base text-textSecondary text-right max-w-[60%]">
                     {project.tools.join(', ')}
                   </p>
                 </div>
@@ -187,7 +187,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
             {/* Long Description */}
             <div className="lg:col-span-6">
               <Reveal variant="fade-up" delay={300}>
-                <div className="font-manrope text-textSecondary text-base leading-relaxed space-y-6 whitespace-pre-line break-words">
+                <div className="font-manrope text-textSecondary text-sm md:text-base lg:text-lg leading-relaxed space-y-6 whitespace-pre-wrap break-words w-full">
                   {project.descriptionLong}
                 </div>
               </Reveal>

@@ -39,7 +39,7 @@ const NotFound: React.FC<NotFoundProps> = ({ onHome }) => {
                 </Reveal>
 
                 <Reveal variant="fade-up" delay={200}>
-                    <p className="font-manrope text-neutral-500 max-w-md mx-auto mb-12 text-sm md:text-base leading-relaxed">
+                    <p className="font-manrope text-neutral-500 max-w-md mx-auto mb-12 text-sm md:text-base lg:text-lg leading-relaxed">
                         A página que você procura desvaneceu na luz branca.
                     </p>
                 </Reveal>

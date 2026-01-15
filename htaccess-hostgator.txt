@@ -1,7 +1,30 @@
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index\.html$ - [L]
+
+  # DISABLE AUTOMATIC TRAILING SLASH REDIRECT
+  # This prevents Apache from redirecting /project/slug to /project/slug/ if the dir exists
+  DirectorySlash Off
+
+  # 1. Externally redirect to remove .html
+  RewriteCond %{THE_REQUEST} \s/+(.+?)\.html(\s|\?) [NC]
+  RewriteRule ^ /%1 [R=301,L]
+
+  # 2. Add trailing slash ONLY if it's a real directory AND NO matching .html file exists
+  # This handles actual folders like /imgs/
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_FILENAME}.html !-f
+  RewriteRule ^(.*[^/])$ $1/ [R=301,L]
+
+  # 3. Internally rewrite to .html if it exists (EVEN IF A DIR EXISTS with same name)
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.+?)/?$ $1.html [L]
+
+  # 4. Fallback to index.html for SPA (only if not a real file/dir/html)
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]

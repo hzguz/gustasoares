@@ -61,8 +61,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, text, onClick, anima
             </div>
 
             {/* Info */}
-            <div className={`flex flex-col gap-2 pl-4 border-l-2 border-transparent group-hover:border-${inverted ? 'white' : 'inverse'} transition-colors duration-300`}>
-                <h3 className={`font-syne font-bold text-xl md:text-2xl ${inverted ? 'text-white' : 'text-textPrimary'} group-hover:translate-x-1 transition-transform duration-300`}>
+            <div className="flex flex-col gap-2 pl-0 md:pl-4 border-l-2 border-transparent md:group-hover:border-white transition-colors duration-300">
+                <h3 className={`font-syne font-bold text-lg md:text-xl lg:text-2xl ${inverted ? 'text-white' : 'text-textPrimary'} md:group-hover:translate-x-1 transition-transform duration-300`}>
                     {project.title}
                 </h3>
                 <div className="flex items-center gap-4">

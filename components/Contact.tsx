@@ -82,32 +82,32 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                     <div className="flex flex-col justify-center">
                         <Reveal variant="scale-in">
                             {/* Tagline */}
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/[0.06] backdrop-blur-md mb-6 md:mb-8 w-fit hover:bg-black/[0.1] hover:scale-105 transition-all duration-300">
-                                <IconMessage size={14} className="text-textPrimary" stroke={1} />
-                                <span className="text-xs font-syne font-bold tracking-[0.2em] text-textSecondary uppercase leading-none pt-[1px]">
+                            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-black/[0.06] backdrop-blur-md mb-6 md:mb-8 w-fit hover:bg-black/[0.1] hover:scale-105 transition-all duration-300">
+                                <IconMessage size={12} className="text-textPrimary md:w-[14px] md:h-[14px]" stroke={1} />
+                                <span className="text-[10px] md:text-xs font-syne font-bold tracking-[0.2em] text-textSecondary uppercase leading-none pt-[1px]">
                                     {text.tagline}
                                 </span>
                             </div>
                         </Reveal>
 
                         <Reveal variant="blur-in" delay={100} duration={0.8}>
-                            <h2 className="font-syne font-bold text-4xl md:text-4xl lg:text-5xl text-textPrimary mb-6 md:mb-8 leading-[0.95]">
+                            <h2 className="font-syne font-bold text-2xl md:text-4xl lg:text-5xl text-textPrimary mb-6 md:mb-8 leading-[0.95]">
                                 {text.title}
                             </h2>
                         </Reveal>
 
                         <Reveal variant="fade-right" delay={200} duration={0.8}>
-                            <p className="font-manrope text-textSecondary text-base md:text-lg mb-12 xl:mb-48 max-w-lg leading-relaxed">
+                            <p className="font-manrope text-textSecondary text-sm md:text-base lg:text-lg mb-12 xl:mb-48 max-w-lg leading-relaxed">
                                 {text.description}
                             </p>
                         </Reveal>
 
                         <Reveal variant="fade-up" delay={300}>
                             <div className="mt-auto">
-                                <p className="font-manrope text-textSecondary text-xs uppercase tracking-widest mb-4">{text.orEmail}</p>
+                                <p className="font-manrope text-textSecondary text-xs uppercase tracking-widest mb-2">{text.orEmail}</p>
                                 <a
                                     href={`mailto:${socialEmail}`}
-                                    className="font-syne font-medium text-lg text-textPrimary hover:text-textSecondary transition-colors group w-fit block"
+                                    className="font-syne font-medium text-sm md:text-lg text-textPrimary hover:text-textSecondary transition-colors group w-fit block"
                                 >
                                     {socialEmail}
                                 </a>
@@ -140,7 +140,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                         <h3 className="font-syne font-bold text-xl text-textPrimary mb-4">
                                             Mensagem Enviada!
                                         </h3>
-                                        <p className="font-manrope text-textSecondary text-base max-w-sm mb-10 leading-relaxed">
+                                        <p className="font-manrope text-textSecondary text-sm md:text-base lg:text-lg max-w-sm mb-10 leading-relaxed">
                                             Recebi seu contato com sucesso. Em breve retornarei com uma resposta.
                                         </p>
 
@@ -227,7 +227,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                                 variant="primary"
                                                 type="submit"
                                                 disabled={loading}
-                                                className={`w-full md:w-auto py-4 px-8 text-sm group ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                                className={`w-full md:w-auto py-4 px-8 text-sm group bg-gradient-to-r from-[#353535] to-[#111111] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                                             >
                                                 {loading ? 'Enviando...' : text.form.submit}
                                                 {!loading && (

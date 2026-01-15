@@ -59,7 +59,7 @@ export const CONTENT: Record<string, Translations> = {
     },
     contact: {
       tagline: "Contato",
-      title: "Pronto para começar algo incrível? Fale comigo!",
+      title: "Pronto para começar algo incrível?",
       description: "Agende uma conversa e compartilhe suas ideias. Transformarei cada detalhe em uma experiência única.",
       orEmail: "Ou envie um e-mail para",
       form: {
@@ -181,7 +181,7 @@ export const CONTENT: Record<string, Translations> = {
     },
     contact: {
       tagline: "Contact",
-      title: "Ready to start something amazing? Talk to me!",
+      title: "Ready to start something amazing?",
       description: "Schedule a chat and share your ideas. I will transform every detail into a unique experience.",
       orEmail: "Or send an email to",
       form: {

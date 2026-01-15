@@ -1,15 +1,29 @@
 import { useState, useEffect } from 'react';
 
+// Cache global para armazenar cores já processadas
+const colorCache = new Map<string, string>();
+
 /**
  * Extrai a cor dominante de uma imagem e calcula uma cor de contraste para bordas.
  * Usa canvas para sampling de pixels e análise de luminância.
+ * Resultados são cacheados para evitar reprocessamento.
  */
 export function useImageColor(imageSrc: string) {
-    const [borderColor, setBorderColor] = useState<string>('rgba(17, 17, 17, 0.3)');
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [borderColor, setBorderColor] = useState<string>(() => {
+        // Verificar cache imediatamente
+        return colorCache.get(imageSrc) || 'rgba(17, 17, 17, 0.3)';
+    });
+    const [isLoaded, setIsLoaded] = useState(() => colorCache.has(imageSrc));
 
     useEffect(() => {
         if (!imageSrc) return;
+
+        // Se já está no cache, não reprocessar
+        if (colorCache.has(imageSrc)) {
+            setBorderColor(colorCache.get(imageSrc)!);
+            setIsLoaded(true);
+            return;
+        }
 
         const img = new Image();
         img.crossOrigin = 'anonymous';
@@ -54,6 +68,8 @@ export function useImageColor(imageSrc: string) {
                     }
                 }
 
+                let calculatedColor = 'rgba(17, 17, 17, 0.3)';
+
                 if (validSamples > 0) {
                     const avgR = totalR / validSamples;
                     const avgG = totalG / validSamples;
@@ -64,14 +80,15 @@ export function useImageColor(imageSrc: string) {
 
                     // Se o fundo é claro, usar borda escura; se escuro, usar borda clara
                     if (luminance > 0.5) {
-                        // Fundo claro: borda escura
-                        setBorderColor(`rgba(17, 17, 17, 0.4)`);
+                        calculatedColor = 'rgba(17, 17, 17, 0.4)';
                     } else {
-                        // Fundo escuro: borda clara/branca
-                        setBorderColor(`rgba(255, 255, 255, 0.5)`);
+                        calculatedColor = 'rgba(255, 255, 255, 0.5)';
                     }
                 }
 
+                // Salvar no cache
+                colorCache.set(imageSrc, calculatedColor);
+                setBorderColor(calculatedColor);
                 setIsLoaded(true);
             } catch {
                 // Fallback silencioso em caso de CORS ou erro
@@ -88,3 +105,4 @@ export function useImageColor(imageSrc: string) {
 
     return { borderColor, isLoaded };
 }
+

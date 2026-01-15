@@ -55,10 +55,7 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
   return (
     <section
       id="projects"
-      className="py-20 md:py-28 xl:py-40 relative overflow-hidden"
-      style={{
-        background: 'radial-gradient(at bottom center, var(--e-global-color-3ba8dc3) 0%, var(--e-global-color-primary) 80%)'
-      }}
+      className="py-20 md:py-28 xl:py-40 relative overflow-hidden bg-[linear-gradient(to_top,var(--e-global-color-3ba8dc3)_0%,var(--e-global-color-primary)_80%)] md:bg-[radial-gradient(at_bottom_center,var(--e-global-color-3ba8dc3)_0%,var(--e-global-color-primary)_80%)]"
     >
       <GridLines variant="center" inverted />
 
@@ -72,7 +69,7 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
         <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-4 md:gap-6 xl:gap-8 pb-0 xl:pb-8 relative z-20 mb-8 md:mb-12 xl:mb-0">
           <div>
             <Reveal variant="blur-in" delay={100} duration={0.8}>
-              <h2 className="font-syne font-bold text-4xl md:text-5xl lg:text-5xl text-white">
+              <h2 className="font-syne font-bold text-2xl md:text-4xl lg:text-5xl text-white">
                 {text.title}
               </h2>
             </Reveal>

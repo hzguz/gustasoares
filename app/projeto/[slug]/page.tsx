@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { generateSlug } from '@/lib/utils';
 import ClientProjectPage from './client-page';
 
@@ -7,12 +7,22 @@ export const dynamicParams = false;
 
 export async function generateStaticParams() {
     console.log("Generating static params for [slug]...");
+
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    // If env vars are missing, skip static generation
+    if (!supabaseUrl || !supabaseAnonKey) {
+        console.warn("Supabase env vars missing. Skipping static params generation.");
+        return [];
+    }
+
     try {
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
         const { data: projects, error } = await supabase.from('projects').select('title');
 
         if (error) {
             console.error("Supabase Error in generateStaticParams:", error);
-            // Fallback to empty if DB fails, allowing build to pass (but no static pages generated)
             return [];
         }
 

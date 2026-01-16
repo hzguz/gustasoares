@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:hostgator": "next build && copy htaccess-hostgator.txt out\\.htaccess",
     "start": "next start",
     "lint": "next lint"
   },

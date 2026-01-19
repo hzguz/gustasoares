@@ -4,6 +4,7 @@ import { Translations, Language } from '../types';
 import { IconWorld, IconArrowUpRight, IconBrandLinkedin, IconBrandBehance, IconBrandWhatsapp } from '@tabler/icons-react';
 import { getWhatsAppLink, WHATSAPP_MESSAGES } from '../constants';
 import GridLines from './GridLines';
+import Container from './Container';
 
 interface FooterProps {
   text: Translations['footer'];
@@ -39,7 +40,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
 
       <GridLines variant="outer" inverted />
 
-      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+      <Container className="relative z-10">
 
         {/* Main Grid Layout - Equal Top/Bottom Padding (Large) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 py-20 md:py-28 xl:py-40">
@@ -58,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
               rel="noopener noreferrer"
               className="group w-fit relative inline-flex items-center gap-4 pl-6 pr-3 py-3 rounded-full bg-transparent border border-white/[0.1] transition-all duration-500 hover:bg-white hover:border-white"
             >
-              <span className="font-manrope text-base font-medium text-white tracking-tight transition-colors duration-500 group-hover:text-black">
+              <span className="font-syne text-base font-medium text-white tracking-tight transition-colors duration-500 group-hover:text-black">
                 {text.emailButtonText}
               </span>
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black transition-all duration-500 group-hover:scale-110 group-hover:rotate-45 group-hover:bg-black group-hover:text-white shadow-[0_0_10px_rgba(255,255,255,0.2)]">
@@ -131,12 +132,12 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
           </div>
         </div>
 
-      </div>
+      </Container>
 
       {/* Full Width Border */}
       <div className="w-full h-[1px] bg-white/[0.05] relative z-10" />
 
-      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+      <Container className="relative z-10">
         {/* Footer Bottom Bar */}
         <div className="flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-8 md:gap-6 py-8 md:py-12">
           <div className="flex flex-col gap-2">
@@ -159,7 +160,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
             </button>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

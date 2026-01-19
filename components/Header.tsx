@@ -4,6 +4,7 @@ import { IconMenu, IconWorld } from '@tabler/icons-react';
 import { Language, Translations } from '../types';
 import Button from './Button';
 import { SOCIAL_LINKS } from '../constants';
+import Container from './Container';
 
 interface HeaderProps {
   lang: Language;
@@ -37,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text, onNavigate, onO
     <>
       {/* Top Banner Header - Always Absolute */}
       <header className="absolute top-0 left-0 right-0 z-50 py-6 md:py-8">
-        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
+        <Container>
           {/* Desktop Menu Container with blur */}
           <div className="hidden xl:flex items-center justify-between px-8 py-4 border rounded-full border-white/5 bg-black/5 backdrop-blur-[16px]">
             <div className="flex items-center z-50 relative">
@@ -134,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({ lang, toggleLang, text, onNavigate, onO
               </button>
             </div>
           </div>
-        </div>
+        </Container>
       </header>
     </>
   );

@@ -4,6 +4,7 @@ import { IconSparkles } from '@tabler/icons-react';
 import { Translations } from '../types';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
+import Container from './Container';
 
 interface HeroProps {
   text: Translations['hero'];
@@ -133,7 +134,7 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
 
 
 
-      <div className={`w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10 flex flex-col items-center flex-grow justify-center ${variant === 'about' ? 'md:items-start md:text-left' : 'text-center'}`}>
+      <Container className={`relative z-10 flex flex-col items-center flex-grow justify-center ${variant === 'about' ? 'md:items-start md:text-left' : 'text-center'}`}>
 
         {/* Content Wrapper */}
         <div className={`flex-grow flex flex-col justify-center w-full max-w-5xl mt-12 md:mt-20 ${variant === 'about' ? 'items-start' : 'items-center'}`}>
@@ -184,7 +185,7 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
             </a>
           </Reveal>
         )}
-      </div>
+      </Container>
     </section>
   );
 };

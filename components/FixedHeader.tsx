@@ -4,6 +4,10 @@ import { IconMenu } from '@tabler/icons-react';
 import { Language, Translations } from '../types';
 import Button from './Button';
 
+import { createPortal } from 'react-dom';
+import { SOCIAL_LINKS } from '../constants';
+import Container from './Container';
+
 interface FixedHeaderProps {
     lang: Language;
     toggleLang: () => void;
@@ -11,9 +15,6 @@ interface FixedHeaderProps {
     onNavigate?: (id: string) => void;
     onOpenMenu: () => void;
 }
-
-import { createPortal } from 'react-dom';
-import { SOCIAL_LINKS } from '../constants';
 
 const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNavigate, onOpenMenu }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -58,7 +59,7 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
                     transform: isVisible ? 'translateY(0)' : 'translateY(-200%)',
                 }}
             >
-                <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
+                <Container>
                     <div className="flex items-center justify-between border rounded-full transition-all duration-300 mx-auto bg-white/85 border-black/5 backdrop-blur-md w-fit pl-8 pr-3 py-3 gap-32">
                         {/* Logo */}
                         <div className="flex items-center z-50 relative">
@@ -104,7 +105,7 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
                             </button>
                         </div>
                     </div>
-                </div>
+                </Container>
             </header>
 
             {/* Fixed Mobile Header */}
@@ -114,7 +115,7 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
                     transform: isVisible ? 'translateY(0)' : 'translateY(-200%)',
                 }}
             >
-                <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
+                <Container>
                     <div className="flex items-center justify-between w-full">
                         <div className="flex items-center z-50 relative">
                             <a
@@ -149,7 +150,7 @@ const FixedHeader: React.FC<FixedHeaderProps> = ({ lang, toggleLang, text, onNav
                             </button>
                         </div>
                     </div>
-                </div>
+                </Container>
             </header>
         </>,
         document.body

@@ -6,6 +6,7 @@ import Button from './Button';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
 import CustomSelect from './CustomSelect';
+import Container from './Container';
 
 import { supabase } from '../lib/supabase';
 
@@ -75,7 +76,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
             {/* Background Light - Significantly Reduced Intensity */}
             <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-inverse/[0.02] to-transparent pointer-events-none" />
 
-            <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+            <Container className="relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
 
                     {/* Left Column: Text */}
@@ -92,7 +93,12 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
 
                         <Reveal variant="blur-in" delay={100} duration={0.8}>
                             <h2 className="font-syne font-bold text-2xl md:text-4xl lg:text-5xl text-textPrimary mb-6 md:mb-8 leading-[0.95]">
-                                {text.title}
+                                {text.title.split('\n').map((line, i) => (
+                                    <React.Fragment key={i}>
+                                        {line}
+                                        {i < text.title.split('\n').length - 1 && <br />}
+                                    </React.Fragment>
+                                ))}
                             </h2>
                         </Reveal>
 
@@ -241,7 +247,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                         </div>
                     </Reveal>
                 </div>
-            </div>
+            </Container>
         </section>
     );
 };

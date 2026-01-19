@@ -87,7 +87,7 @@ const AdminEditor: React.FC<AdminEditorProps> = ({ project, onSave, onCancel }) 
         if (!formData.title) return alert("Título é obrigatório");
 
         const finalProject: ExtendedProject = {
-            id: formData.id || String(Date.now()),
+            id: formData.id || Date.now(),
             slug: formData.slug || generateSlug(formData.title!),
             title: formData.title!,
             category: formData.category || 'landing',

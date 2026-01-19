@@ -3,13 +3,14 @@ import { IconDeviceDesktop, IconCode, IconLayersIntersect, IconSearch } from '@t
 import { Translations } from '../types';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
+import Container from './Container';
 
 interface ServicesProps {
   text: Translations['services'];
 }
 
 const Services: React.FC<ServicesProps> = ({ text }) => {
-  const activeIndex = 0; // Fixo no primeiro card
+  const [activeIndex, setActiveIndex] = useState(0);
   const [highlightStyle, setHighlightStyle] = useState({ left: 0, top: 0, width: 0, height: 0, opacity: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,7 +60,7 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
       {/* Decorative Light */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-inverse/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -translate-y-1/2 -translate-x-1/2 opacity-30" />
 
-      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+      <Container className="relative z-10">
 
         {/* Header */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6 xl:gap-8 mb-6 md:mb-16 items-end">
@@ -118,9 +119,10 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
                     className="h-full"
                   >
                     <div
+                      onMouseEnter={() => setActiveIndex(index)}
                       className={`
                         group relative p-6 md:p-8 md:pt-16 md:pb-10 flex flex-col justify-between min-h-[260px] md:min-h-[380px] h-full
-                        transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] rounded-[1.2rem] md:rounded-[2rem] z-10
+                        transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] rounded-[1.2rem] md:rounded-[2rem] z-10 cursor-pointer
                         
                         /* Mobile Specific Styles */
                         border-0 md:border md:border-none
@@ -164,7 +166,7 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
             })}
           </div>
         </div>
-      </div >
+      </Container >
     </section >
   );
 };

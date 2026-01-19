@@ -6,6 +6,7 @@ import Button from './Button';
 import Footer from './Footer';
 import { IconArrowUpRight } from '@tabler/icons-react';
 import GridLines from './GridLines';
+import Container from './Container';
 
 interface ProjectPageProps {
   project: ExtendedProject;
@@ -133,11 +134,11 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
         </div>
 
         {/* Radial Gradient Overlay - Separate Layer */}
-        <div className="absolute inset-0 z-[1] pointer-events-none bg-[linear-gradient(to_bottom,#11111181_0%,#111111FC_50%)] md:bg-[radial-gradient(at_top_center,#11111181_0%,#111111FC_50%)]" />
+        <div className="absolute inset-0 z-[1] pointer-events-none bg-[linear-gradient(to_bottom,#11111181_0%,#111111f5_50%)] md:bg-[radial-gradient(at_top_center,#11111181_0%,#111111f5_50%)]" />
 
         <GridLines variant="outer" inverted />
 
-        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+        <Container className="relative z-10">
           <Reveal variant="fade-up" duration={0.8}>
             <div className="max-w-4xl">
               <h1 className="font-syne font-bold text-2xl md:text-4xl xl:text-6xl leading-[0.9] text-white mb-3 md:mb-6 drop-shadow-2xl">
@@ -157,12 +158,12 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
               )}
             </div>
           </Reveal>
-        </div>
+        </Container>
       </section>
 
       {/* 2. Seção Detalhes */}
       <section className="pt-8 pb-0 md:pt-12 md:pb-0 xl:py-32 xl:border-b xl:border-black/[0.04]">
-        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
+        <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 xl:gap-[120px]">
 
             {/* Meta Info (Year & Tools) */}
@@ -193,12 +194,12 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
               </Reveal>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* 3. Seção Conteúdo Dinâmico (Builder) ou Galeria Legada */}
       <section className="py-8 md:py-12 xl:py-32 bg-surface/30">
-        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
+        <Container>
           {/* If dynamic blocks exist, render them. Otherwise render legacy gallery */}
           {project.blocks && project.blocks.length > 0 ? (
             <div className="flex flex-col">
@@ -220,7 +221,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
               ))}
             </div>
           )}
-        </div>
+        </Container>
       </section>
 
       {/* 4. Rodapé Padrão */}

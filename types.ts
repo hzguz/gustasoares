@@ -28,7 +28,7 @@ export interface ProjectBlock {
 }
 
 export interface Project {
-  id: string;
+  id: string | number;
   slug: string;
   title: string;
   category: string;

@@ -2,6 +2,7 @@
 import React from 'react';
 import { IconArrowLeft, IconMenu2 } from '@tabler/icons-react';
 import { Translations } from '../types';
+import Container from './Container';
 
 interface ProjectHeaderProps {
   onBack: () => void;
@@ -16,7 +17,7 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ onBack, onNavigate, navTe
   return (
     <>
       <header className="absolute top-0 left-0 right-0 z-50 py-6 md:py-8">
-        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8">
+        <Container>
           {/* Desktop Container with blur */}
           <div className="hidden xl:flex items-center justify-between px-8 py-4 backdrop-blur-md border border-white/[0.1] rounded-full transition-all duration-300 bg-black/20">
 
@@ -104,7 +105,7 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ onBack, onNavigate, navTe
               </button>
             </div>
           </div>
-        </div>
+        </Container>
       </header>
     </>
   );

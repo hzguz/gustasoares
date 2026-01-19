@@ -79,4 +79,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, text, onClick, anima
     );
 };
 
-export default ProjectCard;
+// Memoize to prevent re-renders when props haven't changed
+export default React.memo(ProjectCard, (prevProps, nextProps) => {
+    return (
+        prevProps.project.id === nextProps.project.id &&
+        prevProps.animationDelay === nextProps.animationDelay &&
+        prevProps.inverted === nextProps.inverted
+    );
+});

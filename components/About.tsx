@@ -2,6 +2,7 @@ import React from 'react';
 import { Translations } from '../types';
 import Reveal from './Reveal';
 import GridLines from './GridLines';
+import Container from './Container';
 
 interface AboutProps {
     translations: Translations;
@@ -13,7 +14,7 @@ const About: React.FC<AboutProps> = ({ translations }) => {
     return (
         <section id="about" className="py-20 md:py-28 xl:py-40 relative overflow-hidden border-t border-black/[0.04]">
             <GridLines variant="outer" />
-            <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+            <Container className="relative z-10">
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 lg:gap-12 xl:gap-32 items-center">
 
                     {/* Text Side (Left) */}
@@ -76,7 +77,7 @@ const About: React.FC<AboutProps> = ({ translations }) => {
                     </div>
 
                 </div>
-            </div>
+            </Container>
         </section>
     );
 };

@@ -6,6 +6,7 @@ import Reveal from './Reveal';
 import GridLines from './GridLines';
 import ProjectCard from './ProjectCard';
 import ProjectFilters from './ProjectFilters';
+import Container from './Container';
 
 interface ProjectsProps {
   text: Translations['projects'];
@@ -65,7 +66,7 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
       {/* Noise Overlay */}
 
 
-      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-30">
+      <Container className="relative z-30">
         <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-4 md:gap-6 xl:gap-8 pb-0 xl:pb-8 relative z-20 mb-8 md:mb-12 xl:mb-0">
           <div>
             <Reveal variant="blur-in" delay={100} duration={0.8}>
@@ -85,11 +86,11 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
             />
           </Reveal>
         </div>
-      </div>
+      </Container>
 
       <div className="w-full h-[1px] bg-white/[0.05] hidden xl:block mb-8 md:mb-12 xl:mb-20" />
 
-      <div className="w-full max-w-[1800px] mx-auto px-5 md:px-6 lg:px-8 relative z-10">
+      <Container className="relative z-10">
         {/* Smooth Height Container */}
         <div
           className="transition-[height] duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] overflow-hidden relative z-10"
@@ -112,7 +113,7 @@ const Projects: React.FC<ProjectsProps> = ({ text, projects, onProjectClick }) =
             ))}
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

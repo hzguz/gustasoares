@@ -59,7 +59,7 @@ export const CONTENT: Record<string, Translations> = {
     },
     contact: {
       tagline: "Contato",
-      title: "Pronto para começar algo incrível?",
+      title: "Pronto para começar \n algo incrível?",
       description: "Agende uma conversa e compartilhe suas ideias. Transformarei cada detalhe em uma experiência única.",
       orEmail: "Ou envie um e-mail para",
       form: {

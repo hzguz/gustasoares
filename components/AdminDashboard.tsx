@@ -10,7 +10,7 @@ interface AdminDashboardProps {
     projects: ExtendedProject[];
     onCreate: () => void;
     onEdit: (project: ExtendedProject) => void;
-    onDelete: (id: string) => void;
+    onDelete: (id: string | number) => void;
     onLogout: () => void;
     onSeed: () => void;
     onView?: (project: ExtendedProject) => void;
@@ -113,12 +113,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, onCreate, onE
                     {filteredProjects.map((project) => (
                         <div key={project.id} className="w-full bg-white/90 backdrop-blur-sm border border-black/[0.04] p-5 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-sm hover:shadow-xl hover:shadow-black/[0.06] transition-all duration-300 group hover:-translate-y-0.5">
                             {/* Thumbnail with Preview Overlay */}
-                            <div className="relative w-full md:w-52 md:flex-shrink-0 h-36 rounded-xl overflow-hidden border border-black/[0.04] shadow-inner group/thumb">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-105"
-                                />
+                            <div className="relative w-full md:w-52 md:flex-shrink-0 h-36 rounded-xl overflow-hidden border border-black/[0.04] shadow-inner group/thumb bg-black/[0.02]">
+                                {project.image && (
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-105"
+                                    />
+                                )}
                                 {/* Hover Overlay with Eye Icon */}
                                 {onView && (
                                     <button

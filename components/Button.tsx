@@ -9,7 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtonProps> = ({ variant = 'primary', children, className = '', ...props }) => {
   // Changed font-manrope to font-syne
   // Added hover:scale-[1.02] and active:scale-[0.98] for consistent interaction
-  const baseStyles = "font-syne font-semibold rounded-full transition-all duration-300 ease-in-out px-8 py-3 flex items-center justify-center gap-2 text-sm tracking-wide hover:scale-[1.02] active:scale-[0.98]";
+  const baseStyles = "font-syne font-medium rounded-full transition-all duration-300 ease-in-out px-8 py-3 flex items-center justify-center gap-2 text-sm tracking-wide hover:scale-[1.02] active:scale-[0.98]";
 
   const variants = {
     primary: "bg-inverse text-inverseSurface hover:bg-inverse/80 hover:shadow-[0_0_20px_rgba(var(--inverse),0.2)]",

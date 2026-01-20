@@ -18,9 +18,9 @@ export const metadata: Metadata = {
     title: "GustaSoares | UX/UI Designer",
     description: "Criando experiências que conectam seu público. Desenvolvendo interfaces intuitivas e envolventes.",
     icons: {
-        icon: "/logo-simbolo.svg",
-        shortcut: "/logo-simbolo.svg",
-        apple: "/logo-simbolo.svg",
+        icon: "/favicon.png",
+        shortcut: "/favicon.png",
+        apple: "/favicon.png",
     },
 };
 

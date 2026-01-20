@@ -233,7 +233,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                                 variant="primary"
                                                 type="submit"
                                                 disabled={loading}
-                                                className={`w-full md:w-auto py-4 px-8 text-sm group bg-gradient-to-r from-[#353535] to-[#111111] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                                className={`w-full md:w-auto py-3 px-8 text-sm group bg-gradient-to-r from-[#353535] to-[#111111] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                                             >
                                                 {loading ? 'Enviando...' : text.form.submit}
                                                 {!loading && (

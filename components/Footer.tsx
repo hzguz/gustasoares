@@ -57,13 +57,14 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
               href={getWhatsAppLink(WHATSAPP_MESSAGES.footer)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group w-fit relative inline-flex items-center gap-4 pl-6 pr-3 py-3 rounded-full bg-transparent border border-white/[0.1] transition-all duration-500 hover:bg-white hover:border-white"
+              className="group w-fit relative inline-flex items-center gap-2 md:gap-4 pl-4 md:pl-6 pr-2 md:pr-3 py-2 md:py-3 rounded-full bg-transparent border border-white/[0.1] transition-all duration-500 hover:bg-white hover:border-white"
             >
-              <span className="font-syne text-base font-medium text-white tracking-tight transition-colors duration-500 group-hover:text-black">
+              <span className="font-syne text-sm font-medium text-white tracking-tight transition-colors duration-500 group-hover:text-black">
                 {text.emailButtonText}
               </span>
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black transition-all duration-500 group-hover:scale-110 group-hover:rotate-45 group-hover:bg-black group-hover:text-white shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-                <IconArrowUpRight size={16} stroke={1} />
+              <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center text-black transition-all duration-500 group-hover:scale-110 group-hover:rotate-45 group-hover:bg-black group-hover:text-white shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+                <IconArrowUpRight size={14} className="md:hidden" stroke={1} />
+                <IconArrowUpRight size={16} className="hidden md:block" stroke={1} />
               </div>
             </a>
           </div>
@@ -141,10 +142,10 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
         {/* Footer Bottom Bar */}
         <div className="flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-8 md:gap-6 py-8 md:py-12">
           <div className="flex flex-col gap-2">
-            <p className="font-manrope font-medium text-white/60 text-xs uppercase tracking-widest">
+            <p className="font-manrope font-medium text-white/80 text-xs uppercase tracking-widest">
               GustaSoares © {currentYear}
             </p>
-            <p className="font-manrope text-xs text-white/40 max-w-md">
+            <p className="font-manrope text-xs text-white/60 max-w-md">
               {text.description}
             </p>
           </div>

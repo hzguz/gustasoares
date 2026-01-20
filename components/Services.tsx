@@ -119,43 +119,43 @@ const Services: React.FC<ServicesProps> = ({ text }) => {
                     className="h-full"
                   >
                     <div
-                      onMouseEnter={() => setActiveIndex(index)}
+                      onMouseEnter={() => {
+                        if (window.innerWidth >= 768) setActiveIndex(index);
+                      }}
                       className={`
                         group relative p-6 md:p-8 md:pt-16 md:pb-10 flex flex-col justify-between min-h-[260px] md:min-h-[380px] h-full
-                        transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] rounded-[1.2rem] md:rounded-[2rem] z-10 cursor-pointer
+                        transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] rounded-[1.2rem] md:rounded-[2rem] z-10 border-0
                         
-                        /* Mobile Specific Styles */
-                        border-0 md:border md:border-none
-                        ${isActive
-                          ? 'text-white border-transparent bg-[image:radial-gradient(at_top_center,var(--e-global-color-3ba8dc3)_0%,var(--e-global-color-primary)_100%)]'
-                          : 'bg-white/50 md:border-black/[0.04] text-textPrimary'}
-                            
-                        /* Desktop Specific Override (relying on sliding bg) */
+                        /* Mobile: First card has dark bg, others white */
+                        ${index === 0
+                          ? 'bg-[image:radial-gradient(at_top_center,var(--e-global-color-3ba8dc3)_0%,var(--e-global-color-primary)_100%)]'
+                          : 'bg-white/50'}
+                        
+                        /* Desktop: All transparent (sliding bg handles active) */
                         md:bg-transparent md:bg-none
-                        ${isActive
-                          ? 'md:scale-[1.0]'
-                          : 'md:opacity-70'}
+                        ${isActive ? 'md:scale-[1.0]' : 'md:opacity-70'}
                         `}
                     >
                       <div className="relative z-10">
                         <div className={`
                                 mb-8 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center border transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]
-                                ${isActive
-                            ? 'bg-white text-inverse border-white scale-100 md:scale-110 shadow-[0_0_20px_rgba(255,255,255,0.2)] delay-100'
-                            : 'bg-inverse/5 text-textPrimary border-black/[0.04] delay-0'}
+                                ${index === 0 ? 'bg-white text-black border-white md:bg-inverse/5 md:text-textPrimary md:border-black/[0.04]' : 'bg-inverse/5 text-textPrimary border-black/[0.04]'}
+                                ${isActive ? 'md:!bg-white md:!text-black md:!border-white md:scale-110 md:shadow-[0_0_20px_rgba(255,255,255,0.2)]' : ''}
                             `}>
                           {getIcon(service.icon)}
                         </div>
 
-                        <h3 className={`font-syne font-bold text-base md:text-xl mb-4 leading-tight transition-colors duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
-                                ${isActive ? 'text-white delay-100' : 'text-black delay-0'}`}>
+                        <h3 className={`font-syne font-bold text-base md:text-xl mb-4 leading-tight transition-colors duration-500
+                                ${index === 0 ? 'text-white md:text-black' : 'text-black'}
+                                ${isActive ? 'md:!text-white' : ''}`}>
                           {service.title}
                         </h3>
                       </div>
 
                       <div className="relative z-10">
-                        <p className={`font-manrope text-sm leading-relaxed transition-colors duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
-                                ${isActive ? 'text-gray-300 delay-100' : 'text-textSecondary delay-0'}`}>
+                        <p className={`font-manrope text-sm leading-relaxed transition-colors duration-500
+                                ${index === 0 ? 'text-white/70 md:text-textSecondary' : 'text-textSecondary'}
+                                ${isActive ? 'md:!text-gray-300' : ''}`}>
                           {service.description}
                         </p>
                       </div>

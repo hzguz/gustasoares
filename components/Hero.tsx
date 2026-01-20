@@ -176,8 +176,8 @@ const Hero: React.FC<HeroProps> = ({ text, variant = 'home' }) => {
               </div>
               {/* Mobile: Simple chevron with pulse */}
               <div className="flex md:hidden flex-col items-center gap-1 animate-bounce">
-                <div className="w-6 h-6 flex items-center justify-center">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/60">
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/60">
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </div>

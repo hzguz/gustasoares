@@ -153,7 +153,7 @@ const Contact: React.FC<ContactProps> = ({ text, socialEmail }) => {
                                         <Button
                                             variant="primary"
                                             onClick={() => setStatus('idle')}
-                                            className="w-full md:w-auto py-4 px-10 text-base"
+                                            className="w-full md:w-auto py-3 px-8 text-sm"
                                         >
                                             Enviar outra mensagem
                                         </Button>

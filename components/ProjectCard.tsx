@@ -52,11 +52,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, text, onClick, anima
                 />
 
                 {/* Arrow - Always visible on mobile in corner, fade in on desktop */}
-                <div className="absolute top-4 right-4 z-20 bg-black/80 backdrop-blur text-white p-2 md:p-3 rounded-full 
+                <div className="absolute top-4 right-4 z-20 bg-black/80 backdrop-blur text-white p-3 md:p-3 rounded-full 
               opacity-100 translate-y-0
               md:opacity-0 md:-translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 
               transition-all duration-300 border border-white/10">
-                    <IconArrowUpRight className="w-4 h-4 md:w-5 md:h-5" stroke={1.5} />
+                    <IconArrowUpRight className="w-6 h-6 md:w-5 md:h-5" stroke={1.5} />
                 </div>
             </div>
 

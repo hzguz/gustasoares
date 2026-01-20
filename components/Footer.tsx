@@ -57,7 +57,7 @@ const Footer: React.FC<FooterProps> = ({ text, navText, socials, toggleLang, lan
               href={getWhatsAppLink(WHATSAPP_MESSAGES.footer)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group w-fit relative inline-flex items-center gap-2 md:gap-4 pl-4 md:pl-6 pr-2 md:pr-3 py-2 md:py-3 rounded-full bg-transparent border border-white/[0.1] transition-all duration-500 hover:bg-white hover:border-white"
+              className="group w-fit relative inline-flex items-center gap-2 md:gap-4 pl-5 md:pl-6 pr-2 md:pr-3 py-2 md:py-3 rounded-full bg-transparent border border-white/[0.1] transition-all duration-500 hover:bg-white hover:border-white"
             >
               <span className="font-syne text-sm font-medium text-white tracking-tight transition-colors duration-500 group-hover:text-black">
                 {text.emailButtonText}
